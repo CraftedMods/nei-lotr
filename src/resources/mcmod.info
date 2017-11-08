@@ -1,0 +1,16 @@
+[{	
+    "modid" : "neilotr",	
+    "name" : "NEI Addon for the \"The Lord of the Rings\" Minecraft Mod",	
+    "description" : "This Mod/Addon adds NEI Integration for LOTR MC Mod. 
+NEI Integration means, that NEI (Not Enough Items) can work with recipes/crafting tables/furnances/... added by LOTR Mod.",	
+    "version" : "Alpha 0.4.6",	
+    "url" : "http://www.minecraftforum.net/forums/topic/2563743",	
+    "updateUrl" : "",	
+    "authorList" : ["Crafted_Mods (a.k.a. The_Ranger_Malvegil or just Malvegil)"],	
+    "credits" : "ChickenBones (NEI), Mevans (LOTR), The Forge and FML guys, Mojang",	
+    "logoFile" : "",	
+    "screenshots" : [],	
+    "dependencies" : ["NotEnoughItems"],	
+    "requiredMods" : ["Forge","lotr"],	
+    "parent" : ""
+}]

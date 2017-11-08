@@ -1,0 +1,14 @@
+lotrNei.recipe.barrel.name=Fass
+
+lotrNei.recipe.shapeless=Formlos
+lotrNei.recipe.shaped=Geformt
+
+lotrNei.config.gui.title=Konfiguration des NEI-plugins für LOTR MC MOD
+lotrNei.versionChecker.notification.text=? Neue Version gefunden: $ für Minecraft @
+
+lotrNei.lotr.block.elvenPortal.name=Elbenportal
+lotrNei.lotr.block.morgulPortal.name=Morgulportal
+lotrNei.lotr.block.utumnoPortal.name=Utumnoportal
+lotrNei.lotr.block.utumnoReturnPortal.name=Utumno Rückkehr-Portal
+lotrNei.lotr.block.utumnoReturnPortalBase.name=Melkor Platte
+lotrNei.lotr.block.rhunFire.name=Rhûnisches Feuer
