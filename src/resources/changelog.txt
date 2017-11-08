@@ -1,41 +1,7 @@
 ===Changelog for NEI LOTR===
 Made by 'Crafted_Mods' or 'The_Ranger_Malvegil'
 
- #Beta 1.0.0:
-  + Updated to Beta 28 (29.6) of LOTR MC Mod (PART 2)
-     + Registered new traders to trader handler
-  + Added Ent-draught support (-GUI)
-  + Added support for 
-    1. Harad Turban ornament
-    2. Hobbit Pipe
-    3. Feather dye (-)
-    4. Harad Robes dye (-)
-    5. Leather Hat dye (-)
-    6. Leather Hat feather and (-)
-    7. Pouch dye (-)
-    8. Treasure pile (-)
-    9. Weapon unpoisoning
-    recipes.
-    
-  + Readded trade handler
  
-  * Fixed wrong encoding for some lang file entries
-  * Huge internal cleanup and partial rewriting (-)
-  * Re-enabled and improved all features that were disabled while Alpha 0.4.2 (-)
-  * Fixed that the UnsmelteryRH showed unsmeltery recipes for story items (-)
- 
- - Removed some unnecessary entries in .lang files and other deprecated resources (-)
-
- #Alpha 0.5.0:
- + Updated to Beta 33.4 of LOTR Mod
-  + Added all new technical blocks to the block-hiding list
- + Crafting and usage recipes of items enchanted with the modifier system are now shown
- + Added config options to enable/disable every recipe handler individually (-)
- + The alloy forge handler now has two modes: 'static' (fast but inflexible) and (the default mode) 'dynamic' (slow but flexible)
- * Fixed that the alloy forge handler didn't show some recipes
- * The addon now logs the count of computed recipes (-)
- * The alloy forge handler now cycles the ingredients (-)
-
  #Alpha 0.4.6:
  + Updated to Beta 32 of LOTR Mod
   + Added support for Rivendell CT
