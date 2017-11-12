@@ -13,6 +13,7 @@ import codechicken.nei.recipe.GuiCraftingRecipe;
 import codechicken.nei.recipe.GuiUsageRecipe;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import codechicken.nei.recipe.TemplateRecipeHandler.CachedRecipe;
+import craftedMods.neiLotr.handlers.BarrelRecipeHandler;
 import craftedMods.neiLotr.handlers.BasicForgeRecipeHandler;
 import craftedMods.neiLotr.handlers.BasicTradeHandler;
 import craftedMods.neiLotr.handlers.craftingTable.BasicCTShapedRecipeHandler;
@@ -152,7 +153,8 @@ public class NeiLotrNEIConfig {
 			initCTHandlers();
 			initAlloyForgeHandlers();
 			registerTraderHandlers();
-
+			registerBarrelHandler();
+			
 			recipeLoader.loadStaticRecipes();
 
 			NeiLotr.mod.getLogger()
@@ -334,6 +336,11 @@ public class NeiLotrNEIConfig {
 		registerBasicTradeHandler(LOTREntityRivendellSmith.class, RIVENDELL_SMITH_BUY, RIVENDELL_SMITH_SELL);
 	}
 
+	private void registerBarrelHandler() {
+		BarrelRecipeHandler barrelRecipeHandler = new BarrelRecipeHandler(nextId());
+		this.registerDefaultHandler(barrelRecipeHandler, barrelRecipeHandler.getRecipes());
+	}
+	
 	private void registerBasicTradeHandler(Class<? extends LOTRTradeable> entityClass, LOTRTradeEntries buy,
 			LOTRTradeEntries sell) {
 		BasicTradeHandler handler = new BasicTradeHandler(nextId(),
