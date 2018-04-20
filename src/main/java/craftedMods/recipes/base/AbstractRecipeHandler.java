@@ -7,9 +7,7 @@ import org.apache.logging.log4j.Logger;
 
 import craftedMods.recipes.api.*;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
-import net.minecraft.world.World;
 
 /**
  * A default implementation of some aspects of the RecipeHandler interface. Normally you should extend this class if you want to create a new recipe handler instead of implementing the interface directly.
@@ -143,7 +141,7 @@ public abstract class AbstractRecipeHandler<T extends Recipe> implements RecipeH
 	}
 
 	@Override
-	public RecipeHandlerCraftingHelper getCraftingHelper() {
+	public RecipeHandlerCraftingHelper<T> getCraftingHelper() {
 		return null;
 	}
 

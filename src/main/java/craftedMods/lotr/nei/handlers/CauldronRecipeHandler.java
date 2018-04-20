@@ -2,13 +2,11 @@ package craftedMods.lotr.nei.handlers;
 
 import java.util.*;
 
-import codechicken.nei.api.API;
-import codechicken.nei.recipe.*;
 import craftedMods.recipes.api.*;
 import craftedMods.recipes.api.utils.*;
 import craftedMods.recipes.base.*;
 import lotr.common.LOTRMod;
-import lotr.common.item.*;
+import lotr.common.item.LOTRItemHobbitPipe;
 import lotr.common.recipe.LOTRRecipePoisonWeapon;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -33,7 +31,7 @@ public class CauldronRecipeHandler extends AbstractRecipeHandler<ShapelessRecipe
 		for (int i = 1; i < 17; i++) {
 			ItemStack pipe = new ItemStack(LOTRMod.hobbitPipe);
 			LOTRItemHobbitPipe.setSmokeColor(pipe, i);
-			dyedHobbitPipes.add(pipe);
+			this.dyedHobbitPipes.add(pipe);
 		}
 		return null;
 	}
@@ -41,9 +39,9 @@ public class CauldronRecipeHandler extends AbstractRecipeHandler<ShapelessRecipe
 	@Override
 	public Collection<ShapelessRecipe> getDynamicCraftingRecipes(ItemStack result) {
 		Collection<ShapelessRecipe> recipes = new ArrayList<>();
-		if (result.getItem() == LOTRMod.hobbitPipe && LOTRItemHobbitPipe.getSmokeColor(result) == 0) {
-			recipes.add(new HobbitPipeUndyeningRecipe(dyedHobbitPipes, new ItemStack(LOTRMod.hobbitPipe)));
-		} else if (LOTRRecipePoisonWeapon.inputToPoisoned.containsKey(result.getItem())) {
+		if (result.getItem() == LOTRMod.hobbitPipe && LOTRItemHobbitPipe.getSmokeColor(result) == 0)
+			recipes.add(new HobbitPipeUndyeningRecipe(this.dyedHobbitPipes, new ItemStack(LOTRMod.hobbitPipe)));
+		else if (LOTRRecipePoisonWeapon.inputToPoisoned.containsKey(result.getItem())) {
 			ItemStack input = new ItemStack(LOTRRecipePoisonWeapon.inputToPoisoned.get(result.getItem()));
 			if (result.isItemStackDamageable()) input.setItemDamage(result.getItemDamage());
 			recipes.add(new ShapelessRecipe(input, result));
@@ -54,9 +52,9 @@ public class CauldronRecipeHandler extends AbstractRecipeHandler<ShapelessRecipe
 	@Override
 	public Collection<ShapelessRecipe> getDynamicUsageRecipes(ItemStack ingredient) {
 		Collection<ShapelessRecipe> recipes = new ArrayList<>();
-		if (ingredient.getItem() == LOTRMod.hobbitPipe && LOTRItemHobbitPipe.getSmokeColor(ingredient) != 0) {
+		if (ingredient.getItem() == LOTRMod.hobbitPipe && LOTRItemHobbitPipe.getSmokeColor(ingredient) != 0)
 			recipes.add(new HobbitPipeUndyeningRecipe(ingredient, new ItemStack(LOTRMod.hobbitPipe)));
-		} else if (LOTRRecipePoisonWeapon.poisonedToInput.containsKey(ingredient.getItem())) {
+		else if (LOTRRecipePoisonWeapon.poisonedToInput.containsKey(ingredient.getItem())) {
 			ItemStack result = new ItemStack(LOTRRecipePoisonWeapon.poisonedToInput.get(ingredient.getItem()));
 			if (ingredient.isItemStackDamageable()) result.setItemDamage(ingredient.getItemDamage());
 			recipes.add(new ShapelessRecipe(ingredient, result));
@@ -70,8 +68,9 @@ public class CauldronRecipeHandler extends AbstractRecipeHandler<ShapelessRecipe
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public CauldronRecipeHandlerRenderer getRenderer() {
-		return renderer;
+		return this.renderer;
 	}
 
 	public class HobbitPipeUndyeningRecipe extends ShapelessRecipe {
@@ -105,7 +104,7 @@ public class CauldronRecipeHandler extends AbstractRecipeHandler<ShapelessRecipe
 
 		@Override
 		public void renderBackground(CauldronRecipeHandler handler, ShapelessRecipe recipe, int cycleticks) {
-			RecipeHandlerRendererUtils.getInstance().bindTexture(DEFAULT_GUI_TEXTURE);
+			RecipeHandlerRendererUtils.getInstance().bindTexture(RecipeHandlerRenderer.DEFAULT_GUI_TEXTURE);
 			RecipeHandlerRendererUtils.getInstance().drawTexturedRectangle(42, 19, 65, 30, 80, 26);
 			RecipeHandlerRendererUtils.getInstance().drawRectangle(42, 13, 18, 10, 0xFFC6C6C6);
 			RecipeHandlerRendererUtils.getInstance().drawRectangle(42, 41, 18, 4, 0xFFC6C6C6);

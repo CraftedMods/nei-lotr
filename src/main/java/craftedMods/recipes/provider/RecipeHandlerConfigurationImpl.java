@@ -16,7 +16,7 @@ public class RecipeHandlerConfigurationImpl implements RecipeHandlerConfiguratio
 	public RecipeHandlerConfigurationImpl(Configuration config, String unlocalizedHandlerName) {
 		this.config = config;
 		this.unlocalizedHandlerName = unlocalizedHandlerName;
-		this.defaultCategory = RECIPEHANDLER_CATEGORY + "." + this.unlocalizedHandlerName;
+		this.defaultCategory = RecipeHandlerConfigurationImpl.RECIPEHANDLER_CATEGORY + "." + this.unlocalizedHandlerName;
 	}
 
 	@Override

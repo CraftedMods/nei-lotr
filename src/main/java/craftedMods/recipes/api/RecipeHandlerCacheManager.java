@@ -22,7 +22,7 @@ public interface RecipeHandlerCacheManager<T extends Recipe> {
 
 	public Collection<T> readRecipesFromCache(NBTTagCompound cacheHeaderTag, NBTTagCompound cacheContentTag);
 
-	//Cache is validated after writing
+	// Cache is validated after writing
 	public void writeRecipesToCache(NBTTagCompound cacheHeaderTag, NBTTagCompound cacheContentTag);
 
 }

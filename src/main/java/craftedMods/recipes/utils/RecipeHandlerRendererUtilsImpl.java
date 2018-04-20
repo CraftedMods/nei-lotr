@@ -2,46 +2,55 @@ package craftedMods.recipes.utils;
 
 import codechicken.lib.gui.GuiDraw;
 import craftedMods.recipes.api.utils.RecipeHandlerRendererUtils;
-import craftedMods.recipes.api.utils.RecipeHandlerRendererUtils.EnumProgressBarDirection;
 
-public class RecipeHandlerRendererUtilsImpl implements RecipeHandlerRendererUtils{
+public class RecipeHandlerRendererUtilsImpl implements RecipeHandlerRendererUtils {
 
+	@Override
 	public void bindTexture(String texture) {
 		GuiDraw.changeTexture(texture);
 	}
 
+	@Override
 	public void drawRectangle(int x, int y, int width, int height, int color) {
 		GuiDraw.drawRect(x, y, width, height, color);
 	}
 
+	@Override
 	public void drawGradientRectangle(int x, int y, int width, int height, int color1, int color2) {
 		GuiDraw.drawGradientRect(x, y, width, height, color1, color2);
 	}
 
+	@Override
 	public void drawTexturedRectangle(int x, int y, int textureX, int textureY, int width, int height) {
 		GuiDraw.drawTexturedModalRect(x, y, textureX, textureY, width, height);
 	}
 
+	@Override
 	public void drawText(String text, int x, int y, int color, boolean shadow) {
 		GuiDraw.drawString(text, x, y, color, shadow);
 	}
 
+	@Override
 	public void drawText(String text, int x, int y, int color) {
 		GuiDraw.drawString(text, x, y, color);
 	}
 
+	@Override
 	public void drawTextCentered(String text, int x, int y, int color, boolean shadow) {
 		GuiDraw.drawStringC(text, x, y, color, shadow);
 	}
 
+	@Override
 	public void drawTextCentered(String text, int x, int y, int color) {
 		GuiDraw.drawStringC(text, x, y, color);
 	}
 
+	@Override
 	public int getStringWidth(String text) {
 		return GuiDraw.getStringWidth(text);
 	}
 
+	@Override
 	public void drawProgressBar(int x, int y, int textureX, int textureY, int width, int height, float completion, EnumProgressBarDirection direction) {
 		this.drawProgressBar(x, y, textureX, textureY, width, height, completion, direction.ordinal());
 	}

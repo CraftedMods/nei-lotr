@@ -1,30 +1,16 @@
 package craftedMods.lotr.nei.handlers;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 import org.apache.logging.log4j.Logger;
 
-import craftedMods.recipes.api.EnumRecipeItemRole;
-import craftedMods.recipes.api.RecipeHandlerConfiguration;
-import craftedMods.recipes.api.RecipeHandlerCraftingHelper;
-import craftedMods.recipes.api.RegisteredRecipeHandler;
-import craftedMods.recipes.base.AbstractCraftingHelper;
-import craftedMods.recipes.base.AbstractRecipe;
-import craftedMods.recipes.base.ShapedRecipe;
-import craftedMods.recipes.base.ShapelessRecipe;
-import craftedMods.recipes.utils.NEIExtensionsUtils;
+import craftedMods.recipes.api.*;
+import craftedMods.recipes.base.*;
 import lotr.common.item.LOTRPoisonedDrinks;
-import lotr.common.recipe.LOTRRecipeHobbitPipe;
-import lotr.common.recipe.LOTRRecipesPoisonDrinks;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.gui.inventory.GuiCrafting;
-import net.minecraft.client.gui.inventory.GuiInventory;
+import lotr.common.recipe.*;
+import net.minecraft.client.gui.inventory.*;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
-import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.*;
 
 @RegisteredRecipeHandler
 public class VanillaCraftingTableRecipeHandler extends AbstractLOTRCraftingTableRecipeHandler {
@@ -43,8 +29,7 @@ public class VanillaCraftingTableRecipeHandler extends AbstractLOTRCraftingTable
 	@Override
 	public void onPreLoad(RecipeHandlerConfiguration config, Logger logger) {
 		super.onPreLoad(config, logger);
-		if (LOTRRecipeHandlerUtils.hasCraftTweaker())
-			this.logger.info("CraftTweaker was found - dynamic recipe loading will be enabled");
+		if (LOTRRecipeHandlerUtils.hasCraftTweaker()) this.logger.info("CraftTweaker was found - dynamic recipe loading will be enabled");
 	}
 
 	@Override
@@ -53,6 +38,7 @@ public class VanillaCraftingTableRecipeHandler extends AbstractLOTRCraftingTable
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	protected Collection<AbstractRecipe> loadRecipes() {
 		this.recipes.clear();
 		this.recipes.addAll(CraftingManager.getInstance().getRecipeList());
@@ -63,10 +49,8 @@ public class VanillaCraftingTableRecipeHandler extends AbstractLOTRCraftingTable
 
 	@Override
 	protected void undefinedRecipeTypeFound(IRecipe recipe, Collection<AbstractRecipe> container) {
-		if (recipe instanceof LOTRRecipesPoisonDrinks)
-			return;
-		if (recipe instanceof LOTRRecipeHobbitPipe)
-			return;
+		if (recipe instanceof LOTRRecipesPoisonDrinks) return;
+		if (recipe instanceof LOTRRecipeHobbitPipe) return;
 		super.undefinedRecipeTypeFound(recipe, container);
 	}
 
@@ -75,10 +59,8 @@ public class VanillaCraftingTableRecipeHandler extends AbstractLOTRCraftingTable
 		Collection<AbstractRecipe> ret = new ArrayList<>();
 		if (LOTRRecipeHandlerUtils.hasCraftTweaker()) {
 			Collection<AbstractRecipe> recipes = this.loadRecipes();
-			for (AbstractRecipe recipe : recipes) {
-				if (recipe.produces(result))
-					ret.add(recipe);
-			}
+			for (AbstractRecipe recipe : recipes)
+				if (recipe.produces(result)) ret.add(recipe);
 		}
 		return ret;
 	}
@@ -88,17 +70,15 @@ public class VanillaCraftingTableRecipeHandler extends AbstractLOTRCraftingTable
 		Collection<AbstractRecipe> ret = new ArrayList<>();
 		if (LOTRRecipeHandlerUtils.hasCraftTweaker()) {
 			Collection<AbstractRecipe> recipes = this.loadRecipes();
-			for (AbstractRecipe recipe : recipes) {
-				if (recipe.consumes(ingredient))
-					ret.add(recipe);
-			}
+			for (AbstractRecipe recipe : recipes)
+				if (recipe.consumes(ingredient)) ret.add(recipe);
 		}
 		return ret;
 	}
 
 	@Override
-	public RecipeHandlerCraftingHelper getCraftingHelper() {
-		return craftingHelper;
+	public RecipeHandlerCraftingHelper<AbstractRecipe> getCraftingHelper() {
+		return this.craftingHelper;
 	}
 
 	@Override
@@ -125,8 +105,7 @@ public class VanillaCraftingTableRecipeHandler extends AbstractLOTRCraftingTable
 
 		@Override
 		public Collection<Class<? extends GuiContainer>> getSupportedGUIClasses(AbstractRecipe recipe) {
-			return isRecipe2x2(recipe) ? Arrays.asList(GuiInventory.class, GuiCrafting.class)
-					: Arrays.asList(GuiCrafting.class);
+			return this.isRecipe2x2(recipe) ? Arrays.asList(GuiInventory.class, GuiCrafting.class) : Arrays.asList(GuiCrafting.class);
 		}
 
 		@Override
@@ -141,8 +120,7 @@ public class VanillaCraftingTableRecipeHandler extends AbstractLOTRCraftingTable
 
 		@Override
 		public boolean matches(ItemStack stack1, ItemStack stack2) {
-			return super.matches(stack1, stack2)
-					&& LOTRPoisonedDrinks.isDrinkPoisoned(stack1) == LOTRPoisonedDrinks.isDrinkPoisoned(stack2);
+			return super.matches(stack1, stack2) && LOTRPoisonedDrinks.isDrinkPoisoned(stack1) == LOTRPoisonedDrinks.isDrinkPoisoned(stack2);
 		}
 
 		private boolean isRecipe2x2(AbstractRecipe recipe) {

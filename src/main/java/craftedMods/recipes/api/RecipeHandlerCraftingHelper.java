@@ -12,7 +12,7 @@ public interface RecipeHandlerCraftingHelper<T extends Recipe> {
 	public int getOffsetX(Class<? extends GuiContainer> guiClass, T recipe);
 
 	public int getOffsetY(Class<? extends GuiContainer> guiClass, T recipe);
-	
+
 	public boolean matches(ItemStack stack1, ItemStack stack2);
 
 }

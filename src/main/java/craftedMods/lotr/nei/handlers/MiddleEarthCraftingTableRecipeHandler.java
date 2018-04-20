@@ -15,18 +15,19 @@ public class MiddleEarthCraftingTableRecipeHandler extends AbstractLOTRCraftingT
 	public static final String UNLOCALIZED_NAME_PREFIX = "middleEarthCrafting.";
 
 	public MiddleEarthCraftingTableRecipeHandler(String unlocalizedName, Class<? extends GuiContainer> guiClass, Collection<IRecipe> recipes) {
-		super(UNLOCALIZED_NAME_PREFIX + unlocalizedName, recipes);
+		super(MiddleEarthCraftingTableRecipeHandler.UNLOCALIZED_NAME_PREFIX + unlocalizedName, recipes);
 		this.craftingHelper = new MiddleEarthCraftingTableRecipeHandlerCraftingHelper(guiClass);
 	}
 
 	@Override
 	public String getDisplayName() {
-		return StatCollector.translateToLocal("container.lotr.crafting." + this.getUnlocalizedName().replace(UNLOCALIZED_NAME_PREFIX, ""));
+		return StatCollector.translateToLocal(
+				"container.lotr.crafting." + this.getUnlocalizedName().replace(MiddleEarthCraftingTableRecipeHandler.UNLOCALIZED_NAME_PREFIX, ""));
 	}
 
 	@Override
-	public RecipeHandlerCraftingHelper getCraftingHelper() {
-		return craftingHelper;
+	public RecipeHandlerCraftingHelper<AbstractRecipe> getCraftingHelper() {
+		return this.craftingHelper;
 	}
 
 	private class MiddleEarthCraftingTableRecipeHandlerCraftingHelper extends AbstractCraftingHelper<AbstractRecipe> {
@@ -39,7 +40,7 @@ public class MiddleEarthCraftingTableRecipeHandler extends AbstractLOTRCraftingT
 
 		@Override
 		public Collection<Class<? extends GuiContainer>> getSupportedGUIClasses(AbstractRecipe recipe) {
-			return guiClass;
+			return this.guiClass;
 		}
 
 		@Override

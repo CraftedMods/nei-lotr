@@ -39,9 +39,8 @@ public class ItemStackMapImpl<V> implements ItemStackMap<V> {
 	@Override
 	public Set<ItemStack> keySet() {
 		Set<ItemStack> ret = new HashSet<>();
-		for (ItemStackWrapper key : this.innerMap.keySet()) {
+		for (ItemStackWrapper key : this.innerMap.keySet())
 			ret.add(key.toItemStack());
-		}
 		return ret;
 	}
 
@@ -54,7 +53,7 @@ public class ItemStackMapImpl<V> implements ItemStackMap<V> {
 	public Set<java.util.Map.Entry<ItemStack, V>> entrySet() {
 		Set<java.util.Map.Entry<ItemStack, V>> entrySet = new HashSet<>();
 		this.innerMap.forEach((key, value) -> {
-			entrySet.add(new AbstractMap.SimpleEntry(key.toItemStack(), value));
+			entrySet.add(new AbstractMap.SimpleEntry<>(key.toItemStack(), value));
 		});
 		return entrySet;
 	}

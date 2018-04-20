@@ -15,17 +15,12 @@ public class NEIExtensionsUtils {
 
 	public static ItemStackSet generatePermutations(Collection<ItemStack> stacks) {
 		ItemStackSet permutations = ItemStackSet.create();
-		for (ItemStack stack : stacks) {
+		for (ItemStack stack : stacks)
 			if (stack != null && stack.getItem() != null) {
 				List<ItemStack> perms = ItemList.itemMap.get(stack.getItem());
-				if (stack.getItemDamage() == OreDictionary.WILDCARD_VALUE && perms != null && !perms.isEmpty()) {
-					permutations.addAll(perms);
-				} else {
-					permutations.add(stack);
-				}
+				if (stack.getItemDamage() == OreDictionary.WILDCARD_VALUE && perms != null && !perms.isEmpty()) permutations.addAll(perms);
+				else permutations.add(stack);
 			}
-
-		}
 		return permutations;
 	}
 
@@ -45,12 +40,9 @@ public class NEIExtensionsUtils {
 		if (container instanceof String) {
 			List<ItemStack> stacks = OreDictionary.getOres((String) container);
 			return stacks.toArray(new ItemStack[stacks.size()]);
-		} else if (container instanceof Item)
-			return new ItemStack[] { new ItemStack((Item) container) };
-		else if (container instanceof Block)
-			return new ItemStack[] { new ItemStack((Block) container) };
-		else
-			return NEIServerUtils.extractRecipeItems(container);
+		} else if (container instanceof Item) return new ItemStack[] { new ItemStack((Item) container) };
+		else if (container instanceof Block) return new ItemStack[] { new ItemStack((Block) container) };
+		else return NEIServerUtils.extractRecipeItems(container);
 	}
 
 	public static List<ItemStack> getItemList() {
@@ -62,12 +54,9 @@ public class NEIExtensionsUtils {
 		String[] cats = unlocalizedName.split("\\.");
 		if (cats.length > 1) {
 			categories = new String[cats.length - 1];
-			for (int i = 0; i < cats.length - 1; i++) {
+			for (int i = 0; i < cats.length - 1; i++)
 				categories[i] = cats[i];
-			}
-		} else {
-			categories = new String[] {};
-		}
+		} else categories = new String[] {};
 		return categories;
 	}
 
@@ -77,16 +66,13 @@ public class NEIExtensionsUtils {
 			NBTTagList list = compound.getTagList(tagName, 10);
 			for (int i = 0; i < list.tagCount(); i++) {
 				ItemStack stack = ItemStack.loadItemStackFromNBT(list.getCompoundTagAt(i));
-				if (stack != null) {
-					ret.add(stack);
-				}
+				if (stack != null) ret.add(stack);
 			}
 		}
 		return ret;
 	}
 
-	public static void writeItemStackListToNBT(NBTTagCompound compound, String tagName,
-			Collection<? extends ItemStack> stacks) {
+	public static void writeItemStackListToNBT(NBTTagCompound compound, String tagName, Collection<? extends ItemStack> stacks) {
 		NBTTagList list = new NBTTagList();
 		for (ItemStack stack : stacks) {
 			NBTTagCompound stackTag = new NBTTagCompound();
@@ -98,9 +84,8 @@ public class NEIExtensionsUtils {
 
 	public static List<RecipeItemSlot> offset(List<RecipeItemSlot> slotsList, int xOffset, int yOffset) {
 		List<RecipeItemSlot> ret = new ArrayList<>();
-		for (RecipeItemSlot slot : slotsList) {
+		for (RecipeItemSlot slot : slotsList)
 			ret.add(slot == null ? null : new RecipeItemSlotImpl(slot.getX() + xOffset, slot.getY() + yOffset));
-		}
 		return ret;
 	}
 
@@ -116,12 +101,12 @@ public class NEIExtensionsUtils {
 
 		@Override
 		public int getX() {
-			return x;
+			return this.x;
 		}
 
 		@Override
 		public int getY() {
-			return y;
+			return this.y;
 		}
 
 	}

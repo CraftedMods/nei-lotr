@@ -6,9 +6,6 @@ import java.util.*;
 import org.apache.logging.log4j.Logger;
 
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.StatCollector;
-import net.minecraft.world.World;
 
 /**
  * The recipe handler needs - to be discovered - a default constructor.

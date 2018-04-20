@@ -25,15 +25,10 @@ public class ClassDiscoverer {
 
 	public boolean registerClassToDiscover(Class<? extends Annotation> annotationClass, Class<?> interfaceClass) {
 		if (this.canRegister) {
-			if (!this.registeredClasses.containsKey(annotationClass)) {
-				this.registeredClasses.put(annotationClass, new HashSet<>());
-			}
-			if (!this.discoveredClasses.containsKey(annotationClass)) {
-				this.discoveredClasses.put(annotationClass, new HashMap<>());
-			}
-			if (!this.discoveredClasses.get(annotationClass).containsKey(interfaceClass)) {
+			if (!this.registeredClasses.containsKey(annotationClass)) this.registeredClasses.put(annotationClass, new HashSet<>());
+			if (!this.discoveredClasses.containsKey(annotationClass)) this.discoveredClasses.put(annotationClass, new HashMap<>());
+			if (!this.discoveredClasses.get(annotationClass).containsKey(interfaceClass))
 				this.discoveredClasses.get(annotationClass).put(interfaceClass, new HashSet<>());
-			}
 			return this.registeredClasses.get(annotationClass).add(interfaceClass);
 		}
 		return false;
@@ -44,21 +39,17 @@ public class ClassDiscoverer {
 		this.discovererThread = new Thread(() -> {
 			long start = System.currentTimeMillis();
 			FastClasspathScanner scanner = new FastClasspathScanner();
-			for (Class<? extends Annotation> annotationClass : this.registeredClasses.keySet()) {
+			for (Class<? extends Annotation> annotationClass : this.registeredClasses.keySet())
 				scanner.matchClassesWithAnnotation(annotationClass, clazz -> {
 					try {
 						Class<?> loadedClass = Loader.instance().getModClassLoader().loadClass(clazz.getName());
-						for (Class<?> interfaceClass : this.registeredClasses.get(annotationClass)) {
-							if (interfaceClass.isAssignableFrom(loadedClass)) {
-								this.discoveredClasses.get(annotationClass).get(interfaceClass).add(loadedClass);
-							}
-						}
+						for (Class<?> interfaceClass : this.registeredClasses.get(annotationClass))
+							if (interfaceClass.isAssignableFrom(loadedClass)) this.discoveredClasses.get(annotationClass).get(interfaceClass).add(loadedClass);
 
 					} catch (Exception e) {
 						this.logger.error("Couldn't load class \"" + clazz.getName() + "\"", e);
 					}
 				});
-			}
 			scanner.scan(Runtime.getRuntime().availableProcessors());
 			this.logger.info("Scanned the classpath in " + (System.currentTimeMillis() - start) + " milliseconds");
 		});

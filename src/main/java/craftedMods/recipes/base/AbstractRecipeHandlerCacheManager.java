@@ -22,22 +22,22 @@ public abstract class AbstractRecipeHandlerCacheManager<T extends Recipe> implem
 
 	@Override
 	public void invalidateCache() {
-		isCacheValid = false;
+		this.isCacheValid = false;
 	}
 
 	@Override
 	public void validateCache() {
-		isCacheValid = true;
+		this.isCacheValid = true;
 	}
 
 	@Override
 	public boolean isCacheValid(NBTTagCompound cacheHeaderTag) {
-		return isCacheValid && cacheHeaderTag.getString(RECIPE_HANDLER_VERSION_KEY).equals(handler.getVersion());
+		return this.isCacheValid && cacheHeaderTag.getString(AbstractRecipeHandlerCacheManager.RECIPE_HANDLER_VERSION_KEY).equals(this.handler.getVersion());
 	}
 
 	@Override
 	public void writeRecipesToCache(NBTTagCompound cacheHeaderTag, NBTTagCompound cacheContentTag) {
-		cacheHeaderTag.setString(RECIPE_HANDLER_VERSION_KEY, handler.getVersion());
+		cacheHeaderTag.setString(AbstractRecipeHandlerCacheManager.RECIPE_HANDLER_VERSION_KEY, this.handler.getVersion());
 	}
 
 }

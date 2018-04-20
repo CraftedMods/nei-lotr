@@ -3,17 +3,16 @@ package craftedMods.recipes.api.utils;
 import java.util.*;
 
 import craftedMods.recipes.api.RecipeItemSlot;
-import craftedMods.recipes.utils.*;
+import craftedMods.recipes.utils.RecipeHandlerUtilsImpl;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import scala.actors.threadpool.Arrays;
 
 public interface RecipeHandlerUtils {
 
 	public static final RecipeHandlerUtils instance = new RecipeHandlerUtilsImpl();
 
 	public static RecipeHandlerUtils getInstance() {
-		return instance;
+		return RecipeHandlerUtils.instance;
 	}
 
 	public ItemStackSet generatePermutations(ItemStack... stacks);
@@ -36,5 +35,5 @@ public interface RecipeHandlerUtils {
 	public List<RecipeItemSlot> offset(List<RecipeItemSlot> slotsList, int xOffset, int yOffset);
 
 	public void forceRecipeCacheRefresh();
-	
+
 }

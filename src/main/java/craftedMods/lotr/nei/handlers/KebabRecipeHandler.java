@@ -18,7 +18,7 @@ public class KebabRecipeHandler extends AbstractRecipeHandler<ShapelessRecipe> {
 	public KebabRecipeHandler() {
 		super("kebab");
 	}
-	
+
 	@Override
 	public String getDisplayName() {
 		return LOTRMod.kebabStand.getLocalizedName();
@@ -32,9 +32,7 @@ public class KebabRecipeHandler extends AbstractRecipeHandler<ShapelessRecipe> {
 	@Override
 	public ShapelessRecipe loadComplicatedStaticRecipe(ItemStack... stacks) {
 		ShapelessRecipe recipe = null;
-		if (kebabStandDummy.isMeat(stacks[0])) {
-			recipe = new ShapelessRecipe(Arrays.asList(stacks[0]), new ItemStack(LOTRMod.kebab));
-		}
+		if (this.kebabStandDummy.isMeat(stacks[0])) recipe = new ShapelessRecipe(Arrays.asList(stacks[0]), new ItemStack(LOTRMod.kebab));
 		return recipe;
 	}
 
@@ -44,23 +42,23 @@ public class KebabRecipeHandler extends AbstractRecipeHandler<ShapelessRecipe> {
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public KebabRecipeHandlerRenderer getRenderer() {
-		return renderer;
-	}
-	
-
-public class KebabRecipeHandlerRenderer implements RecipeHandlerRenderer<KebabRecipeHandler, ShapelessRecipe> {
-
-	@Override
-	public void renderBackground(KebabRecipeHandler handler, ShapelessRecipe recipe, int cycleticks) {
-		RecipeHandlerRendererUtils.getInstance().bindTexture(DEFAULT_GUI_TEXTURE);
-		RecipeHandlerRendererUtils.getInstance().drawTexturedRectangle(42, 19, 65, 30, 80, 26);
-		RecipeHandlerRendererUtils.getInstance().drawRectangle(42, 13, 18, 10, 0xFFC6C6C6);
-		RecipeHandlerRendererUtils.getInstance().drawRectangle(42, 41, 18, 4, 0xFFC6C6C6);
+		return this.renderer;
 	}
 
-	@Override
-	public void renderForeground(KebabRecipeHandler handler, ShapelessRecipe recipe, int cycleticks) {}
+	public class KebabRecipeHandlerRenderer implements RecipeHandlerRenderer<KebabRecipeHandler, ShapelessRecipe> {
 
-}
+		@Override
+		public void renderBackground(KebabRecipeHandler handler, ShapelessRecipe recipe, int cycleticks) {
+			RecipeHandlerRendererUtils.getInstance().bindTexture(RecipeHandlerRenderer.DEFAULT_GUI_TEXTURE);
+			RecipeHandlerRendererUtils.getInstance().drawTexturedRectangle(42, 19, 65, 30, 80, 26);
+			RecipeHandlerRendererUtils.getInstance().drawRectangle(42, 13, 18, 10, 0xFFC6C6C6);
+			RecipeHandlerRendererUtils.getInstance().drawRectangle(42, 41, 18, 4, 0xFFC6C6C6);
+		}
+
+		@Override
+		public void renderForeground(KebabRecipeHandler handler, ShapelessRecipe recipe, int cycleticks) {}
+
+	}
 }

@@ -13,8 +13,8 @@ public interface Recipe {
 
 	public boolean consumes(ItemStack ingredient);
 
-	public ItemStack getIngredientReplacement(ItemStack defaultReplacement);//Can return null
+	public ItemStack getIngredientReplacement(ItemStack defaultReplacement);// Can return null
 
-	public ItemStack getResultReplacement(ItemStack defaultReplacement);//Can return null
+	public ItemStack getResultReplacement(ItemStack defaultReplacement);// Can return null
 
 }

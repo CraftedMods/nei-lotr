@@ -1,8 +1,8 @@
 package craftedMods.recipes.base;
 
-import java.util.*;
+import java.util.Collection;
 
-import craftedMods.recipes.api.utils.*;
+import craftedMods.recipes.api.utils.RecipeHandlerUtils;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
@@ -18,11 +18,8 @@ public class ShapelessRecipe extends AbstractRecipe {
 	}
 
 	public ShapelessRecipe(Collection<?> ingredients, ItemStack result) {
-		for (Object ingredient : ingredients) {
-			if (ingredient != null) {
-				this.ingredients.add(this.createItemStackSet(RecipeHandlerUtils.getInstance().extractRecipeItems(ingredient)));
-			}
-		}
+		for (Object ingredient : ingredients)
+			if (ingredient != null) this.ingredients.add(this.createItemStackSet(RecipeHandlerUtils.getInstance().extractRecipeItems(ingredient)));
 		this.add(result, this.results);
 	}
 

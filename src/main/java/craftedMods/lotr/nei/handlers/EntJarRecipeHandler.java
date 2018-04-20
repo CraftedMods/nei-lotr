@@ -25,6 +25,7 @@ public class EntJarRecipeHandler extends AbstractRecipeHandler<ShapelessRecipe> 
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public Collection<ShapelessRecipe> loadSimpleStaticRecipes() {
 		Collection<ShapelessRecipe> ret = new ArrayList<>();
 		try {
@@ -47,15 +48,16 @@ public class EntJarRecipeHandler extends AbstractRecipeHandler<ShapelessRecipe> 
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public EntJarRecipeHandlerRenderer getRenderer() {
-		return renderer;
+		return this.renderer;
 	}
-	
+
 	public class EntJarRecipeHandlerRenderer implements RecipeHandlerRenderer<EntJarRecipeHandler, ShapelessRecipe> {
 
 		@Override
 		public void renderBackground(EntJarRecipeHandler handler, ShapelessRecipe recipe, int cycleticks) {
-			RecipeHandlerRendererUtils.getInstance().bindTexture(DEFAULT_GUI_TEXTURE);
+			RecipeHandlerRendererUtils.getInstance().bindTexture(RecipeHandlerRenderer.DEFAULT_GUI_TEXTURE);
 			RecipeHandlerRendererUtils.getInstance().drawTexturedRectangle(42, 19, 65, 30, 80, 26);
 			RecipeHandlerRendererUtils.getInstance().drawRectangle(42, 13, 18, 10, 0xFFC6C6C6);
 			RecipeHandlerRendererUtils.getInstance().drawRectangle(42, 41, 18, 4, 0xFFC6C6C6);

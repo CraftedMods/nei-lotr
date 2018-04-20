@@ -5,7 +5,7 @@ import java.util.*;
 import craftedMods.recipes.api.utils.ItemStackSet;
 import net.minecraft.item.ItemStack;
 
-public class ItemStackSetImpl extends AbstractSet<ItemStack>implements ItemStackSet {
+public class ItemStackSetImpl extends AbstractSet<ItemStack> implements ItemStackSet {
 
 	private final boolean isNBTSensitive;
 	private final ArrayList<ItemStackWrapper> innerList = new ArrayList<>();
@@ -17,9 +17,8 @@ public class ItemStackSetImpl extends AbstractSet<ItemStack>implements ItemStack
 
 	public ItemStackSetImpl(boolean isNBTSensitive, ItemStack... stacks) {
 		this.isNBTSensitive = isNBTSensitive;
-		for (ItemStack stack : stacks) {
+		for (ItemStack stack : stacks)
 			this.add(stack);
-		}
 	}
 
 	public ItemStackSetImpl(Collection<? extends ItemStack> stacks) {
@@ -56,9 +55,7 @@ public class ItemStackSetImpl extends AbstractSet<ItemStack>implements ItemStack
 		ItemStackWrapper wrapper = new ItemStackWrapper(stack, this.isNBTSensitive);
 		if (!this.innerList.contains(wrapper)) {
 			ret = this.innerList.add(wrapper);
-			if (ret) {
-				this.stacksList.add(stack);
-			}
+			if (ret) this.stacksList.add(stack);
 		}
 		return ret;
 	}

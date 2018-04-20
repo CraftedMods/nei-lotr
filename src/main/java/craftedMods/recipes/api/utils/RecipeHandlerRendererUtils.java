@@ -1,7 +1,5 @@
 package craftedMods.recipes.api.utils;
 
-import codechicken.lib.gui.GuiDraw;
-import craftedMods.recipes.api.utils.RecipeHandlerRendererUtils.EnumProgressBarDirection;
 import craftedMods.recipes.utils.RecipeHandlerRendererUtilsImpl;
 
 public interface RecipeHandlerRendererUtils {
@@ -9,7 +7,7 @@ public interface RecipeHandlerRendererUtils {
 	public static final RecipeHandlerRendererUtils instance = new RecipeHandlerRendererUtilsImpl();
 
 	public static RecipeHandlerRendererUtils getInstance() {
-		return instance;
+		return RecipeHandlerRendererUtils.instance;
 	}
 
 	public void bindTexture(String texture);

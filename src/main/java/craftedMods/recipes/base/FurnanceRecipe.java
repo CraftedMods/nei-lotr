@@ -3,9 +3,7 @@ package craftedMods.recipes.base;
 import java.util.Collection;
 
 import craftedMods.lotr.nei.handlers.LOTRRecipeHandlerUtils;
-import craftedMods.recipes.api.utils.ItemStackSet;
 import net.minecraft.item.ItemStack;
-import scala.actors.threadpool.Arrays;
 
 public class FurnanceRecipe extends ShapelessRecipe {
 

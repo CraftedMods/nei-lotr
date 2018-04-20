@@ -28,6 +28,7 @@ public class MillstoneRecipeHandler extends AbstractRecipeHandler<MillstoneRecip
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public Collection<MillstoneRecipe> loadSimpleStaticRecipes() {
 		Collection<MillstoneRecipe> ret = new ArrayList<>();
 		try {
@@ -46,19 +47,20 @@ public class MillstoneRecipeHandler extends AbstractRecipeHandler<MillstoneRecip
 
 	@Override
 	public List<RecipeItemSlot> getSlotsForRecipeItems(MillstoneRecipe recipe, EnumRecipeItemRole role) {
-		return Arrays.asList(role == EnumRecipeItemRole.INGREDIENT ? createRecipeItemSlot(75, 16) : createRecipeItemSlot(75, 62));
+		return Arrays.asList(role == EnumRecipeItemRole.INGREDIENT ? this.createRecipeItemSlot(75, 16) : this.createRecipeItemSlot(75, 62));
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public MillstoneRecipeHandlerRenderer getRenderer() {
-		return renderer;
+		return this.renderer;
 	}
-	
+
 	@Override
 	public int getRecipesPerPage() {
 		return 1;
 	}
-	
+
 	public class MillstoneRecipe extends ShapelessRecipe {
 
 		private final float chance;
@@ -73,7 +75,7 @@ public class MillstoneRecipeHandler extends AbstractRecipeHandler<MillstoneRecip
 		}
 
 	}
-	
+
 	public class MillstoneRecipeHandlerRenderer implements RecipeHandlerRenderer<MillstoneRecipeHandler, MillstoneRecipe> {
 
 		@Override
@@ -86,7 +88,8 @@ public class MillstoneRecipeHandler extends AbstractRecipeHandler<MillstoneRecip
 		@Override
 		public void renderForeground(MillstoneRecipeHandler handler, MillstoneRecipe recipe, int cycleticks) {
 			String text = "Chance: " + recipe.getChance() * 100 + "%";
-			RecipeHandlerRendererUtils.getInstance().drawTextCentered(text, 48 + RecipeHandlerRendererUtils.getInstance().getStringWidth(text)/2, 95, 4210752, false);
+			RecipeHandlerRendererUtils.getInstance().drawTextCentered(text, 48 + RecipeHandlerRendererUtils.getInstance().getStringWidth(text) / 2, 95, 4210752,
+					false);
 		}
 
 	}

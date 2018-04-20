@@ -53,17 +53,11 @@ public class MCVersionChecker {
 		String url = null;
 
 		StringTokenizer tok = new StringTokenizer(versionString, "|");
-		while (tok.hasMoreTokens()) {
-			if (tok.countTokens() == 4) {
-				state = EnumVersionState.valueOf(tok.nextToken().toUpperCase());
-			} else if (tok.countTokens() == 3) {
-				version = tok.nextToken();
-			} else if (tok.countTokens() == 2) {
-				mcVersion = tok.nextToken();
-			} else if (tok.countTokens() == 1) {
-				url = tok.nextToken().trim();
-			}
-		}
+		while (tok.hasMoreTokens())
+			if (tok.countTokens() == 4) state = EnumVersionState.valueOf(tok.nextToken().toUpperCase());
+			else if (tok.countTokens() == 3) version = tok.nextToken();
+			else if (tok.countTokens() == 2) mcVersion = tok.nextToken();
+			else if (tok.countTokens() == 1) url = tok.nextToken().trim();
 
 		NEIExtensions.mod.getLogger().info("Found version: " + version);
 

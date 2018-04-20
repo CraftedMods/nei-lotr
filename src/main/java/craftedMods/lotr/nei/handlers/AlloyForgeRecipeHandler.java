@@ -4,12 +4,12 @@ import java.util.*;
 
 import craftedMods.lotr.nei.handlers.AlloyForgeRecipeHandler.AlloyForgeRecipe;
 import craftedMods.recipes.api.*;
-import craftedMods.recipes.api.utils.*;
+import craftedMods.recipes.api.utils.RecipeHandlerRendererUtils;
 import craftedMods.recipes.api.utils.RecipeHandlerRendererUtils.EnumProgressBarDirection;
 import craftedMods.recipes.base.*;
 import lotr.common.tileentity.*;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.*;
+import net.minecraft.nbt.NBTTagCompound;
 
 public class AlloyForgeRecipeHandler extends AbstractRecipeHandler<AlloyForgeRecipe> {
 
@@ -27,7 +27,7 @@ public class AlloyForgeRecipeHandler extends AbstractRecipeHandler<AlloyForgeRec
 
 	@Override
 	public String getDisplayName() {
-		return alloyForgeDummy.getName();
+		return this.alloyForgeDummy.getName();
 	}
 
 	@Override
@@ -40,15 +40,13 @@ public class AlloyForgeRecipeHandler extends AbstractRecipeHandler<AlloyForgeRec
 		List<RecipeItemSlot> slots = new ArrayList<>();
 		switch (role) {
 			case RESULT:
-				for (int i = 0; i < 4; i++) {
+				for (int i = 0; i < 4; i++)
 					slots.add(this.createRecipeItemSlot(48 + i * 18, 65));
-				}
 				break;
 			case INGREDIENT:
 				int size = recipe.getRecipeItems(EnumRecipeItemRole.INGREDIENT).size();
-				for (int i = 0; i < size; i++) {
+				for (int i = 0; i < size; i++)
 					slots.add(this.createRecipeItemSlot(48 + (size == 4 ? i : i / 2) * 18, size == 4 ? 19 : (i + 1) % 2 == 0 ? 1 : 19));
-				}
 				break;
 			case OTHER:
 				slots.add(this.createRecipeItemSlot(75, 109));
@@ -59,30 +57,31 @@ public class AlloyForgeRecipeHandler extends AbstractRecipeHandler<AlloyForgeRec
 
 	@Override
 	public int getComplicatedStaticRecipeDepth() {
-		return wasCacheLoaded ? 0 : 2;
+		return this.wasCacheLoaded ? 0 : 2;
 	}
 
 	@Override
 	public AlloyForgeRecipe loadComplicatedStaticRecipe(ItemStack... stacks) {
 		AlloyForgeRecipe ret = null;
 		if (stacks[1] == null) {
-			ItemStack result = alloyForgeDummy.getSmeltingResult(stacks[0]);
+			ItemStack result = this.alloyForgeDummy.getSmeltingResult(stacks[0]);
 			if (result != null) ret = new AlloyForgeRecipe(Arrays.asList(stacks[0]), result);
 		} else {
-			ItemStack result = alloyForgeDummy.getAlloyResult(stacks[0], stacks[1]);
+			ItemStack result = this.alloyForgeDummy.getAlloyResult(stacks[0], stacks[1]);
 			if (result != null) ret = new AlloyForgeRecipe(Arrays.asList(stacks), result);
 		}
 		return ret;
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public AlloyForgeRecipeHandlerRenderer getRenderer() {
-		return renderer;
+		return this.renderer;
 	}
 
 	@Override
 	public RecipeHandlerCacheManager<AlloyForgeRecipe> getRecipeHandlerCacheManager() {
-		return cacheManager;
+		return this.cacheManager;
 	}
 
 	public class AlloyForgeRecipeHandlerCacheManager extends AbstractRecipeHandlerCacheManager<AlloyForgeRecipe> {
@@ -92,16 +91,15 @@ public class AlloyForgeRecipeHandler extends AbstractRecipeHandler<AlloyForgeRec
 		}
 
 		@Override
+		@SuppressWarnings("unchecked")
 		public Collection<AlloyForgeRecipe> readRecipesFromCache(NBTTagCompound cacheHeaderTag, NBTTagCompound cacheContentTag) {
 			Collection<AlloyForgeRecipe> ret = new ArrayList<>(150);
 			for (String key : (Set<String>) cacheContentTag.func_150296_c()) {
 				NBTTagCompound recipeTag = cacheContentTag.getCompoundTag(key);
 				AlloyForgeRecipe recipe = AlloyForgeRecipe.readRecipeFromNBT(recipeTag);
-				if (recipe != null) {
-					ret.add(recipe);
-				}
+				if (recipe != null) ret.add(recipe);
 			}
-			wasCacheLoaded = ret.size() > 0;
+			AlloyForgeRecipeHandler.this.wasCacheLoaded = ret.size() > 0;
 			return ret;
 		}
 
@@ -141,15 +139,12 @@ public class AlloyForgeRecipeHandler extends AbstractRecipeHandler<AlloyForgeRec
 
 		public AlloyForgeRecipe(Collection<ItemStack> ingredients, ItemStack result) {
 			super(ingredients, result);
-			for (int i = 0; i < 3; i++) {
+			for (int i = 0; i < 3; i++)
 				this.addAll(ingredients, this.ingredients);
-			}
-			for (int i = 0; i < 3; i++) {
+			for (int i = 0; i < 3; i++)
 				this.add(result, this.results);
-			}
 			this.ingredientItem = this.ingredients.get(0).iterator().next();
-			if (ingredients.size() == 2)
-				this.alloyItem = this.ingredients.get(1).iterator().next();
+			if (ingredients.size() == 2) this.alloyItem = this.ingredients.get(1).iterator().next();
 			else this.alloyItem = null;
 			this.resultItem = result;
 		}

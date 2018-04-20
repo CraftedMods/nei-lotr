@@ -8,11 +8,10 @@ import org.apache.logging.log4j.Logger;
 import codechicken.nei.api.API;
 import codechicken.nei.recipe.*;
 import craftedMods.recipes.api.*;
-import craftedMods.recipes.utils.NEIExtensionsUtils;
 import craftedMods.utils.ClassDiscoverer;
 import lotr.common.LOTRMod;
 import net.minecraft.block.Block;
-import net.minecraft.item.*;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 
 public class NEIIntegrationManager {
@@ -54,22 +53,18 @@ public class NEIIntegrationManager {
 		if (!this.config.isDisabled()) {
 
 			long start = System.currentTimeMillis();
-			
+
 			// Remove recipe handlers
-			if (this.config.isBrewingRecipeHandlerDisabled()) {
-				this.removeCraftingAndUsageHandler(BrewingRecipeHandler.class);
-			}
+			if (this.config.isBrewingRecipeHandlerDisabled()) this.removeCraftingAndUsageHandler(BrewingRecipeHandler.class);
 
 			this.removeCraftingAndUsageHandler(ShapedRecipeHandler.class);
 			this.removeCraftingAndUsageHandler(ShapelessRecipeHandler.class);
 
 			// Load registered handlers
-			this.recipeHandlerManager.getRecipeHandlers().forEach((unlocalizedName, handler) -> this.loadHandler(new PluginRecipeHandler(handler)));
+			this.recipeHandlerManager.getRecipeHandlers().forEach((unlocalizedName, handler) -> this.loadHandler(new PluginRecipeHandler<>(handler)));
 
 			// Item hiding
-			if (this.config.isHideTechnicalBlocks()) {
-				this.hideItems();
-			}
+			if (this.config.isHideTechnicalBlocks()) this.hideItems();
 
 			// Override names
 			this.addOverrideNames();
@@ -103,9 +98,7 @@ public class NEIIntegrationManager {
 	private <T> void removeHandler(Class<? extends T> handlerClass, List<T> handlerList) {
 		for (int i = 0; i < handlerList.size(); i++) {
 			T handler = handlerList.get(i);
-			if (handler.getClass() == handlerClass) {
-				handlerList.remove(i);
-			}
+			if (handler.getClass() == handlerClass) handlerList.remove(i);
 		}
 	}
 
@@ -258,9 +251,9 @@ public class NEIIntegrationManager {
 		this.hideItemMeta(new ItemStack(block));
 	}
 
-	private void hideItemMeta(Item item) {
-		this.hideItemMeta(new ItemStack(item));
-	}
+	// private void hideItemMeta(Item item) {
+	// this.hideItemMeta(new ItemStack(item));
+	// }
 
 	private void hideItemAll(ItemStack stack) {
 		ItemStack s = new ItemStack(stack.getItem(), 1, 32767);
@@ -271,17 +264,17 @@ public class NEIIntegrationManager {
 		this.hideItemAll(new ItemStack(block));
 	}
 
-	private void hideItemAll(Item item) {
-		this.hideItemAll(new ItemStack(item));
-	}
+	// private void hideItemAll(Item item) {
+	// this.hideItemAll(new ItemStack(item));
+	// }
 
 	private void setOverrideName(ItemStack stack, String name) {
 		API.setOverrideName(stack, name);
 	}
 
-	private void setOverrideName(Item item, String name) {
-		this.setOverrideName(new ItemStack(item), name);
-	}
+	// private void setOverrideName(Item item, String name) {
+	// this.setOverrideName(new ItemStack(item), name);
+	// }
 
 	private void setOverrideName(Block block, String name) {
 		this.setOverrideName(new ItemStack(block), name);

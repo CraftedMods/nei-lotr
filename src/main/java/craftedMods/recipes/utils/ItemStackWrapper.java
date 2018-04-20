@@ -46,9 +46,7 @@ public class ItemStackWrapper {
 		result = prime * result + (this.item == null ? 0 : this.item.hashCode());
 		result = prime * result + this.damage;
 		result = prime * result + (this.isNBTSensitive ? 1231 : 1237);
-		if (this.isNBTSensitive) {
-			result = prime * result + (this.compound == null ? 0 : this.compound.hashCode());
-		}
+		if (this.isNBTSensitive) result = prime * result + (this.compound == null ? 0 : this.compound.hashCode());
 		return result;
 	}
 
@@ -63,11 +61,9 @@ public class ItemStackWrapper {
 		} else if (!this.item.equals(other.item)) return false;
 		if (this.damage != other.damage) return false;
 		if (this.isNBTSensitive != other.isNBTSensitive) return false;
-		if (this.isNBTSensitive) {
-			if (this.compound == null) {
-				if (other.compound != null) return false;
-			} else if (!this.compound.equals(other.compound)) return false;
-		}
+		if (this.isNBTSensitive) if (this.compound == null) {
+			if (other.compound != null) return false;
+		} else if (!this.compound.equals(other.compound)) return false;
 		return true;
 	}
 
