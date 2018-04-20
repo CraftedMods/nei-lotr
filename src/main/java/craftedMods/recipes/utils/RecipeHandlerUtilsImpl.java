@@ -7,7 +7,6 @@ import craftedMods.recipes.api.RecipeItemSlot;
 import craftedMods.recipes.api.utils.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import scala.actors.threadpool.Arrays;
 
 public class RecipeHandlerUtilsImpl implements RecipeHandlerUtils {
 
