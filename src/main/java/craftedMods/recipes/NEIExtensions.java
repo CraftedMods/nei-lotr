@@ -39,7 +39,7 @@ public class NEIExtensions {
 
 	public static final String MODID = "neilotr";
 	public static final String MODNAME = "NEI Addon for the \"The Lord of the Rings\" Minecraft Mod";
-	public static final String VERSION = "0.5.2";
+	public static final String VERSION = "0.5.3";
 
 	public static final String DEFAULT_VERSION_FILE_URL = "https://dl.dropboxusercontent.com/s/gyz1oq7vyz753y5/version.txt";
 
