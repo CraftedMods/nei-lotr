@@ -1,0 +1,3 @@
+[submodule "submodules/nei-recipe-handlers"]
+	path = submodules/nei-recipe-handlers
+	url = http://github.com/CraftedMods/nei-recipe-handlers

@@ -2,9 +2,10 @@ package craftedMods.lotr.nei.recipeHandlers;
 
 import java.util.*;
 
+import org.apache.logging.log4j.Logger;
+
 import cpw.mods.fml.relauncher.ReflectionHelper;
 import craftedMods.lotr.nei.recipeHandlers.TraderRecipeHandler.TraderRecipe;
-import craftedMods.recipes.NEIExtensions;
 import craftedMods.recipes.api.*;
 import craftedMods.recipes.api.utils.*;
 import craftedMods.recipes.base.*;
@@ -32,11 +33,16 @@ public class TraderRecipeHandler extends AbstractRecipeHandler<TraderRecipe> {
 		this.traderName = unlocalizedName;
 		this.itemsBought = itemsBought;
 		this.itemsSold = itemsSold;
+	}
+
+	@Override
+	public void onPreLoad(RecipeHandlerConfiguration config, Logger logger) {
+		super.onPreLoad(config, logger);
 		try {
 			Vessel[] vesselsArray = ReflectionHelper.getPrivateValue(LOTRTradeEntries.class, itemsSold, "drinkVessels");
 			if (vesselsArray != null) this.vesselsSold = Arrays.asList(vesselsArray);
 		} catch (Exception e) {
-			NEIExtensions.mod.getLogger().error("Could not get private field value drinkVessels from LOTRTradeEntries via reflection", e);
+			logger.error("Could not get private field value drinkVessels from LOTRTradeEntries via reflection", e);
 		}
 		if (this.vesselsSold == null) this.vesselsSold = new ArrayList<>();
 	}

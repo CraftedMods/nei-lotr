@@ -3,7 +3,6 @@ package craftedMods.lotr.nei.recipeHandlers;
 import java.lang.reflect.Field;
 import java.util.*;
 
-import craftedMods.recipes.NEIExtensions;
 import craftedMods.recipes.api.utils.*;
 import lotr.common.item.LOTRItemMug;
 import lotr.common.recipe.LOTRBrewingRecipes;
@@ -54,7 +53,8 @@ public class LOTRRecipeHandlerUtils {
 			brewingRecipesField.setAccessible(true);
 			LOTRRecipeHandlerUtils.brewingRecipes = (List<IRecipe>) (List<?>) brewingRecipesField.get(null);
 		} catch (Exception e) {
-			NEIExtensions.mod.getLogger().error("Couldn't access LOTR brewing recipes: ", e);
+			System.err.print("Couldn't access LOTR brewing recipes: ");
+			e.printStackTrace();
 		}
 		return LOTRRecipeHandlerUtils.brewingRecipes;
 	}
@@ -65,7 +65,8 @@ public class LOTRRecipeHandlerUtils {
 			strenghts.setAccessible(true);
 			LOTRRecipeHandlerUtils.drinkStrenghts = (float[]) strenghts.get(null);
 		} catch (Exception e) {
-			NEIExtensions.mod.getLogger().error("Couldn't access drinkStrengths: ", e);
+			System.err.print("Couldn't access drinkStrengths: ");
+			e.printStackTrace();
 		}
 		return LOTRRecipeHandlerUtils.drinkStrenghts;
 	}

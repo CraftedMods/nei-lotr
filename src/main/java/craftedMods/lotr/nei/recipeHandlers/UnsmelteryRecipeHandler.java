@@ -3,11 +3,12 @@ package craftedMods.lotr.nei.recipeHandlers;
 import java.lang.reflect.Method;
 import java.util.*;
 
+import org.apache.logging.log4j.Logger;
+
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import craftedMods.lotr.nei.recipeHandlers.UnsmelteryRecipeHandler.UnsmelteryRecipe;
-import craftedMods.recipes.NEIExtensions;
 import craftedMods.recipes.api.*;
 import craftedMods.recipes.api.utils.*;
 import craftedMods.recipes.api.utils.RecipeHandlerRendererUtils.EnumProgressBarDirection;
@@ -26,7 +27,7 @@ public class UnsmelteryRecipeHandler extends AbstractRecipeHandler<UnsmelteryRec
 	private final UnsmelteryRecipeHandlerRenderer renderer = new UnsmelteryRecipeHandlerRenderer();
 	private final UnsmelteryRecipeHandlerCacheManager cacheManager = new UnsmelteryRecipeHandlerCacheManager(this);
 
-	private final LOTRTileEntityUnsmeltery unsmeltery;
+	private final LOTRTileEntityUnsmeltery unsmeltery = new LOTRTileEntityUnsmeltery();
 	private Method getLargestUnsmeltingResultMethod;
 
 	private boolean wasCacheLoaded = false;
@@ -39,15 +40,19 @@ public class UnsmelteryRecipeHandler extends AbstractRecipeHandler<UnsmelteryRec
 
 	public UnsmelteryRecipeHandler() {
 		super("unsmeltery");
-		this.unsmeltery = new LOTRTileEntityUnsmeltery();
+	}
+
+	@Override
+	public void onPreLoad(RecipeHandlerConfiguration config, Logger logger) {
+		super.onPreLoad(config, logger);
+		FMLCommonHandler.instance().bus().register(this);
+		MinecraftForge.EVENT_BUS.register(this);
 		try {
 			this.getLargestUnsmeltingResultMethod = this.unsmeltery.getClass().getDeclaredMethod("getLargestUnsmeltingResult", ItemStack.class);
 			this.getLargestUnsmeltingResultMethod.setAccessible(true);
 		} catch (Exception e) {
-			NEIExtensions.mod.getLogger().error("Couldn't access LOTR unsmeltery: ", e);
+			logger.error("Couldn't access LOTR unsmeltery: ", e);
 		}
-		FMLCommonHandler.instance().bus().register(this);
-		MinecraftForge.EVENT_BUS.register(this);
 	}
 
 	@Override
@@ -153,7 +158,7 @@ public class UnsmelteryRecipeHandler extends AbstractRecipeHandler<UnsmelteryRec
 		try {
 			ret = (ItemStack) this.getLargestUnsmeltingResultMethod.invoke(this.unsmeltery, stack);
 		} catch (Exception e) {
-			NEIExtensions.mod.getLogger().error("Couldn't get largest unsmeltery result: ", e);
+			this.logger.error("Couldn't get largest unsmeltery result: ", e);
 		}
 		return ret;
 	}
