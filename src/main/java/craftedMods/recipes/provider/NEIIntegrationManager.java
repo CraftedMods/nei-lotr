@@ -10,10 +10,7 @@ import codechicken.nei.recipe.*;
 import craftedMods.recipes.NEIExtensions;
 import craftedMods.recipes.api.*;
 import craftedMods.utils.ClassDiscoverer;
-import lotr.common.LOTRMod;
-import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.StatCollector;
 
 public class NEIIntegrationManager {
 
@@ -24,6 +21,7 @@ public class NEIIntegrationManager {
 	private RecipeHandlerManager recipeHandlerManager;
 
 	private Collection<ItemHidingHandler> itemHidingHandlers = new ArrayList<>();
+	private Collection<ItemOverrideHandler> itemOverrideHandlers = new ArrayList<>();
 
 	public NEIIntegrationManager(NEIExtensionsConfiguration config, Logger logger) {
 		this.config = config;
@@ -35,6 +33,7 @@ public class NEIIntegrationManager {
 		this.discoverer.registerClassToDiscover(RegisteredHandler.class, RecipeHandler.class);
 		this.discoverer.registerClassToDiscover(RegisteredHandler.class, RecipeHandlerFactory.class);
 		this.discoverer.registerClassToDiscover(RegisteredHandler.class, ItemHidingHandler.class);
+		this.discoverer.registerClassToDiscover(RegisteredHandler.class, ItemOverrideHandler.class);
 		this.discoverer.discoverClassesAsync();
 	}
 
@@ -50,7 +49,10 @@ public class NEIIntegrationManager {
 			this.recipeHandlerManager.init(useCachedRecipes);
 
 			NEIExtensions.mod.getLogger().info("Enable item hiding handlers: " + this.config.isHideTechnicalBlocks());
+
 			if (this.config.isHideTechnicalBlocks()) this.discoverItemHidingHandlers(discoveredClasses);
+
+			this.discoverItemOverrideHandlers(discoveredClasses);
 
 			this.logger.info("Initialized NEI config for LOTR Mod within " + (System.currentTimeMillis() - start) + " ms");
 		} catch (Exception e) {
@@ -75,6 +77,23 @@ public class NEIIntegrationManager {
 		});
 	}
 
+	@SuppressWarnings("unchecked")
+	private void discoverItemOverrideHandlers(Map<Class<? extends Annotation>, Map<Class<?>, Set<Class<?>>>> discoveredClasses) {
+		Set<Class<?>> itemHOverrideHandlers = discoveredClasses.get(RegisteredHandler.class).get(ItemOverrideHandler.class);
+		NEIExtensions.mod.getLogger().info("Found " + itemHOverrideHandlers.size() + " item override handlers in classpath");
+		itemHOverrideHandlers.forEach(clazz -> {
+			try {
+				Class<? extends ItemOverrideHandler> handler = (Class<? extends ItemOverrideHandler>) clazz;
+				if (handler.getAnnotation(RegisteredHandler.class).isEnabled()) {
+					this.itemOverrideHandlers.add(handler.newInstance());
+					NEIExtensions.mod.getLogger().debug("Successfully registered item override handler \"" + handler.getName() + "\"");
+				} else NEIExtensions.mod.getLogger().info("The item override handler \"" + handler.getName() + "\" was disabled by the author.");
+			} catch (Exception e) {
+				NEIExtensions.mod.getLogger().error("Couldn't create an instance of class \"" + clazz.getName() + "\"", e);
+			}
+		});
+	}
+
 	public void load() {
 		if (!this.config.isDisabled()) {
 
@@ -93,7 +112,7 @@ public class NEIIntegrationManager {
 			if (this.config.isHideTechnicalBlocks()) this.registerHiddenItems();
 
 			// Override names
-			this.addOverrideNames();
+			this.registerItemOverrides();
 
 			this.logger.info("Loaded NEI config for LOTR Mod within " + (System.currentTimeMillis() - start) + " ms");
 		}
@@ -139,28 +158,15 @@ public class NEIIntegrationManager {
 		}
 	}
 
-	private void addOverrideNames() {
-		// Portals
-		this.setOverrideName(LOTRMod.elvenPortal, StatCollector.translateToLocal("neiLotr.lotr.block.elvenPortal.name"));
-		this.setOverrideName(LOTRMod.morgulPortal, StatCollector.translateToLocal("neiLotr.lotr.block.morgulPortal.name"));
-		this.setOverrideName(LOTRMod.utumnoPortal, StatCollector.translateToLocal("neiLotr.lotr.block.utumnoPortal.name"));
-		this.setOverrideName(LOTRMod.utumnoReturnPortal, StatCollector.translateToLocal("neiLotr.lotr.block.utumnoReturnPortal.name"));
-		this.setOverrideName(LOTRMod.utumnoReturnPortalBase, StatCollector.translateToLocal("neiLotr.lotr.block.utumnoReturnPortalBase.name"));
-
-		// Others
-		this.setOverrideName(LOTRMod.rhunFire, StatCollector.translateToLocal("neiLotr.lotr.block.rhunFire.name"));
-	}
-
-	private void setOverrideName(ItemStack stack, String name) {
-		API.setOverrideName(stack, name);
-	}
-
-	// private void setOverrideName(Item item, String name) {
-	// this.setOverrideName(new ItemStack(item), name);
-	// }
-
-	private void setOverrideName(Block block, String name) {
-		this.setOverrideName(new ItemStack(block), name);
+	private void registerItemOverrides() {
+		for (ItemOverrideHandler handler : this.itemOverrideHandlers) {
+			Map<ItemStack, String> overrides = handler.getItemOverrideNames();
+			if (overrides != null) {
+				overrides.forEach(API::setOverrideName);
+				NEIExtensions.mod.getLogger().debug("The item override handler \"" + handler.getClass() + "\" overwrote the name of "
+						+ (overrides == null ? 0 : overrides.size()) + " items");
+			}
+		}
 	}
 
 }

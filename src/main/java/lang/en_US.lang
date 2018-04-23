@@ -4,3 +4,10 @@ neiLotr.handler.trader.minLabel=Min:
 neiLotr.handler.trader.maxLabel=Max:
 neiLotr.handler.unsmeltery.minLabel=Min:
 neiLotr.handler.unsmeltery.maxLabel=Max:
+
+neiLotr.override.elvenPortal.name=Elven Portal
+neiLotr.override.morgulPortal.name=Morgul Portal
+neiLotr.override.utumnoPortal.name=Utumno Portal
+neiLotr.override.utumnoReturnPortal.name=Utumno Return Portal
+neiLotr.override.utumnoReturnPortalBase.name=Melkor Plate
+neiLotr.override.rhunFire.name=Rhûnic Fire
