@@ -20,11 +20,10 @@ public class NEIExtensionsConfiguration {
 	}
 
 	public void update() {
-		this.hideTechnicalBlocks = this.configFile.getBoolean("Hide technical blocks", Configuration.CATEGORY_GENERAL, this.hideTechnicalBlocks,
-				"Hides technical blocks of the LOTR Mod in NEI.");
+		this.hideTechnicalBlocks = this.configFile.getBoolean("Enable item hiding handlers", Configuration.CATEGORY_GENERAL, this.hideTechnicalBlocks,
+				"Item hiding handlers hide items - typically technical block items - in NEI");
 		this.useVersionChecker = this.configFile.getBoolean("Use version checker", Configuration.CATEGORY_GENERAL, this.useVersionChecker,
 				"Enables/disables the version checker of the plugin. If it is disabled, you won't be notified about new available versions.");
-
 		this.brewingRecipeHandlerDisabled = this.configFile.getBoolean("Disable vanilla brewing recipe handler", Configuration.CATEGORY_GENERAL,
 				this.brewingRecipeHandlerDisabled,
 				"If set to true, the vanilla brewing recipe handler will be disabled. Set this to true if you don't use the vanilla brewing system.");
