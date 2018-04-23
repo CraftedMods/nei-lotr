@@ -84,28 +84,6 @@ public abstract class AbstractRecipeHandler<T extends Recipe> implements RecipeH
 		return new RecipeItemSlotImpl(x, y);
 	}
 
-	protected class RecipeItemSlotImpl implements RecipeItemSlot {
-
-		private int x;
-		private int y;
-
-		protected RecipeItemSlotImpl(int x, int y) {
-			this.x = x;
-			this.y = y;
-		}
-
-		@Override
-		public int getX() {
-			return this.x;
-		}
-
-		@Override
-		public int getY() {
-			return this.y;
-		}
-
-	}
-
 	@Override
 	public Map<ResourceLocation, Supplier<InputStream>> getResources() {
 		return this.loadedResources;

@@ -6,6 +6,7 @@ import codechicken.nei.*;
 import cpw.mods.fml.relauncher.ReflectionHelper;
 import craftedMods.recipes.api.*;
 import craftedMods.recipes.api.utils.ItemStackSet;
+import craftedMods.recipes.base.RecipeItemSlotImpl;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.IResourcePack;
@@ -90,28 +91,6 @@ public class NEIExtensionsUtils {
 		for (RecipeItemSlot slot : slotsList)
 			ret.add(slot == null ? null : new RecipeItemSlotImpl(slot.getX() + xOffset, slot.getY() + yOffset));
 		return ret;
-	}
-
-	private static class RecipeItemSlotImpl implements RecipeItemSlot {
-
-		private final int x;
-		private final int y;
-
-		public RecipeItemSlotImpl(int x, int y) {
-			this.x = x;
-			this.y = y;
-		}
-
-		@Override
-		public int getX() {
-			return this.x;
-		}
-
-		@Override
-		public int getY() {
-			return this.y;
-		}
-
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
