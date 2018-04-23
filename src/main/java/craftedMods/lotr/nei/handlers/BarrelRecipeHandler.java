@@ -14,7 +14,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
-@RegisteredRecipeHandler
+@RegisteredHandler
 public class BarrelRecipeHandler extends CraftingGridRecipeHandler {
 
 	private final BarrelRecipeHandlerCraftingHelper craftingHelper = new BarrelRecipeHandlerCraftingHelper();

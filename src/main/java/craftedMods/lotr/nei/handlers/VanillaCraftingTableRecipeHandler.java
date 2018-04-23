@@ -13,7 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.*;
 import net.minecraft.util.StatCollector;
 
-@RegisteredRecipeHandler
+@RegisteredHandler
 public class VanillaCraftingTableRecipeHandler extends AbstractLOTRCraftingTableRecipeHandler {
 
 	private final VanillaCraftingTableRecipeHandlerCraftingHelper craftingHelper = new VanillaCraftingTableRecipeHandlerCraftingHelper();

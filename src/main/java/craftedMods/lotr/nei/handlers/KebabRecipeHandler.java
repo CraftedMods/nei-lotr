@@ -9,7 +9,7 @@ import lotr.common.LOTRMod;
 import lotr.common.tileentity.LOTRTileEntityKebabStand;
 import net.minecraft.item.ItemStack;
 
-@RegisteredRecipeHandler
+@RegisteredHandler
 public class KebabRecipeHandler extends AbstractRecipeHandler<ShapelessRecipe> {
 
 	private final KebabRecipeHandlerRenderer renderer = new KebabRecipeHandlerRenderer();

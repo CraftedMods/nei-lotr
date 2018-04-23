@@ -28,8 +28,8 @@ public class NEIIntegrationManager {
 	}
 
 	public void preInit() {
-		this.discoverer.registerClassToDiscover(RegisteredRecipeHandler.class, RecipeHandler.class);
-		this.discoverer.registerClassToDiscover(RegisteredRecipeHandlerFactory.class, RecipeHandlerFactory.class);
+		this.discoverer.registerClassToDiscover(RegisteredHandler.class, RecipeHandler.class);
+		this.discoverer.registerClassToDiscover(RegisteredHandler.class, RecipeHandlerFactory.class);
 		this.discoverer.discoverClassesAsync();
 	}
 

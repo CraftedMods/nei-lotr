@@ -13,7 +13,7 @@ import lotr.common.recipe.LOTRMillstoneRecipes.MillstoneResult;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 
-@RegisteredRecipeHandler
+@RegisteredHandler
 public class MillstoneRecipeHandler extends AbstractRecipeHandler<MillstoneRecipe> {
 
 	private final MillstoneRecipeHandlerRenderer renderer = new MillstoneRecipeHandlerRenderer();

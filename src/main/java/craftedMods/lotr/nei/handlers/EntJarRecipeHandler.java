@@ -10,7 +10,7 @@ import lotr.common.recipe.LOTREntJarRecipes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 
-@RegisteredRecipeHandler
+@RegisteredHandler
 public class EntJarRecipeHandler extends AbstractRecipeHandler<ShapelessRecipe> {
 
 	private final EntJarRecipeHandlerRenderer renderer = new EntJarRecipeHandlerRenderer();

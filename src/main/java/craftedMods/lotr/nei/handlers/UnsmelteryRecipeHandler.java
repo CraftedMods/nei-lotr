@@ -20,7 +20,7 @@ import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.WorldEvent;
 
-@RegisteredRecipeHandler
+@RegisteredHandler
 public class UnsmelteryRecipeHandler extends AbstractRecipeHandler<UnsmelteryRecipe> {
 
 	private final UnsmelteryRecipeHandlerRenderer renderer = new UnsmelteryRecipeHandlerRenderer();

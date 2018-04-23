@@ -11,7 +11,7 @@ import lotr.common.recipe.LOTRRecipePoisonWeapon;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
-@RegisteredRecipeHandler(isEnabled = false)
+@RegisteredHandler(isEnabled = false)
 public class CauldronRecipeHandler extends AbstractRecipeHandler<ShapelessRecipe> {
 
 	private final CauldronRecipeHandlerRenderer renderer = new CauldronRecipeHandlerRenderer();

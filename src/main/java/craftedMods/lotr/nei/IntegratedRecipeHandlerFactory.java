@@ -15,7 +15,7 @@ import net.minecraft.entity.EntityList;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 
-@RegisteredRecipeHandlerFactory
+@RegisteredHandler
 public class IntegratedRecipeHandlerFactory implements RecipeHandlerFactory {
 
 	private static final Set<RecipeHandler<?>> recipeHandlers = new HashSet<>();

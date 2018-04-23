@@ -12,7 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.util.StatCollector;
 
-@RegisteredRecipeHandler
+@RegisteredHandler
 public class HobbitOvenRecipeHandler extends AbstractRecipeHandler<HobbitOvenRecipe> {
 
 	private final HobbitOvenRecipeHandlerRenderer renderer = new HobbitOvenRecipeHandlerRenderer();
