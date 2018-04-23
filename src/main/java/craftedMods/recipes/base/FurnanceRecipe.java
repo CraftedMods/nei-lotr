@@ -2,7 +2,7 @@ package craftedMods.recipes.base;
 
 import java.util.Collection;
 
-import craftedMods.lotr.nei.handlers.LOTRRecipeHandlerUtils;
+import craftedMods.lotr.nei.recipeHandlers.LOTRRecipeHandlerUtils;
 import net.minecraft.item.ItemStack;
 
 public class FurnanceRecipe extends ShapelessRecipe {

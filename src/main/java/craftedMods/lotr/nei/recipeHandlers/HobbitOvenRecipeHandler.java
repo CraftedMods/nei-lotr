@@ -1,8 +1,8 @@
-package craftedMods.lotr.nei.handlers;
+package craftedMods.lotr.nei.recipeHandlers;
 
 import java.util.*;
 
-import craftedMods.lotr.nei.handlers.HobbitOvenRecipeHandler.HobbitOvenRecipe;
+import craftedMods.lotr.nei.recipeHandlers.HobbitOvenRecipeHandler.HobbitOvenRecipe;
 import craftedMods.recipes.api.*;
 import craftedMods.recipes.api.utils.RecipeHandlerRendererUtils;
 import craftedMods.recipes.api.utils.RecipeHandlerRendererUtils.EnumProgressBarDirection;

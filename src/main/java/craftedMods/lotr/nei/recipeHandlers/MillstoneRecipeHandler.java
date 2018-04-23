@@ -1,9 +1,9 @@
-package craftedMods.lotr.nei.handlers;
+package craftedMods.lotr.nei.recipeHandlers;
 
 import java.lang.reflect.Field;
 import java.util.*;
 
-import craftedMods.lotr.nei.handlers.MillstoneRecipeHandler.MillstoneRecipe;
+import craftedMods.lotr.nei.recipeHandlers.MillstoneRecipeHandler.MillstoneRecipe;
 import craftedMods.recipes.api.*;
 import craftedMods.recipes.api.utils.RecipeHandlerRendererUtils;
 import craftedMods.recipes.api.utils.RecipeHandlerRendererUtils.EnumProgressBarDirection;

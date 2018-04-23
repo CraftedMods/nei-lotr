@@ -1,9 +1,9 @@
-package craftedMods.lotr.nei.handlers;
+package craftedMods.lotr.nei.recipeHandlers;
 
 import java.util.*;
 
 import cpw.mods.fml.relauncher.ReflectionHelper;
-import craftedMods.lotr.nei.handlers.TraderRecipeHandler.TraderRecipe;
+import craftedMods.lotr.nei.recipeHandlers.TraderRecipeHandler.TraderRecipe;
 import craftedMods.recipes.NEIExtensions;
 import craftedMods.recipes.api.*;
 import craftedMods.recipes.api.utils.*;
