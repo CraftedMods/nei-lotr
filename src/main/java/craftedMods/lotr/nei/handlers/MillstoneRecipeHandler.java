@@ -87,7 +87,7 @@ public class MillstoneRecipeHandler extends AbstractRecipeHandler<MillstoneRecip
 
 		@Override
 		public void renderForeground(MillstoneRecipeHandler handler, MillstoneRecipe recipe, int cycleticks) {
-			String text = "Chance: " + recipe.getChance() * 100 + "%";
+			String text = StatCollector.translateToLocalFormatted("neiLotr.handler.millstone.chanceLabel", recipe.getChance() * 100);
 			RecipeHandlerRendererUtils.getInstance().drawTextCentered(text, 48 + RecipeHandlerRendererUtils.getInstance().getStringWidth(text) / 2, 95, 4210752,
 					false);
 		}

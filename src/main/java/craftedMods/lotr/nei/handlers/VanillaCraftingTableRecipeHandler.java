@@ -11,6 +11,7 @@ import lotr.common.recipe.*;
 import net.minecraft.client.gui.inventory.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.*;
+import net.minecraft.util.StatCollector;
 
 @RegisteredRecipeHandler
 public class VanillaCraftingTableRecipeHandler extends AbstractLOTRCraftingTableRecipeHandler {
@@ -23,7 +24,7 @@ public class VanillaCraftingTableRecipeHandler extends AbstractLOTRCraftingTable
 
 	@Override
 	public String getDisplayName() {
-		return "Vanilla Crafting";
+		return StatCollector.translateToLocal("neiLotr.handler.vanillaCrafting.name");
 	}
 
 	@Override

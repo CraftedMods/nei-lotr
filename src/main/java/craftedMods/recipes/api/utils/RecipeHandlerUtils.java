@@ -35,5 +35,7 @@ public interface RecipeHandlerUtils {
 	public List<RecipeItemSlot> offset(List<RecipeItemSlot> slotsList, int xOffset, int yOffset);
 
 	public void forceRecipeCacheRefresh();
+	
+	public String getResourceDomain();
 
 }

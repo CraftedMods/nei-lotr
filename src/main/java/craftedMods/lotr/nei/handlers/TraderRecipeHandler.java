@@ -260,8 +260,10 @@ public class TraderRecipeHandler extends AbstractRecipeHandler<TraderRecipe> {
 		@Override
 		public void renderForeground(TraderRecipeHandler handler, TraderRecipe recipe, int cycleticks) {
 			int offsetX = recipe.isSold() ? 0 : 81;
-			RecipeHandlerRendererUtils.getInstance().drawText("Min:", offsetX + 15, 14, 4210752, false);
-			RecipeHandlerRendererUtils.getInstance().drawText("Max:", offsetX + 42, 14, 4210752, false);
+			RecipeHandlerRendererUtils.getInstance().drawText(StatCollector.translateToLocal("neiLotr.handler.trader.minLabel"), offsetX + 15, 14, 4210752,
+					false);
+			RecipeHandlerRendererUtils.getInstance().drawText(StatCollector.translateToLocal("neiLotr.handler.trader.maxLabel"), offsetX + 42, 14, 4210752,
+					false);
 		}
 
 	}

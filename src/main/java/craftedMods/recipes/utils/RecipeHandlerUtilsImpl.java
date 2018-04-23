@@ -60,4 +60,9 @@ public class RecipeHandlerUtilsImpl implements RecipeHandlerUtils {
 		NEIExtensions.mod.getNeiConfig().refreshCache();
 	}
 
+	@Override
+	public String getResourceDomain() {
+		return NEIExtensions.MODID;
+	}
+
 }

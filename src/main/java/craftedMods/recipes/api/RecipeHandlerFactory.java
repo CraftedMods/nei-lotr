@@ -1,11 +1,15 @@
 package craftedMods.recipes.api;
 
-import java.lang.annotation.*;
+import java.io.InputStream;
+import java.util.*;
+import java.util.function.Supplier;
 
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-public @interface RecipeHandlerFactory {
+import net.minecraft.util.ResourceLocation;
 
-	boolean isEnabled() default true;
+public interface RecipeHandlerFactory {
+
+	public Set<RecipeHandler<?>> getRecipeHandlers();
+
+	public Map<ResourceLocation, Supplier<InputStream>> getResources();
 
 }

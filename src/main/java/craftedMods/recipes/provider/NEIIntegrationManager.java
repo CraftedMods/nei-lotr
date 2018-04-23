@@ -1,7 +1,6 @@
 package craftedMods.recipes.provider;
 
 import java.util.List;
-import java.util.function.Supplier;
 
 import org.apache.logging.log4j.Logger;
 
@@ -30,7 +29,7 @@ public class NEIIntegrationManager {
 
 	public void preInit() {
 		this.discoverer.registerClassToDiscover(RegisteredRecipeHandler.class, RecipeHandler.class);
-		this.discoverer.registerClassToDiscover(RecipeHandlerFactory.class, Supplier.class);
+		this.discoverer.registerClassToDiscover(RegisteredRecipeHandlerFactory.class, RecipeHandlerFactory.class);
 		this.discoverer.discoverClassesAsync();
 	}
 

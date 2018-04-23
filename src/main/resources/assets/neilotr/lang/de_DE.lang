@@ -1,7 +1,5 @@
 neiLotr.integration.name=NEI for LOTR Mod
 
-neiLotr.recipeHandler.vanillaCrafting.name=Vanilla Handwerk
-
 neiLotr.config.gui.title=Konfiguration des NEI-Plugins für LOTR MC MOD
 neiLotr.versionChecker.notification.text=? Neue Version gefunden: $ für Minecraft @
 

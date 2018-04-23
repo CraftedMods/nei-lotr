@@ -1,6 +1,4 @@
-neiLotr.recipeHandler.vanillaCrafting.name=Vanilla Crafting
-
-neiLotr.config.gui.title=Configuration of NEI plugin for LOTR MC MOD
+﻿neiLotr.config.gui.title=Configuration of NEI plugin for LOTR MC MOD
 
 neiLotr.lotr.block.elvenPortal.name=Elven Portal
 neiLotr.lotr.block.morgulPortal.name=Morgul Portal

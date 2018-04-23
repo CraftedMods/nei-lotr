@@ -281,8 +281,8 @@ public class UnsmelteryRecipeHandler extends AbstractRecipeHandler<UnsmelteryRec
 
 		@Override
 		public void renderForeground(UnsmelteryRecipeHandler handler, UnsmelteryRecipe recipe, int cycleticks) {
-			RecipeHandlerRendererUtils.getInstance().drawText("Min:", 111, 14, 4210752, false);
-			RecipeHandlerRendererUtils.getInstance().drawText("Max:", 135, 14, 4210752, false);
+			RecipeHandlerRendererUtils.getInstance().drawText(StatCollector.translateToLocal("neiLotr.handler.unsmeltery.minLabel"), 111, 14, 4210752, false);
+			RecipeHandlerRendererUtils.getInstance().drawText(StatCollector.translateToLocal("neiLotr.handler.unsmeltery.maxLabel"), 135, 14, 4210752, false);
 			RecipeHandlerRendererUtils.getInstance().drawText(Integer.toString(recipe.getMinCount()), 122, 33, 0xFFFFFFFF, true);
 			RecipeHandlerRendererUtils.getInstance().drawText(Integer.toString(recipe.getMaxCount()), 147, 33, 0xFFFFFFFF, true);
 		}

@@ -3,9 +3,12 @@ package craftedMods.recipes.utils;
 import java.util.*;
 
 import codechicken.nei.*;
+import cpw.mods.fml.relauncher.ReflectionHelper;
 import craftedMods.recipes.api.*;
 import craftedMods.recipes.api.utils.ItemStackSet;
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.IResourcePack;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
 import net.minecraftforge.common.util.EnumHelper;
@@ -109,6 +112,11 @@ public class NEIExtensionsUtils {
 			return this.y;
 		}
 
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public static boolean registerDefaultResourcePack(IResourcePack pack) {
+		return ((List) ReflectionHelper.getPrivateValue(Minecraft.class, Minecraft.getMinecraft(), "defaultResourcePacks", "field_110449_ao")).add(pack);
 	}
 
 }

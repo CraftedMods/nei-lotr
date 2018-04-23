@@ -1,13 +1,15 @@
 package craftedMods.recipes.base;
 
+import java.io.InputStream;
 import java.net.URL;
 import java.util.*;
+import java.util.function.Supplier;
 
 import org.apache.logging.log4j.Logger;
 
 import craftedMods.recipes.api.*;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.*;
 
 /**
  * A default implementation of some aspects of the RecipeHandler interface. Normally you should extend this class if you want to create a new recipe handler instead of implementing the interface directly.
@@ -19,6 +21,8 @@ public abstract class AbstractRecipeHandler<T extends Recipe> implements RecipeH
 	private boolean areStaticRecipesLoaded = false;
 	protected Logger logger;
 	protected RecipeHandlerConfiguration config;
+	protected RecipeHandlerResourceLoader resourceLoader;
+	protected Map<ResourceLocation, Supplier<InputStream>> loadedResources = new HashMap<>();
 
 	protected AbstractRecipeHandler(String unlocalizedName) {
 		this.unlocalizedName = unlocalizedName;
@@ -103,8 +107,8 @@ public abstract class AbstractRecipeHandler<T extends Recipe> implements RecipeH
 	}
 
 	@Override
-	public Map<String, Map<String, String>> getLanguageEntries() {
-		return null;
+	public Map<ResourceLocation, Supplier<InputStream>> getResources() {
+		return this.loadedResources;
 	}
 
 	@Override
