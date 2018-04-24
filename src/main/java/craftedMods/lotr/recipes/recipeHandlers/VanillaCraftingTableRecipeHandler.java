@@ -5,6 +5,7 @@ import java.util.*;
 import org.apache.logging.log4j.Logger;
 
 import craftedMods.recipes.api.*;
+import craftedMods.recipes.api.utils.RecipeHandlerUtils;
 import craftedMods.recipes.base.*;
 import lotr.common.item.LOTRPoisonedDrinks;
 import lotr.common.recipe.*;
@@ -31,6 +32,16 @@ public class VanillaCraftingTableRecipeHandler extends AbstractLOTRCraftingTable
 	public void onPreLoad(RecipeHandlerConfiguration config, Logger logger) {
 		super.onPreLoad(config, logger);
 		if (LOTRRecipeHandlerUtils.hasCraftTweaker()) this.logger.info("CraftTweaker was found - dynamic recipe loading will be enabled");
+		this.removeRecipeHandler("codechicken.nei.recipe.ShapedRecipeHandler");
+		this.removeRecipeHandler("codechicken.nei.recipe.ShapelessRecipeHandler");
+	}
+
+	private void removeRecipeHandler(String recipeHandlerClass) {
+		try {
+			RecipeHandlerUtils.getInstance().removeNativeRecipeHandler(recipeHandlerClass);
+		} catch (Exception e) {
+			this.logger.error(String.format("Couldn't remove the native recipe handler \"%s\"", recipeHandlerClass));
+		}
 	}
 
 	@Override
