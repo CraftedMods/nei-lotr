@@ -35,6 +35,7 @@ configurations {
 
 dependencies {
     exports 'io.github.lukehutch:fast-classpath-scanner:2.4.2'
+    exports files("libs/neiRecipeHandlers-1.0.0.jar")
     configurations.compile.extendsFrom(configurations.exports)
 }
 
@@ -45,7 +46,12 @@ jar {
     {
         exclude "META-INF/**"
         exclude "META-INF/*"
+        exclude "changelog.txt"
     }
+    
+    from('src/main/java') {
+      include 'lang/**'
+   }
 }
 
 processResources
