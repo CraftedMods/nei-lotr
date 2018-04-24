@@ -39,7 +39,7 @@ public class TraderRecipeHandler extends AbstractRecipeHandler<TraderRecipe> {
 	public void onPreLoad(RecipeHandlerConfiguration config, Logger logger) {
 		super.onPreLoad(config, logger);
 		try {
-			Vessel[] vesselsArray = ReflectionHelper.getPrivateValue(LOTRTradeEntries.class, itemsSold, "drinkVessels");
+			Vessel[] vesselsArray = ReflectionHelper.getPrivateValue(LOTRTradeEntries.class, this.itemsSold, "drinkVessels");
 			if (vesselsArray != null) this.vesselsSold = Arrays.asList(vesselsArray);
 		} catch (Exception e) {
 			logger.error("Could not get private field value drinkVessels from LOTRTradeEntries via reflection", e);

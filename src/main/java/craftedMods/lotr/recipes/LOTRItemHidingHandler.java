@@ -143,9 +143,8 @@ public class LOTRItemHidingHandler implements ItemHidingHandler {
 	}
 
 	private void hideItemMeta(ItemStack stack) {
-		for (int i = 8; i < 16; i++) {
-			hiddenStacks.add(new ItemStack(stack.getItem(), 1, i));
-		}
+		for (int i = 8; i < 16; i++)
+			LOTRItemHidingHandler.hiddenStacks.add(new ItemStack(stack.getItem(), 1, i));
 	}
 
 	private void hideItemMeta(Block block) {
@@ -157,7 +156,7 @@ public class LOTRItemHidingHandler implements ItemHidingHandler {
 	// }
 
 	private void hideItemAll(ItemStack stack) {
-		hiddenStacks.add(new ItemStack(stack.getItem(), 1, 32767));
+		LOTRItemHidingHandler.hiddenStacks.add(new ItemStack(stack.getItem(), 1, 32767));
 	}
 
 	private void hideItemAll(Block block) {
