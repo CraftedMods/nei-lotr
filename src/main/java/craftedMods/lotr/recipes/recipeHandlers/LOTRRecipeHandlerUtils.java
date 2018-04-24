@@ -1,13 +1,11 @@
 package craftedMods.lotr.recipes.recipeHandlers;
 
 import java.lang.reflect.Field;
-import java.util.*;
+import java.util.List;
 
-import craftedMods.recipes.api.utils.*;
 import lotr.common.item.LOTRItemMug;
 import lotr.common.recipe.LOTRBrewingRecipes;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.*;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -16,7 +14,6 @@ public class LOTRRecipeHandlerUtils {
 	private static ItemStack[] poison;
 	private static List<IRecipe> brewingRecipes;
 	private static float[] drinkStrenghts;
-	private static List<ItemStack> fuels;
 
 	public static ItemStack[] getPoison() {
 		if (LOTRRecipeHandlerUtils.poison == null) {
@@ -24,26 +21,6 @@ public class LOTRRecipeHandlerUtils {
 			LOTRRecipeHandlerUtils.poison = poisonList.toArray(new ItemStack[poisonList.size()]);
 		}
 		return LOTRRecipeHandlerUtils.poison;
-	}
-
-	public static ItemStackSet getFuels() {
-		if (LOTRRecipeHandlerUtils.fuels == null) {
-			Set<Item> excludedfuels = new HashSet<>();
-			excludedfuels.add(Item.getItemFromBlock(Blocks.brown_mushroom));
-			excludedfuels.add(Item.getItemFromBlock(Blocks.red_mushroom));
-			excludedfuels.add(Item.getItemFromBlock(Blocks.standing_sign));
-			excludedfuels.add(Item.getItemFromBlock(Blocks.wall_sign));
-			excludedfuels.add(Item.getItemFromBlock(Blocks.wooden_door));
-			excludedfuels.add(Item.getItemFromBlock(Blocks.trapped_chest));
-			LOTRRecipeHandlerUtils.fuels = new ArrayList<>();
-			for (ItemStack item : RecipeHandlerUtils.getInstance().getItemList())
-				if (!excludedfuels.contains(item.getItem())) {
-					int burnTime = net.minecraft.tileentity.TileEntityFurnace.getItemBurnTime(item);
-					if (burnTime > 0) LOTRRecipeHandlerUtils.fuels.add(item.copy());
-				}
-
-		}
-		return ItemStackSet.create(LOTRRecipeHandlerUtils.fuels);
 	}
 
 	@SuppressWarnings("unchecked")
