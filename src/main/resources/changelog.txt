@@ -3,6 +3,7 @@ Made by 'Crafted_Mods' or 'The_Ranger_Malvegil'
 
  #Alpha 0.5.3:
   + The sourcecode of the recipe handler API is now available at: https://github.com/CraftedMods/nei-lotr
+  + Added a cauldron recipe handler which supports undyening and unpoisoning recipes
 
  #Alpha 0.5.2:
   * Fixed some compatibility issues with CraftTweaker
