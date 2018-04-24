@@ -1,11 +1,11 @@
-package craftedMods.lotr.nei.recipeHandlers;
+package craftedMods.lotr.recipes.recipeHandlers;
 
 import java.util.*;
 
 import org.apache.logging.log4j.Logger;
 
 import cpw.mods.fml.relauncher.ReflectionHelper;
-import craftedMods.lotr.nei.recipeHandlers.TraderRecipeHandler.TraderRecipe;
+import craftedMods.lotr.recipes.recipeHandlers.TraderRecipeHandler.TraderRecipe;
 import craftedMods.recipes.api.*;
 import craftedMods.recipes.api.utils.*;
 import craftedMods.recipes.base.*;

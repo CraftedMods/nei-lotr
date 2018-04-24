@@ -1,8 +1,8 @@
-package craftedMods.lotr.nei.recipeHandlers;
+package craftedMods.lotr.recipes.recipeHandlers;
 
 import java.util.*;
 
-import craftedMods.lotr.nei.recipeHandlers.AlloyForgeRecipeHandler.AlloyForgeRecipe;
+import craftedMods.lotr.recipes.recipeHandlers.AlloyForgeRecipeHandler.AlloyForgeRecipe;
 import craftedMods.recipes.api.*;
 import craftedMods.recipes.api.utils.RecipeHandlerRendererUtils;
 import craftedMods.recipes.api.utils.RecipeHandlerRendererUtils.EnumProgressBarDirection;

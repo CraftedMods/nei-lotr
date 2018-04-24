@@ -1,10 +1,10 @@
-package craftedMods.lotr.nei;
+package craftedMods.lotr.recipes;
 
 import java.io.InputStream;
 import java.util.*;
 import java.util.function.Supplier;
 
-import craftedMods.lotr.nei.recipeHandlers.*;
+import craftedMods.lotr.recipes.recipeHandlers.*;
 import craftedMods.recipes.api.*;
 import craftedMods.recipes.base.*;
 import lotr.client.gui.LOTRGuiCraftingTable;

@@ -1,4 +1,4 @@
-package craftedMods.lotr.nei;
+package craftedMods.lotr.recipes;
 
 import java.util.*;
 

@@ -1,4 +1,4 @@
-package craftedMods.lotr.nei.recipeHandlers;
+package craftedMods.lotr.recipes.recipeHandlers;
 
 import java.lang.reflect.Field;
 import java.util.*;

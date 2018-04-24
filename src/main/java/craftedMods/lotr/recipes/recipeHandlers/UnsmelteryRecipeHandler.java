@@ -1,4 +1,4 @@
-package craftedMods.lotr.nei.recipeHandlers;
+package craftedMods.lotr.recipes.recipeHandlers;
 
 import java.lang.reflect.Method;
 import java.util.*;
@@ -8,7 +8,7 @@ import org.apache.logging.log4j.Logger;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
-import craftedMods.lotr.nei.recipeHandlers.UnsmelteryRecipeHandler.UnsmelteryRecipe;
+import craftedMods.lotr.recipes.recipeHandlers.UnsmelteryRecipeHandler.UnsmelteryRecipe;
 import craftedMods.recipes.api.*;
 import craftedMods.recipes.api.utils.*;
 import craftedMods.recipes.api.utils.RecipeHandlerRendererUtils.EnumProgressBarDirection;
