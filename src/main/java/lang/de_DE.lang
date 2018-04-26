@@ -1,0 +1,13 @@
+neiLotr.handler.vanillaCrafting.name=Vanilla Handwerk
+neiLotr.handler.millstone.chanceLabel=Chance: %.2f%
+neiLotr.handler.trader.minLabel=Min:
+neiLotr.handler.trader.maxLabel=Max:
+neiLotr.handler.unsmeltery.minLabel=Min:
+neiLotr.handler.unsmeltery.maxLabel=Max:
+
+neiLotr.override.elvenPortal.name=Elbenportal
+neiLotr.override.morgulPortal.name=Morgulportal
+neiLotr.override.utumnoPortal.name=Utumnoportal
+neiLotr.override.utumnoReturnPortal.name=Utumno-Rückkehr-Portal
+neiLotr.override.utumnoReturnPortalBase.name=Melkor-Platte
+neiLotr.override.rhunFire.name=Rhûnisches Feuer
