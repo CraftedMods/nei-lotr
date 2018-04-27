@@ -1,6 +1,8 @@
 ===Changelog for NEI LOTR===
 Made by 'Crafted_Mods' or 'The_Ranger_Malvegil'
 
+ #Alpha 0.6.0:
+
  #Alpha 0.5.3:
   + The sourcecode of the plugin now available at: https://github.com/CraftedMods/nei-lotr
   + Added a cauldron recipe handler which supports undyening and unpoisoning recipes
