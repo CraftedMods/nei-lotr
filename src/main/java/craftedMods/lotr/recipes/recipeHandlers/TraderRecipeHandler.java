@@ -92,7 +92,7 @@ public class TraderRecipeHandler extends AbstractRecipeHandler<TraderRecipe> {
 			if (RecipeHandlerUtils.getInstance().areStacksSameTypeForCrafting(baseItem, ingredient)) {
 				ItemStack toAdd = ingredient.copy();
 				toAdd.stackSize = baseItem.stackSize;
-				if (toAdd.isItemStackDamageable()) toAdd.setItemDamage(0);// TODO: Fix durability (permutaion is set in plugin recipe handler)
+				if (toAdd.isItemStackDamageable()) toAdd.setItemDamage(0);// TODO: Fix durability (permutation is set in plugin recipe handler)
 				recipes.add(new TraderRecipe(toAdd, TraderRecipeHandler.getMinTradeCost(toAdd, baseCost, false),
 						TraderRecipeHandler.getMaxTradeCost(toAdd, baseCost, false), false));
 			}
