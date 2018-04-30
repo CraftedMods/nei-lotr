@@ -17,7 +17,7 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "0.6.0-alpha"
+version = "0.6.0-ALPHA"
 group= "craftedMods.neiLotr" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "neiLotr"
 
@@ -34,7 +34,6 @@ configurations {
 }
 
 dependencies {
-    exports 'io.github.lukehutch:fast-classpath-scanner:2.4.2'
     exports files("libs/neiRecipeHandlers-1.0.0.jar")
     configurations.compile.extendsFrom(configurations.exports)
 }
