@@ -1,0 +1,1 @@
+0.6.0-ALPHA||https://raw.githubusercontent.com/CraftedMods/nei-lotr/master/src/main/resources/changelog.txt
