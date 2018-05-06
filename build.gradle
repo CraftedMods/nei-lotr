@@ -49,6 +49,9 @@ jar {
     from('src/main/java') {
       include 'lang/**'
    }
+   from('./') {
+      include 'LICENSE'
+   }
 }
 
 processResources
