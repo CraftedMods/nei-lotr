@@ -36,7 +36,7 @@ public class NeiLotrVersionCheckerHandler implements VersionCheckerHandler {
 
 	@Override
 	public String getVersionFileURL() {
-		return "https://raw.githubusercontent.com/CraftedMods/nei-lotr/master/version.txt";//FIXME change to master
+		return "https://raw.githubusercontent.com/CraftedMods/nei-lotr/master/version.txt";
 	}
 
 }
