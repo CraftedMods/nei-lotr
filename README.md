@@ -5,7 +5,8 @@ If you want to setup a development environment, you'll need the following depend
 - [The Lord of the Rings Mod Beta 33.8](http://www.mediafire.com/file/kcp1k2fvfkahd00/)
 - [neiRecipeHandlers-2.0.1.jar](https://github.com/CraftedMods/nei-recipe-handlers)
 
-The plugin was created with the MinecraftForge version "1.7.10-10.13.4.1614".
+The plugin was created with the MinecraftForge version "1.7.10-10.13.4.1614".  
+You need to download the specified JARs and add them to a 'libs' folder.
 ## Announcements
 Announcements regarding the plugin can be found here: http://lotrminecraftmod.wikia.com/wiki/Thread:174874
 ## Download
