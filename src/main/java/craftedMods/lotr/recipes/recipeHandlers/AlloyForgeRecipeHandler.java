@@ -4,7 +4,7 @@ import java.util.*;
 
 import craftedMods.lotr.recipes.recipeHandlers.AlloyForgeRecipeHandler.AlloyForgeRecipe;
 import craftedMods.recipes.api.*;
-import craftedMods.recipes.api.utils.RecipeHandlerRendererUtils;
+import craftedMods.recipes.api.utils.*;
 import craftedMods.recipes.api.utils.RecipeHandlerRendererUtils.EnumProgressBarDirection;
 import craftedMods.recipes.base.*;
 import lotr.common.tileentity.*;
@@ -80,7 +80,7 @@ public class AlloyForgeRecipeHandler extends AbstractRecipeHandler<AlloyForgeRec
 	}
 
 	@Override
-	public RecipeHandlerCacheManager<AlloyForgeRecipe> getRecipeHandlerCacheManager() {
+	public RecipeHandlerCacheManager<AlloyForgeRecipe> getCacheManager() {
 		return this.cacheManager;
 	}
 
@@ -156,12 +156,12 @@ public class AlloyForgeRecipeHandler extends AbstractRecipeHandler<AlloyForgeRec
 				NBTTagCompound alloyItem = parent.getCompoundTag("alloyItem");
 				NBTTagCompound resultItem = parent.getCompoundTag("resultItem");
 
-				ItemStack alloyStack = alloyItem.hasKey("id") ? ItemStack.loadItemStackFromNBT(alloyItem) : null;
+				ItemStack alloyStack = alloyItem.hasKey("Identifier") ? RecipeHandlerUtils.getInstance().readItemStackFromNBT(alloyItem) : null;
 
 				Collection<ItemStack> ingreds = new ArrayList<>();
-				ingreds.add(ItemStack.loadItemStackFromNBT(ingredientItem));
+				ingreds.add(RecipeHandlerUtils.getInstance().readItemStackFromNBT(ingredientItem));
 				if (alloyStack != null) ingreds.add(alloyStack);
-				ret = new AlloyForgeRecipe(ingreds, ItemStack.loadItemStackFromNBT(resultItem));
+				ret = new AlloyForgeRecipe(ingreds, RecipeHandlerUtils.getInstance().readItemStackFromNBT(resultItem));
 			}
 			return ret;
 		}
@@ -171,9 +171,9 @@ public class AlloyForgeRecipeHandler extends AbstractRecipeHandler<AlloyForgeRec
 			NBTTagCompound alloyItem = new NBTTagCompound();
 			NBTTagCompound resultItem = new NBTTagCompound();
 
-			this.ingredientItem.writeToNBT(ingredientItem);
-			if (this.alloyItem != null) this.alloyItem.writeToNBT(alloyItem);
-			this.resultItem.writeToNBT(resultItem);
+			RecipeHandlerUtils.getInstance().writeItemStackToNBT(this.ingredientItem, ingredientItem);
+			if (this.alloyItem != null) RecipeHandlerUtils.getInstance().writeItemStackToNBT(this.alloyItem, alloyItem);
+			RecipeHandlerUtils.getInstance().writeItemStackToNBT(this.resultItem, resultItem);
 
 			parent.setTag("ingredientItem", ingredientItem);
 			parent.setTag("alloyItem", alloyItem);

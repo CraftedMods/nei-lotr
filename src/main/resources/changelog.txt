@@ -2,6 +2,7 @@
 Made by 'Crafted_Mods' or 'The_Ranger_Malvegil'
 
  #0.6.0-ALPHA:
+  + Updated to NEIRecipeHandlers-2.0.1-ALPHA
 
  #0.5.3-ALPHA:
   + The sourcecode of the plugin now available at: https://github.com/CraftedMods/nei-lotr

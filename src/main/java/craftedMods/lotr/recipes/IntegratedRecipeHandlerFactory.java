@@ -1,19 +1,15 @@
 package craftedMods.lotr.recipes;
 
-import java.io.InputStream;
 import java.util.*;
-import java.util.function.Supplier;
 
 import craftedMods.lotr.recipes.recipeHandlers.*;
 import craftedMods.recipes.api.*;
-import craftedMods.recipes.base.*;
 import lotr.client.gui.LOTRGuiCraftingTable;
 import lotr.common.entity.npc.*;
 import lotr.common.recipe.LOTRRecipes;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.EntityList;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.util.ResourceLocation;
 
 @RegisteredHandler
 public class IntegratedRecipeHandlerFactory implements RecipeHandlerFactory {
@@ -225,7 +221,7 @@ public class IntegratedRecipeHandlerFactory implements RecipeHandlerFactory {
 		IntegratedRecipeHandlerFactory.recipeHandlers.add(new AlloyForgeRecipeHandler("elven", new AlloyForgeRecipeHandler.ElvenForgeAccess()));
 		IntegratedRecipeHandlerFactory.recipeHandlers.add(new AlloyForgeRecipeHandler("dwarven", new AlloyForgeRecipeHandler.DwarvenForgeAccess()));
 	}
-
+	
 	private static void registerMECTHandler(String unlocalizedName, Class<? extends GuiContainer> guiClass, Collection<IRecipe> recipes) {
 		IntegratedRecipeHandlerFactory.recipeHandlers.add(new MiddleEarthCraftingTableRecipeHandler(unlocalizedName, guiClass, recipes));
 	}
@@ -241,11 +237,4 @@ public class IntegratedRecipeHandlerFactory implements RecipeHandlerFactory {
 		return IntegratedRecipeHandlerFactory.recipeHandlers;
 	}
 
-	@Override
-	public Map<ResourceLocation, Supplier<InputStream>> getResources() {
-		RecipeHandlerResourceLoader resourceLoader = new ClasspathResourceLoader();
-		resourceLoader.registerResource(new RecipeHandlerResourceLocation("lang/en_US.lang"));
-		resourceLoader.registerResource(new RecipeHandlerResourceLocation("lang/de_DE.lang"));
-		return resourceLoader.loadResources();
-	}
 }

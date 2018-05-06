@@ -149,7 +149,7 @@ public class UnsmelteryRecipeHandler extends AbstractRecipeHandler<UnsmelteryRec
 	}
 
 	@Override
-	public RecipeHandlerCacheManager<UnsmelteryRecipe> getRecipeHandlerCacheManager() {
+	public RecipeHandlerCacheManager<UnsmelteryRecipe> getCacheManager() {
 		return this.cacheManager;
 	}
 
@@ -250,8 +250,8 @@ public class UnsmelteryRecipeHandler extends AbstractRecipeHandler<UnsmelteryRec
 			UnsmelteryRecipe ret = null;
 			if (parent.hasKey(UnsmelteryRecipe.INGREDIENT_ITEM_KEY) && parent.hasKey(UnsmelteryRecipe.RESULT_ITEM_KEY)
 					&& parent.hasKey(UnsmelteryRecipe.MIN_COUNT_KEY) && parent.hasKey(UnsmelteryRecipe.MAX_COUNT_KEY))
-				ret = new UnsmelteryRecipe(ItemStack.loadItemStackFromNBT(parent.getCompoundTag(UnsmelteryRecipe.INGREDIENT_ITEM_KEY)),
-						ItemStack.loadItemStackFromNBT(parent.getCompoundTag(UnsmelteryRecipe.RESULT_ITEM_KEY)),
+				ret = new UnsmelteryRecipe(RecipeHandlerUtils.getInstance().readItemStackFromNBT(parent.getCompoundTag(UnsmelteryRecipe.INGREDIENT_ITEM_KEY)),
+						RecipeHandlerUtils.getInstance().readItemStackFromNBT(parent.getCompoundTag(UnsmelteryRecipe.RESULT_ITEM_KEY)),
 						parent.getInteger(UnsmelteryRecipe.MIN_COUNT_KEY), parent.getInteger(UnsmelteryRecipe.MAX_COUNT_KEY));
 			return ret;
 		}
@@ -260,8 +260,8 @@ public class UnsmelteryRecipeHandler extends AbstractRecipeHandler<UnsmelteryRec
 			NBTTagCompound ingredientItem = new NBTTagCompound();
 			NBTTagCompound resultItem = new NBTTagCompound();
 
-			this.ingredientItem.writeToNBT(ingredientItem);
-			this.resultItem.writeToNBT(resultItem);
+			RecipeHandlerUtils.getInstance().writeItemStackToNBT(this.ingredientItem, ingredientItem);
+			RecipeHandlerUtils.getInstance().writeItemStackToNBT(this.resultItem, resultItem);
 
 			parent.setTag(UnsmelteryRecipe.INGREDIENT_ITEM_KEY, ingredientItem);
 			parent.setTag(UnsmelteryRecipe.RESULT_ITEM_KEY, resultItem);
