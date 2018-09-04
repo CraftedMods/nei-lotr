@@ -47,7 +47,7 @@ public class VanillaCraftingTableRecipeHandler extends AbstractLOTRCraftingTable
 	@Override
 	public void onPreLoad(RecipeHandlerConfiguration config, Logger logger) {
 		super.onPreLoad(config, logger);
-		if (LOTRRecipeHandlerUtils.hasCraftTweaker()) this.logger.info("CraftTweaker was found - dynamic recipe loading will be enabled");
+		if (LOTRRecipeHandlerUtils.hasMinetweaker()) this.logger.info("The Minetweaker API was detected - dynamic recipe loading will be enabled");
 		this.removeRecipeHandler("codechicken.nei.recipe.ShapedRecipeHandler");
 		this.removeRecipeHandler("codechicken.nei.recipe.ShapelessRecipeHandler");
 	}
@@ -62,7 +62,7 @@ public class VanillaCraftingTableRecipeHandler extends AbstractLOTRCraftingTable
 
 	@Override
 	public Collection<AbstractRecipe> loadSimpleStaticRecipes() {
-		return LOTRRecipeHandlerUtils.hasCraftTweaker() ? null : super.loadSimpleStaticRecipes();
+		return LOTRRecipeHandlerUtils.hasMinetweaker() ? null : super.loadSimpleStaticRecipes();
 	}
 
 	@Override
@@ -85,7 +85,7 @@ public class VanillaCraftingTableRecipeHandler extends AbstractLOTRCraftingTable
 	@Override
 	public Collection<AbstractRecipe> getDynamicCraftingRecipes(ItemStack result) {
 		Collection<AbstractRecipe> ret = new ArrayList<>();
-		if (LOTRRecipeHandlerUtils.hasCraftTweaker()) {
+		if (LOTRRecipeHandlerUtils.hasMinetweaker()) {
 			Collection<AbstractRecipe> recipes = this.loadRecipes();
 			for (AbstractRecipe recipe : recipes)
 				if (recipe.produces(result)) ret.add(recipe);
@@ -96,7 +96,7 @@ public class VanillaCraftingTableRecipeHandler extends AbstractLOTRCraftingTable
 	@Override
 	public Collection<AbstractRecipe> getDynamicUsageRecipes(ItemStack ingredient) {
 		Collection<AbstractRecipe> ret = new ArrayList<>();
-		if (LOTRRecipeHandlerUtils.hasCraftTweaker()) {
+		if (LOTRRecipeHandlerUtils.hasMinetweaker()) {
 			Collection<AbstractRecipe> recipes = this.loadRecipes();
 			for (AbstractRecipe recipe : recipes)
 				if (recipe.consumes(ingredient)) ret.add(recipe);

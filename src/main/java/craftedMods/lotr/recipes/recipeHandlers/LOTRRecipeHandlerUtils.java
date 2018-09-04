@@ -75,16 +75,16 @@ public class LOTRRecipeHandlerUtils {
 		return index;
 	}
 
-	private static Boolean hasCraftTweaker = null;
+	private static Boolean hasMinetweaker = null;
 
-	public static boolean hasCraftTweaker() {
-		if (LOTRRecipeHandlerUtils.hasCraftTweaker == null) try {
+	public static boolean hasMinetweaker() {
+		if (LOTRRecipeHandlerUtils.hasMinetweaker == null) try {
 			Class.forName("minetweaker.MineTweakerAPI");
-			LOTRRecipeHandlerUtils.hasCraftTweaker = Boolean.TRUE;
+			LOTRRecipeHandlerUtils.hasMinetweaker = Boolean.TRUE;
 		} catch (Exception e) {
-			LOTRRecipeHandlerUtils.hasCraftTweaker = Boolean.FALSE;
+			LOTRRecipeHandlerUtils.hasMinetweaker = Boolean.FALSE;
 		}
-		return LOTRRecipeHandlerUtils.hasCraftTweaker;
+		return LOTRRecipeHandlerUtils.hasMinetweaker;
 	}
 
 }
