@@ -71,6 +71,7 @@ public class LOTRItemHidingHandler implements ItemHidingHandler {
 		// Spawner Chests
 		this.hideItemAll(LOTRMod.spawnerChest);
 		this.hideItemAll(LOTRMod.spawnerChestStone);
+		this.hideItemAll(LOTRMod.spawnerChestAncientHarad);
 
 		// Vessels
 		this.hideItemAll(LOTRMod.mugBlock);
@@ -84,10 +85,14 @@ public class LOTRItemHidingHandler implements ItemHidingHandler {
 		this.hideItemAll(LOTRMod.glassBottleBlock);
 		this.hideItemAll(LOTRMod.aleHornBlock);
 		this.hideItemAll(LOTRMod.aleHornGoldBlock);
+		
+		// Plates
+		this.hideItemAll(LOTRMod.plateBlock);
+		this.hideItemAll(LOTRMod.ceramicPlateBlock);
+		this.hideItemAll(LOTRMod.woodPlateBlock);
 
 		// Others
 		this.hideItemAll(LOTRMod.flowerPot);
-		this.hideItemAll(LOTRMod.plateBlock);
 		this.hideItemAll(LOTRMod.armorStand);
 		this.hideItemAll(LOTRMod.marshLights);
 		this.hideItemAll(LOTRMod.utumnoReturnLight);
@@ -108,6 +113,7 @@ public class LOTRItemHidingHandler implements ItemHidingHandler {
 		this.hideItemMeta(LOTRMod.slabSingle10);
 		this.hideItemMeta(LOTRMod.slabSingle11);
 		this.hideItemMeta(LOTRMod.slabSingle12);
+		this.hideItemMeta(LOTRMod.slabSingle13);
 		this.hideItemMeta(LOTRMod.slabSingleV);
 		this.hideItemMeta(LOTRMod.slabSingleThatch);
 		this.hideItemMeta(LOTRMod.slabSingleDirt);
@@ -120,6 +126,7 @@ public class LOTRItemHidingHandler implements ItemHidingHandler {
 		this.hideItemMeta(LOTRMod.slabClayTileSingle);
 		this.hideItemMeta(LOTRMod.slabClayTileDyedSingle);
 		this.hideItemMeta(LOTRMod.slabClayTileDyedSingle2);
+		this.hideItemMeta(LOTRMod.slabBoneSingle);
 		this.hideItemMeta(LOTRMod.woodSlabSingle);
 		this.hideItemMeta(LOTRMod.woodSlabSingle2);
 		this.hideItemMeta(LOTRMod.woodSlabSingle3);
@@ -138,6 +145,7 @@ public class LOTRItemHidingHandler implements ItemHidingHandler {
 		this.hideItemAll(LOTRMod.slabDouble10);
 		this.hideItemAll(LOTRMod.slabDouble11);
 		this.hideItemAll(LOTRMod.slabDouble12);
+		this.hideItemAll(LOTRMod.slabDouble13);
 		this.hideItemAll(LOTRMod.slabDoubleV);
 		this.hideItemAll(LOTRMod.slabDoubleThatch);
 		this.hideItemAll(LOTRMod.slabDoubleDirt);
@@ -150,6 +158,7 @@ public class LOTRItemHidingHandler implements ItemHidingHandler {
 		this.hideItemAll(LOTRMod.slabClayTileDouble);
 		this.hideItemAll(LOTRMod.slabClayTileDyedDouble);
 		this.hideItemAll(LOTRMod.slabClayTileDyedDouble2);
+		this.hideItemAll(LOTRMod.slabBoneDouble);
 		this.hideItemAll(LOTRMod.woodSlabDouble);
 		this.hideItemAll(LOTRMod.woodSlabDouble2);
 		this.hideItemAll(LOTRMod.woodSlabDouble3);

@@ -42,6 +42,11 @@ public class IntegratedRecipeHandlerFactory implements RecipeHandlerFactory {
 	private static final String FACTION_DUNLENDING = "dunlending";
 	private static final String FACTION_BLUE_DWARF = "blueDwarf";
 	private static final String FACTION_NEAR_HARAD = "nearHarad";
+	private static final String FACTION_NEAR_HARAD_SOUTHRON = FACTION_NEAR_HARAD + ".southron";
+	private static final String FACTION_NEAR_HARAD_UMBAR = FACTION_NEAR_HARAD + ".umbar";
+	private static final String FACTION_NEAR_HARAD_GULF = FACTION_NEAR_HARAD + ".gulf";
+	private static final String FACTION_NEAR_HARAD_HARNEDOR = FACTION_NEAR_HARAD + ".harnedor";
+	private static final String FACTION_NEAR_HARAD_NOMAD = FACTION_NEAR_HARAD + ".nomad";
 	private static final String FACTION_ANGMAR = "angmar";
 	private static final String FACTION_DOL_GULDUR = "dolGuldur";
 	private static final String FACTION_HALF_TROLL = "halfTroll";
@@ -68,6 +73,7 @@ public class IntegratedRecipeHandlerFactory implements RecipeHandlerFactory {
 		IntegratedRecipeHandlerFactory.registerMECTHandler("dwarven", LOTRGuiCraftingTable.Dwarven.class, LOTRRecipes.dwarvenRecipes);
 		IntegratedRecipeHandlerFactory.registerMECTHandler("elven", LOTRGuiCraftingTable.Elven.class, LOTRRecipes.elvenRecipes);
 		IntegratedRecipeHandlerFactory.registerMECTHandler("gondorian", LOTRGuiCraftingTable.Gondorian.class, LOTRRecipes.gondorianRecipes);
+		IntegratedRecipeHandlerFactory.registerMECTHandler("gulf", LOTRGuiCraftingTable.Gulf.class, LOTRRecipes.gulfRecipes);
 		IntegratedRecipeHandlerFactory.registerMECTHandler("gundabad", LOTRGuiCraftingTable.Gundabad.class, LOTRRecipes.gundabadRecipes);
 		IntegratedRecipeHandlerFactory.registerMECTHandler("halfTroll", LOTRGuiCraftingTable.HalfTroll.class, LOTRRecipes.halfTrollRecipes);
 		IntegratedRecipeHandlerFactory.registerMECTHandler("highElven", LOTRGuiCraftingTable.HighElven.class, LOTRRecipes.highElvenRecipes);
@@ -82,6 +88,7 @@ public class IntegratedRecipeHandlerFactory implements RecipeHandlerFactory {
 		IntegratedRecipeHandlerFactory.registerMECTHandler("tauredain", LOTRGuiCraftingTable.Tauredain.class, LOTRRecipes.tauredainRecipes);
 		IntegratedRecipeHandlerFactory.registerMECTHandler("uruk", LOTRGuiCraftingTable.Uruk.class, LOTRRecipes.urukRecipes);
 		IntegratedRecipeHandlerFactory.registerMECTHandler("woodElven", LOTRGuiCraftingTable.WoodElven.class, LOTRRecipes.woodElvenRecipes);
+		IntegratedRecipeHandlerFactory.registerMECTHandler("umbar", LOTRGuiCraftingTable.Umbar.class, LOTRRecipes.umbarRecipes);
 
 		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityHobbitBartender.class, IntegratedRecipeHandlerFactory.FACTION_HOBBIT,
 				LOTRTradeEntries.HOBBIT_BARTENDER_SELL, LOTRTradeEntries.HOBBIT_BARTENDER_BUY);
@@ -107,17 +114,9 @@ public class IntegratedRecipeHandlerFactory implements RecipeHandlerFactory {
 				LOTRTradeEntries.HOBBIT_FARMER_SELL, LOTRTradeEntries.HOBBIT_FARMER_BUY);
 		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityBlueDwarfMiner.class, IntegratedRecipeHandlerFactory.FACTION_BLUE_DWARF,
 				LOTRTradeEntries.BLUE_DWARF_MINER_SELL, LOTRTradeEntries.BLUE_DWARF_MINER_BUY);
-		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityNearHaradDrinksTrader.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD,
-				LOTRTradeEntries.NEAR_HARAD_DRINKS_TRADER_SELL, LOTRTradeEntries.NEAR_HARAD_DRINKS_TRADER_BUY);
-		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityNearHaradMineralsTrader.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD,
-				LOTRTradeEntries.NEAR_HARAD_MINERALS_TRADER_SELL, LOTRTradeEntries.NEAR_HARAD_MINERALS_TRADER_BUY);
-		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityNearHaradPlantsTrader.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD,
-				LOTRTradeEntries.NEAR_HARAD_PLANTS_TRADER_SELL, LOTRTradeEntries.NEAR_HARAD_PLANTS_TRADER_BUY);
-		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityNearHaradFoodTrader.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD,
-				LOTRTradeEntries.NEAR_HARAD_FOOD_TRADER_SELL, LOTRTradeEntries.NEAR_HARAD_FOOD_TRADER_BUY);
 		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityBlueDwarfMerchant.class, IntegratedRecipeHandlerFactory.FACTION_BLUE_DWARF,
 				LOTRTradeEntries.BLUE_DWARF_MERCHANT_SELL, LOTRTradeEntries.BLUE_DWARF_MERCHANT_BUY);
-		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityNearHaradMerchant.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD,
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityNearHaradMerchant.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_SOUTHRON,
 				LOTRTradeEntries.NEAR_HARAD_MERCHANT_SELL, LOTRTradeEntries.NEAR_HARAD_MERCHANT_BUY);
 		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityAngmarOrcTrader.class, IntegratedRecipeHandlerFactory.FACTION_ANGMAR,
 				LOTRTradeEntries.ANGMAR_TRADER_SELL, LOTRTradeEntries.ANGMAR_TRADER_BUY);
@@ -229,15 +228,119 @@ public class IntegratedRecipeHandlerFactory implements RecipeHandlerFactory {
 				LOTRTradeEntries.RIVENDELL_SMITH_SELL, LOTRTradeEntries.RIVENDELL_SMITH_BUY);
 		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityGundabadOrcTrader.class, IntegratedRecipeHandlerFactory.FACTION_GUNDABAD,
 				LOTRTradeEntries.GUNDABAD_TRADER_SELL, LOTRTradeEntries.GUNDABAD_TRADER_BUY);
-		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityNearHaradBlacksmith.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD,
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityNearHaradBlacksmith.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_SOUTHRON,
 				LOTRTradeEntries.NEAR_HARAD_BLACKSMITH_SELL, LOTRTradeEntries.NEAR_HARAD_BLACKSMITH_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityHarnedorBlacksmith.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_HARNEDOR,
+				LOTRTradeEntries.HARNEDOR_BLACKSMITH_SELL, LOTRTradeEntries.HARNEDOR_BLACKSMITH_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityUmbarBlacksmith.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_UMBAR,
+				LOTRTradeEntries.UMBAR_BLACKSMITH_SELL, LOTRTradeEntries.UMBAR_BLACKSMITH_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityGulfBlacksmith.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_GULF,
+				LOTRTradeEntries.GULF_BLACKSMITH_SELL, LOTRTradeEntries.GULF_BLACKSMITH_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityNomadMerchant.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_NOMAD,
+				LOTRTradeEntries.NOMAD_MERCHANT_SELL, LOTRTradeEntries.NOMAD_MERCHANT_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityHarnedorBartender.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_HARNEDOR,
+				LOTRTradeEntries.HARNEDOR_BARTENDER_SELL, LOTRTradeEntries.HARNEDOR_BARTENDER_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntitySouthronLumberman.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_SOUTHRON,
+				LOTRTradeEntries.HARAD_LUMBERMAN_SELL, LOTRTradeEntries.HARAD_LUMBERMAN_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityHarnedorLumberman.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_HARNEDOR,
+				LOTRTradeEntries.HARAD_LUMBERMAN_SELL, LOTRTradeEntries.HARAD_LUMBERMAN_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityUmbarLumberman.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_UMBAR,
+				LOTRTradeEntries.HARAD_LUMBERMAN_SELL, LOTRTradeEntries.HARAD_LUMBERMAN_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntitySouthronMason.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_SOUTHRON,
+				LOTRTradeEntries.HARAD_MASON_SELL, LOTRTradeEntries.HARAD_MASON_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityHarnedorMason.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_HARNEDOR,
+				LOTRTradeEntries.HARAD_MASON_SELL, LOTRTradeEntries.HARAD_MASON_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityUmbarMason.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_UMBAR,
+				LOTRTradeEntries.HARAD_MASON_SELL, LOTRTradeEntries.HARAD_MASON_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityGulfMason.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_GULF,
+				LOTRTradeEntries.HARAD_MASON_SELL, LOTRTradeEntries.HARAD_MASON_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntitySouthronButcher.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_SOUTHRON,
+				LOTRTradeEntries.HARAD_BUTCHER_SELL, LOTRTradeEntries.HARAD_BUTCHER_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityHarnedorButcher.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_HARNEDOR,
+				LOTRTradeEntries.HARAD_BUTCHER_SELL, LOTRTradeEntries.HARAD_BUTCHER_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityUmbarButcher.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_UMBAR,
+				LOTRTradeEntries.HARAD_BUTCHER_SELL, LOTRTradeEntries.HARAD_BUTCHER_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityGulfButcher.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_GULF,
+				LOTRTradeEntries.HARAD_BUTCHER_SELL, LOTRTradeEntries.HARAD_BUTCHER_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntitySouthronBrewer.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_SOUTHRON,
+				LOTRTradeEntries.HARAD_BREWER_SELL, LOTRTradeEntries.HARAD_BREWER_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityHarnedorBrewer.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_HARNEDOR,
+				LOTRTradeEntries.HARAD_BREWER_SELL, LOTRTradeEntries.HARAD_BREWER_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityUmbarBrewer.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_UMBAR,
+				LOTRTradeEntries.HARAD_BREWER_SELL, LOTRTradeEntries.HARAD_BREWER_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityGulfBrewer.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_GULF,
+				LOTRTradeEntries.HARAD_BREWER_SELL, LOTRTradeEntries.HARAD_BREWER_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityNomadBrewer.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_NOMAD,
+				LOTRTradeEntries.HARAD_BREWER_SELL, LOTRTradeEntries.HARAD_BREWER_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntitySouthronFishmonger.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_SOUTHRON,
+				LOTRTradeEntries.HARAD_FISHMONGER_SELL, LOTRTradeEntries.HARAD_FISHMONGER_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityHarnedorFishmonger.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_HARNEDOR,
+				LOTRTradeEntries.HARAD_FISHMONGER_SELL, LOTRTradeEntries.HARAD_FISHMONGER_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityUmbarFishmonger.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_UMBAR,
+				LOTRTradeEntries.HARAD_FISHMONGER_SELL, LOTRTradeEntries.HARAD_FISHMONGER_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityGulfFishmonger.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_GULF,
+				LOTRTradeEntries.HARAD_FISHMONGER_SELL, LOTRTradeEntries.HARAD_FISHMONGER_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntitySouthronBaker.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_SOUTHRON,
+				LOTRTradeEntries.HARAD_BAKER_SELL, LOTRTradeEntries.HARAD_BAKER_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityHarnedorBaker.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_HARNEDOR,
+				LOTRTradeEntries.HARAD_BAKER_SELL, LOTRTradeEntries.HARAD_BAKER_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityUmbarBaker.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_UMBAR,
+				LOTRTradeEntries.HARAD_BAKER_SELL, LOTRTradeEntries.HARAD_BAKER_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityHarnedorHunter.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_HARNEDOR,
+				LOTRTradeEntries.HARAD_HUNTER_SELL, LOTRTradeEntries.HARAD_HUNTER_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntitySouthronFarmer.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_SOUTHRON,
+				LOTRTradeEntries.HARAD_FARMER_SELL, LOTRTradeEntries.HARAD_FARMER_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityHarnedorFarmer.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_HARNEDOR,
+				LOTRTradeEntries.HARAD_FARMER_SELL, LOTRTradeEntries.HARAD_FARMER_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityUmbarFarmer.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_UMBAR,
+				LOTRTradeEntries.HARAD_FARMER_SELL, LOTRTradeEntries.HARAD_FARMER_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityGulfFarmer.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_GULF,
+				LOTRTradeEntries.HARAD_FARMER_SELL, LOTRTradeEntries.HARAD_FARMER_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntitySouthronMiner.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_SOUTHRON,
+				LOTRTradeEntries.HARAD_MINER_SELL, LOTRTradeEntries.HARAD_MINER_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityHarnedorMiner.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_HARNEDOR,
+				LOTRTradeEntries.HARAD_MINER_SELL, LOTRTradeEntries.HARAD_MINER_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityUmbarMiner.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_UMBAR,
+				LOTRTradeEntries.HARAD_MINER_SELL, LOTRTradeEntries.HARAD_MINER_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityGulfMiner.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_GULF,
+				LOTRTradeEntries.HARAD_MINER_SELL, LOTRTradeEntries.HARAD_MINER_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityNomadMiner.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_NOMAD,
+				LOTRTradeEntries.HARAD_MINER_SELL, LOTRTradeEntries.HARAD_MINER_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntitySouthronFlorist.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_SOUTHRON,
+				LOTRTradeEntries.HARAD_FLORIST_SELL, LOTRTradeEntries.HARAD_FLORIST_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityUmbarFlorist.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_UMBAR,
+				LOTRTradeEntries.HARAD_FLORIST_SELL, LOTRTradeEntries.HARAD_FLORIST_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntitySouthronGoldsmith.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_SOUTHRON,
+				LOTRTradeEntries.HARAD_GOLDSMITH_SELL, LOTRTradeEntries.HARAD_GOLDSMITH_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityUmbarGoldsmith.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_UMBAR,
+				LOTRTradeEntries.HARAD_GOLDSMITH_SELL, LOTRTradeEntries.HARAD_GOLDSMITH_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityGulfGoldsmith.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_GULF,
+				LOTRTradeEntries.HARAD_GOLDSMITH_SELL, LOTRTradeEntries.HARAD_GOLDSMITH_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityUmbarMason.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_UMBAR,
+				LOTRTradeEntries.UMBAR_MASON_SELL, LOTRTradeEntries.UMBAR_MASON_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityNomadArmourer.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_NOMAD,
+				LOTRTradeEntries.NOMAD_ARMOURER_SELL, LOTRTradeEntries.NOMAD_ARMOURER_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityGulfLumberman.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_GULF,
+				LOTRTradeEntries.GULF_LUMBERMAN_SELL, LOTRTradeEntries.GULF_LUMBERMAN_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityGulfHunter.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_GULF,
+				LOTRTradeEntries.GULF_HUNTER_SELL, LOTRTradeEntries.GULF_HUNTER_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntitySouthronBartender.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_SOUTHRON,
+				LOTRTradeEntries.SOUTHRON_BARTENDER_SELL, LOTRTradeEntries.SOUTHRON_BARTENDER_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityUmbarBartender.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_UMBAR,
+				LOTRTradeEntries.SOUTHRON_BARTENDER_SELL, LOTRTradeEntries.SOUTHRON_BARTENDER_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityGulfBartender.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_GULF,
+				LOTRTradeEntries.GULF_BARTENDER_SELL, LOTRTradeEntries.GULF_BARTENDER_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityGulfBaker.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_GULF,
+				LOTRTradeEntries.GULF_BAKER_SELL, LOTRTradeEntries.GULF_BAKER_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityTauredainSmith.class, IntegratedRecipeHandlerFactory.FACTION_TAUREDAIN,
+				LOTRTradeEntries.TAUREDAIN_SMITH_SELL, LOTRTradeEntries.TAUREDAIN_SMITH_BUY);
 
 		IntegratedRecipeHandlerFactory.recipeHandlers.add(new AlloyForgeRecipeHandler("orc", new AlloyForgeRecipeHandler.OrcForgeAccess()));
 		IntegratedRecipeHandlerFactory.recipeHandlers.add(new AlloyForgeRecipeHandler("men", new AlloyForgeRecipeHandler.MenForgeAccess()));
 		IntegratedRecipeHandlerFactory.recipeHandlers.add(new AlloyForgeRecipeHandler("elven", new AlloyForgeRecipeHandler.ElvenForgeAccess()));
 		IntegratedRecipeHandlerFactory.recipeHandlers.add(new AlloyForgeRecipeHandler("dwarven", new AlloyForgeRecipeHandler.DwarvenForgeAccess()));
 	}
-	
+
 	private static void registerMECTHandler(String unlocalizedName, Class<? extends GuiContainer> guiClass, Collection<IRecipe> recipes) {
 		IntegratedRecipeHandlerFactory.recipeHandlers.add(new MiddleEarthCraftingTableRecipeHandler(unlocalizedName, guiClass, recipes));
 	}
