@@ -42,11 +42,11 @@ public class IntegratedRecipeHandlerFactory implements RecipeHandlerFactory {
 	private static final String FACTION_DUNLENDING = "dunlending";
 	private static final String FACTION_BLUE_DWARF = "blueDwarf";
 	private static final String FACTION_NEAR_HARAD = "nearHarad";
-	private static final String FACTION_NEAR_HARAD_SOUTHRON = FACTION_NEAR_HARAD + ".southron";
-	private static final String FACTION_NEAR_HARAD_UMBAR = FACTION_NEAR_HARAD + ".umbar";
-	private static final String FACTION_NEAR_HARAD_GULF = FACTION_NEAR_HARAD + ".gulf";
-	private static final String FACTION_NEAR_HARAD_HARNEDOR = FACTION_NEAR_HARAD + ".harnedor";
-	private static final String FACTION_NEAR_HARAD_NOMAD = FACTION_NEAR_HARAD + ".nomad";
+	private static final String FACTION_NEAR_HARAD_SOUTHRON = IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD + ".southron";
+	private static final String FACTION_NEAR_HARAD_UMBAR = IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD + ".umbar";
+	private static final String FACTION_NEAR_HARAD_GULF = IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD + ".gulf";
+	private static final String FACTION_NEAR_HARAD_HARNEDOR = IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD + ".harnedor";
+	private static final String FACTION_NEAR_HARAD_NOMAD = IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD + ".nomad";
 	private static final String FACTION_ANGMAR = "angmar";
 	private static final String FACTION_DOL_GULDUR = "dolGuldur";
 	private static final String FACTION_HALF_TROLL = "halfTroll";

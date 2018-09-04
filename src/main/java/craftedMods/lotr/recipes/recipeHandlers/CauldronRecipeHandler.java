@@ -26,7 +26,7 @@ import craftedMods.recipes.api.utils.*;
 import craftedMods.recipes.base.*;
 import lotr.common.item.*;
 import lotr.common.recipe.LOTRRecipePoisonWeapon;
-import net.minecraft.init.*;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.*;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 
@@ -69,7 +69,9 @@ public class CauldronRecipeHandler extends AbstractRecipeHandler<ShapelessRecipe
 		}
 		if (LOTRRecipePoisonWeapon.inputToPoisoned.containsKey(result.getItem())) {
 			ItemStack input = new ItemStack(LOTRRecipePoisonWeapon.inputToPoisoned.get(result.getItem()));
-			if (result.isItemStackDamageable()) input.setItemDamage(result.getItemDamage());
+			if (result.isItemStackDamageable()) {
+				input.setItemDamage(result.getItemDamage());
+			}
 			recipes.add(new ShapelessRecipe(input, result));
 		}
 		return recipes;
@@ -77,8 +79,9 @@ public class CauldronRecipeHandler extends AbstractRecipeHandler<ShapelessRecipe
 
 	private <T extends Item> void handleUndyedResultItem(Class<T> itemType, ItemStack result, Predicate<ItemStack> isDyedFunction,
 			Function<ItemStack, Collection<ItemStack>> permutationsFunction, Collection<ShapelessRecipe> recipes) {
-		if (itemType.isAssignableFrom(result.getItem().getClass()) && !isDyedFunction.test(result))
+		if (itemType.isAssignableFrom(result.getItem().getClass()) && !isDyedFunction.test(result)) {
 			recipes.add(new UndyeningRecipe(permutationsFunction.apply(result.copy()), result));
+		}
 	}
 
 	private Function<ItemStack, Collection<ItemStack>> getHobbitPipeDyePermutations(ItemStack result) {
@@ -94,17 +97,21 @@ public class CauldronRecipeHandler extends AbstractRecipeHandler<ShapelessRecipe
 	private Function<ItemStack, Collection<ItemStack>> getDefaultColorPermutations(ItemStack result,
 			TriFunction<Integer, Integer, Integer, ItemStack> function) {
 		Collection<ItemStack> data = new ArrayList<>();
-		for (int r = 0; r < 255; r += 25)
-			for (int g = 0; g < 255; g += 25)
+		for (int r = 0; r < 255; r += 25) {
+			for (int g = 0; g < 255; g += 25) {
 				for (int b = 0; b < 255; b += 25)
-					if (r < 255 && g < 255 && b < 255) data.add(function.accept(r, g, b));
+					if (r < 255 && g < 255 && b < 255) {
+						data.add(function.accept(r, g, b));
+					}
+			}
+		}
 		return (stack) -> data;
 	}
 
 	private Function<ItemStack, Collection<ItemStack>> getDefaultColorPermutations(ItemStack result, BiConsumer<ItemStack, Integer> dyeFunction) {
 		return this.getDefaultColorPermutations(result, (r, g, b) -> {
 			ItemStack dyedStack = result.copy();
-			dyeFunction.accept(dyedStack,new Color(r,g,b,0).getRGB());//ItemArmor doesn't work if alpha > 127
+			dyeFunction.accept(dyedStack, new Color(r, g, b, 0).getRGB());// ItemArmor doesn't work if alpha > 127
 			return dyedStack;
 		});
 	}
@@ -137,7 +144,9 @@ public class CauldronRecipeHandler extends AbstractRecipeHandler<ShapelessRecipe
 		}
 		if (LOTRRecipePoisonWeapon.poisonedToInput.containsKey(ingredient.getItem())) {
 			ItemStack result = new ItemStack(LOTRRecipePoisonWeapon.poisonedToInput.get(ingredient.getItem()));
-			if (ingredient.isItemStackDamageable()) result.setItemDamage(ingredient.getItemDamage());
+			if (ingredient.isItemStackDamageable()) {
+				result.setItemDamage(ingredient.getItemDamage());
+			}
 			recipes.add(new ShapelessRecipe(ingredient, result));
 		}
 		return recipes;

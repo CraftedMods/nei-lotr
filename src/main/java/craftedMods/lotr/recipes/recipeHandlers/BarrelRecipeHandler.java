@@ -48,7 +48,9 @@ public class BarrelRecipeHandler extends CraftingGridRecipeHandler {
 			if (recipe instanceof ShapelessOreRecipe) {
 				ShapelessOreRecipe shapelessOreRecipe = (ShapelessOreRecipe) recipe;
 				ret.add(new BrewingRecipe(shapelessOreRecipe.getInput(), shapelessOreRecipe.getRecipeOutput()));
-			} else this.undefinedRecipeTypeFound(recipe, ret);
+			} else {
+				this.undefinedRecipeTypeFound(recipe, ret);
+			}
 		return ret;
 	}
 
@@ -89,17 +91,23 @@ public class BarrelRecipeHandler extends CraftingGridRecipeHandler {
 
 		public BrewingRecipe(Collection<?> ingredients, ItemStack result) {
 			super(ingredients, result);
-			for (int i = 0; i < 3; i++)
+			for (int i = 0; i < 3; i++) {
 				this.add(new ItemStack(Items.water_bucket), this.ingredients);
-			for (int i = 0; i < 4; i++)
+			}
+			for (int i = 0; i < 4; i++) {
 				this.results.get(0).add(new ItemStack(result.getItem(), result.stackSize, result.getItemDamage() + i + 1));
+			}
 		}
 
 		@Override
 		public boolean produces(ItemStack result) {
-			if (!LOTRPoisonedDrinks.isDrinkPoisoned(result)) for (ItemStackSet permutations : this.results)
-				if (permutations != null) for (ItemStack permutation : permutations)
-					if (result.getItem() == permutation.getItem()) return true;
+			if (!LOTRPoisonedDrinks.isDrinkPoisoned(result)) {
+				for (ItemStackSet permutations : this.results)
+					if (permutations != null) {
+						for (ItemStack permutation : permutations)
+							if (result.getItem() == permutation.getItem()) return true;
+					}
+			}
 			return false;
 		}
 

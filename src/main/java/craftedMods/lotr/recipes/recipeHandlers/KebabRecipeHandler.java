@@ -48,7 +48,9 @@ public class KebabRecipeHandler extends AbstractRecipeHandler<ShapelessRecipe> {
 	@Override
 	public ShapelessRecipe loadComplicatedStaticRecipe(ItemStack... stacks) {
 		ShapelessRecipe recipe = null;
-		if (this.kebabStandDummy.isMeat(stacks[0])) recipe = new ShapelessRecipe(Arrays.asList(stacks[0]), new ItemStack(LOTRMod.kebab));
+		if (this.kebabStandDummy.isMeat(stacks[0])) {
+			recipe = new ShapelessRecipe(Arrays.asList(stacks[0]), new ItemStack(LOTRMod.kebab));
+		}
 		return recipe;
 	}
 

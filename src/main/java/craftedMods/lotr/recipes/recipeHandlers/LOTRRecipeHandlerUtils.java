@@ -41,25 +41,29 @@ public class LOTRRecipeHandlerUtils {
 
 	@SuppressWarnings("unchecked")
 	public static List<IRecipe> getBrewingRecipes() {
-		if (LOTRRecipeHandlerUtils.brewingRecipes == null) try {
-			Field brewingRecipesField = LOTRBrewingRecipes.class.getDeclaredField("recipes");
-			brewingRecipesField.setAccessible(true);
-			LOTRRecipeHandlerUtils.brewingRecipes = (List<IRecipe>) (List<?>) brewingRecipesField.get(null);
-		} catch (Exception e) {
-			System.err.print("Couldn't access LOTR brewing recipes: ");
-			e.printStackTrace();
+		if (LOTRRecipeHandlerUtils.brewingRecipes == null) {
+			try {
+				Field brewingRecipesField = LOTRBrewingRecipes.class.getDeclaredField("recipes");
+				brewingRecipesField.setAccessible(true);
+				LOTRRecipeHandlerUtils.brewingRecipes = (List<IRecipe>) (List<?>) brewingRecipesField.get(null);
+			} catch (Exception e) {
+				System.err.print("Couldn't access LOTR brewing recipes: ");
+				e.printStackTrace();
+			}
 		}
 		return LOTRRecipeHandlerUtils.brewingRecipes;
 	}
 
 	public static float[] getDrinkStrenghts() {
-		if (LOTRRecipeHandlerUtils.drinkStrenghts == null) try {
-			Field strenghts = LOTRItemMug.class.getDeclaredField("strengths");
-			strenghts.setAccessible(true);
-			LOTRRecipeHandlerUtils.drinkStrenghts = (float[]) strenghts.get(null);
-		} catch (Exception e) {
-			System.err.print("Couldn't access drinkStrengths: ");
-			e.printStackTrace();
+		if (LOTRRecipeHandlerUtils.drinkStrenghts == null) {
+			try {
+				Field strenghts = LOTRItemMug.class.getDeclaredField("strengths");
+				strenghts.setAccessible(true);
+				LOTRRecipeHandlerUtils.drinkStrenghts = (float[]) strenghts.get(null);
+			} catch (Exception e) {
+				System.err.print("Couldn't access drinkStrengths: ");
+				e.printStackTrace();
+			}
 		}
 		return LOTRRecipeHandlerUtils.drinkStrenghts;
 	}
@@ -78,11 +82,13 @@ public class LOTRRecipeHandlerUtils {
 	private static Boolean hasMinetweaker = null;
 
 	public static boolean hasMinetweaker() {
-		if (LOTRRecipeHandlerUtils.hasMinetweaker == null) try {
-			Class.forName("minetweaker.MineTweakerAPI");
-			LOTRRecipeHandlerUtils.hasMinetweaker = Boolean.TRUE;
-		} catch (Exception e) {
-			LOTRRecipeHandlerUtils.hasMinetweaker = Boolean.FALSE;
+		if (LOTRRecipeHandlerUtils.hasMinetweaker == null) {
+			try {
+				Class.forName("minetweaker.MineTweakerAPI");
+				LOTRRecipeHandlerUtils.hasMinetweaker = Boolean.TRUE;
+			} catch (Exception e) {
+				LOTRRecipeHandlerUtils.hasMinetweaker = Boolean.FALSE;
+			}
 		}
 		return LOTRRecipeHandlerUtils.hasMinetweaker;
 	}

@@ -56,13 +56,15 @@ public class AlloyForgeRecipeHandler extends AbstractRecipeHandler<AlloyForgeRec
 		List<RecipeItemSlot> slots = new ArrayList<>();
 		switch (role) {
 			case RESULT:
-				for (int i = 0; i < 4; i++)
+				for (int i = 0; i < 4; i++) {
 					slots.add(this.createRecipeItemSlot(48 + i * 18, 65));
+				}
 				break;
 			case INGREDIENT:
 				int size = recipe.getRecipeItems(EnumRecipeItemRole.INGREDIENT).size();
-				for (int i = 0; i < size; i++)
+				for (int i = 0; i < size; i++) {
 					slots.add(this.createRecipeItemSlot(48 + (size == 4 ? i : i / 2) * 18, size == 4 ? 19 : (i + 1) % 2 == 0 ? 1 : 19));
+				}
 				break;
 			case OTHER:
 				slots.add(this.createRecipeItemSlot(75, 109));
@@ -81,10 +83,14 @@ public class AlloyForgeRecipeHandler extends AbstractRecipeHandler<AlloyForgeRec
 		AlloyForgeRecipe ret = null;
 		if (stacks[1] == null) {
 			ItemStack result = this.alloyForgeDummy.getSmeltingResult(stacks[0]);
-			if (result != null) ret = new AlloyForgeRecipe(Arrays.asList(stacks[0]), result);
+			if (result != null) {
+				ret = new AlloyForgeRecipe(Arrays.asList(stacks[0]), result);
+			}
 		} else {
 			ItemStack result = this.alloyForgeDummy.getAlloyResult(stacks[0], stacks[1]);
-			if (result != null) ret = new AlloyForgeRecipe(Arrays.asList(stacks), result);
+			if (result != null) {
+				ret = new AlloyForgeRecipe(Arrays.asList(stacks), result);
+			}
 		}
 		return ret;
 	}
@@ -113,7 +119,9 @@ public class AlloyForgeRecipeHandler extends AbstractRecipeHandler<AlloyForgeRec
 			for (String key : (Set<String>) cacheContentTag.func_150296_c()) {
 				NBTTagCompound recipeTag = cacheContentTag.getCompoundTag(key);
 				AlloyForgeRecipe recipe = AlloyForgeRecipe.readRecipeFromNBT(recipeTag);
-				if (recipe != null) ret.add(recipe);
+				if (recipe != null) {
+					ret.add(recipe);
+				}
 			}
 			AlloyForgeRecipeHandler.this.wasCacheLoaded = ret.size() > 0;
 			return ret;
@@ -155,13 +163,18 @@ public class AlloyForgeRecipeHandler extends AbstractRecipeHandler<AlloyForgeRec
 
 		public AlloyForgeRecipe(Collection<ItemStack> ingredients, ItemStack result) {
 			super(ingredients, result);
-			for (int i = 0; i < 3; i++)
+			for (int i = 0; i < 3; i++) {
 				this.addAll(ingredients, this.ingredients);
-			for (int i = 0; i < 3; i++)
+			}
+			for (int i = 0; i < 3; i++) {
 				this.add(result, this.results);
+			}
 			this.ingredientItem = this.ingredients.get(0).iterator().next();
-			if (ingredients.size() == 2) this.alloyItem = this.ingredients.get(1).iterator().next();
-			else this.alloyItem = null;
+			if (ingredients.size() == 2) {
+				this.alloyItem = this.ingredients.get(1).iterator().next();
+			} else {
+				this.alloyItem = null;
+			}
 			this.resultItem = result;
 		}
 
@@ -176,7 +189,9 @@ public class AlloyForgeRecipeHandler extends AbstractRecipeHandler<AlloyForgeRec
 
 				Collection<ItemStack> ingreds = new ArrayList<>();
 				ingreds.add(RecipeHandlerUtils.getInstance().readItemStackFromNBT(ingredientItem));
-				if (alloyStack != null) ingreds.add(alloyStack);
+				if (alloyStack != null) {
+					ingreds.add(alloyStack);
+				}
 				ret = new AlloyForgeRecipe(ingreds, RecipeHandlerUtils.getInstance().readItemStackFromNBT(resultItem));
 			}
 			return ret;
@@ -188,7 +203,9 @@ public class AlloyForgeRecipeHandler extends AbstractRecipeHandler<AlloyForgeRec
 			NBTTagCompound resultItem = new NBTTagCompound();
 
 			RecipeHandlerUtils.getInstance().writeItemStackToNBT(this.ingredientItem, ingredientItem);
-			if (this.alloyItem != null) RecipeHandlerUtils.getInstance().writeItemStackToNBT(this.alloyItem, alloyItem);
+			if (this.alloyItem != null) {
+				RecipeHandlerUtils.getInstance().writeItemStackToNBT(this.alloyItem, alloyItem);
+			}
 			RecipeHandlerUtils.getInstance().writeItemStackToNBT(this.resultItem, resultItem);
 
 			parent.setTag("ingredientItem", ingredientItem);

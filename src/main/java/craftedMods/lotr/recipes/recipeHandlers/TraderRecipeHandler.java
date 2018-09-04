@@ -56,44 +56,57 @@ public class TraderRecipeHandler extends AbstractRecipeHandler<TraderRecipe> {
 		super.onPreLoad(config, logger);
 		try {
 			Vessel[] vesselsArray = ReflectionHelper.getPrivateValue(LOTRTradeEntries.class, this.itemsSold, "drinkVessels");
-			if (vesselsArray != null) this.vesselsSold = Arrays.asList(vesselsArray);
+			if (vesselsArray != null) {
+				this.vesselsSold = Arrays.asList(vesselsArray);
+			}
 		} catch (Exception e) {
 			logger.error("Could not get private field value drinkVessels from LOTRTradeEntries via reflection", e);
 		}
-		if (this.vesselsSold == null) this.vesselsSold = new ArrayList<>();
+		if (this.vesselsSold == null) {
+			this.vesselsSold = new ArrayList<>();
+		}
 	}
 
 	@Override
 	public Collection<TraderRecipe> getDynamicCraftingRecipes(ItemStack result) {
 		Collection<TraderRecipe> recipes = new ArrayList<>();
-		if (result.getItem() != LOTRMod.silverCoin) for (LOTRTradeEntry entry : this.itemsSold.tradeEntries) {
-			boolean add = false;
-			int baseCost = entry.getCost();
-			ItemStack baseItem = entry.createTradeItem();
-			if (result.getItem() instanceof LOTRItemMug && LOTRItemMug.isItemFullDrink(result) && baseItem.getItem() instanceof LOTRItemMug
-					&& LOTRItemMug.isItemFullDrink(baseItem) && result.getItem() == baseItem.getItem()
-					&& LOTRPoisonedDrinks.isDrinkPoisoned(result) == LOTRPoisonedDrinks.isDrinkPoisoned(baseItem)
-					&& (baseItem.getItemDamage() == TraderRecipeHandler.ALL_STRENGHTS_META
-							|| LOTRItemMug.getFoodStrength(result) == LOTRItemMug.getFoodStrength(baseItem))) {
-				Vessel vessel = LOTRItemMug.getVessel(result);
-				if (this.vesselsSold.contains(vessel)) add = true;
-			} else add = baseItem.getItem() instanceof LOTRItemBarrel || result.getItem() instanceof LOTRItemBarrel
-					? RecipeHandlerUtils.getInstance().areStacksSameType(baseItem, result)
-					: RecipeHandlerUtils.getInstance().areStacksSameTypeForCrafting(baseItem, result);
-			if (add) {
-				ItemStack toAdd = result.copy();
-				toAdd.stackSize = baseItem.stackSize;
-				if (toAdd.isItemStackDamageable()) toAdd.setItemDamage(0);
-				recipes.add(new TraderRecipe(toAdd, TraderRecipeHandler.getMinTradeCost(toAdd, baseCost, true),
-						TraderRecipeHandler.getMaxTradeCost(toAdd, baseCost, true), true));
+		if (result.getItem() != LOTRMod.silverCoin) {
+			for (LOTRTradeEntry entry : this.itemsSold.tradeEntries) {
+				boolean add = false;
+				int baseCost = entry.getCost();
+				ItemStack baseItem = entry.createTradeItem();
+				if (result.getItem() instanceof LOTRItemMug && LOTRItemMug.isItemFullDrink(result) && baseItem.getItem() instanceof LOTRItemMug
+						&& LOTRItemMug.isItemFullDrink(baseItem) && result.getItem() == baseItem.getItem()
+						&& LOTRPoisonedDrinks.isDrinkPoisoned(result) == LOTRPoisonedDrinks.isDrinkPoisoned(baseItem)
+						&& (baseItem.getItemDamage() == TraderRecipeHandler.ALL_STRENGHTS_META
+								|| LOTRItemMug.getFoodStrength(result) == LOTRItemMug.getFoodStrength(baseItem))) {
+					Vessel vessel = LOTRItemMug.getVessel(result);
+					if (this.vesselsSold.contains(vessel)) {
+						add = true;
+					}
+				} else {
+					add = baseItem.getItem() instanceof LOTRItemBarrel || result.getItem() instanceof LOTRItemBarrel
+							? RecipeHandlerUtils.getInstance().areStacksSameType(baseItem, result)
+							: RecipeHandlerUtils.getInstance().areStacksSameTypeForCrafting(baseItem, result);
+				}
+				if (add) {
+					ItemStack toAdd = result.copy();
+					toAdd.stackSize = baseItem.stackSize;
+					if (toAdd.isItemStackDamageable()) {
+						toAdd.setItemDamage(0);
+					}
+					recipes.add(new TraderRecipe(toAdd, TraderRecipeHandler.getMinTradeCost(toAdd, baseCost, true),
+							TraderRecipeHandler.getMaxTradeCost(toAdd, baseCost, true), true));
+				}
 			}
-		}
-		else for (LOTRTradeEntry entry : this.itemsBought.tradeEntries) {
-			// boolean add = false;
-			int baseCost = entry.getCost();
-			ItemStack baseItem = entry.createTradeItem();
-			recipes.add(new TraderRecipe(baseItem, TraderRecipeHandler.getMinTradeCost(baseItem, baseCost, false),
-					TraderRecipeHandler.getMaxTradeCost(baseItem, baseCost, false), false));
+		} else {
+			for (LOTRTradeEntry entry : this.itemsBought.tradeEntries) {
+				// boolean add = false;
+				int baseCost = entry.getCost();
+				ItemStack baseItem = entry.createTradeItem();
+				recipes.add(new TraderRecipe(baseItem, TraderRecipeHandler.getMinTradeCost(baseItem, baseCost, false),
+						TraderRecipeHandler.getMaxTradeCost(baseItem, baseCost, false), false));
+			}
 		}
 		return recipes;
 	}
@@ -101,32 +114,39 @@ public class TraderRecipeHandler extends AbstractRecipeHandler<TraderRecipe> {
 	@Override
 	public Collection<TraderRecipe> getDynamicUsageRecipes(ItemStack ingredient) {
 		Collection<TraderRecipe> recipes = new ArrayList<>();
-		if (ingredient.getItem() != LOTRMod.silverCoin) for (LOTRTradeEntry entry : this.itemsBought.tradeEntries) {
-			// boolean add = false;
-			int baseCost = entry.getCost();
-			ItemStack baseItem = entry.createTradeItem();
-			if (RecipeHandlerUtils.getInstance().areStacksSameTypeForCrafting(baseItem, ingredient)) {
-				ItemStack toAdd = ingredient.copy();
-				toAdd.stackSize = baseItem.stackSize;
-				if (toAdd.isItemStackDamageable()) toAdd.setItemDamage(0);// TODO: Fix durability (permutation is set in plugin recipe handler)
-				recipes.add(new TraderRecipe(toAdd, TraderRecipeHandler.getMinTradeCost(toAdd, baseCost, false),
-						TraderRecipeHandler.getMaxTradeCost(toAdd, baseCost, false), false));
-			}
-		}
-		else for (LOTRTradeEntry entry : this.itemsSold.tradeEntries) {
-			// boolean add = false;
-			int baseCost = entry.getCost();
-			ItemStack baseItem = entry.createTradeItem();
-			if (baseItem.getItem() instanceof LOTRItemMug && LOTRItemMug.isItemFullDrink(baseItem)
-					&& baseItem.getItemDamage() == TraderRecipeHandler.ALL_STRENGHTS_META)
-				for (float strength : LOTRRecipeHandlerUtils.getDrinkStrenghts()) {
-				baseItem = baseItem.copy();
-				LOTRItemMug.setStrengthMeta(baseItem, LOTRRecipeHandlerUtils.getDrinkStrengthIndex(strength));
-				recipes.add(new TraderRecipe(baseItem, TraderRecipeHandler.getMinTradeCost(baseItem, baseCost, true),
-						TraderRecipeHandler.getMaxTradeCost(baseItem, baseCost, true), true));
+		if (ingredient.getItem() != LOTRMod.silverCoin) {
+			for (LOTRTradeEntry entry : this.itemsBought.tradeEntries) {
+				// boolean add = false;
+				int baseCost = entry.getCost();
+				ItemStack baseItem = entry.createTradeItem();
+				if (RecipeHandlerUtils.getInstance().areStacksSameTypeForCrafting(baseItem, ingredient)) {
+					ItemStack toAdd = ingredient.copy();
+					toAdd.stackSize = baseItem.stackSize;
+					if (toAdd.isItemStackDamageable()) {
+						toAdd.setItemDamage(0);// TODO: Fix durability (permutation is set in plugin recipe handler)
+					}
+					recipes.add(new TraderRecipe(toAdd, TraderRecipeHandler.getMinTradeCost(toAdd, baseCost, false),
+							TraderRecipeHandler.getMaxTradeCost(toAdd, baseCost, false), false));
 				}
-			else recipes.add(new TraderRecipe(baseItem, TraderRecipeHandler.getMinTradeCost(baseItem, baseCost, true),
-					TraderRecipeHandler.getMaxTradeCost(baseItem, baseCost, true), true));
+			}
+		} else {
+			for (LOTRTradeEntry entry : this.itemsSold.tradeEntries) {
+				// boolean add = false;
+				int baseCost = entry.getCost();
+				ItemStack baseItem = entry.createTradeItem();
+				if (baseItem.getItem() instanceof LOTRItemMug && LOTRItemMug.isItemFullDrink(baseItem)
+						&& baseItem.getItemDamage() == TraderRecipeHandler.ALL_STRENGHTS_META) {
+					for (float strength : LOTRRecipeHandlerUtils.getDrinkStrenghts()) {
+						baseItem = baseItem.copy();
+						LOTRItemMug.setStrengthMeta(baseItem, LOTRRecipeHandlerUtils.getDrinkStrengthIndex(strength));
+						recipes.add(new TraderRecipe(baseItem, TraderRecipeHandler.getMinTradeCost(baseItem, baseCost, true),
+								TraderRecipeHandler.getMaxTradeCost(baseItem, baseCost, true), true));
+					}
+				} else {
+					recipes.add(new TraderRecipe(baseItem, TraderRecipeHandler.getMinTradeCost(baseItem, baseCost, true),
+							TraderRecipeHandler.getMaxTradeCost(baseItem, baseCost, true), true));
+				}
+			}
 		}
 		return recipes;
 
@@ -141,11 +161,15 @@ public class TraderRecipeHandler extends AbstractRecipeHandler<TraderRecipe> {
 	public List<RecipeItemSlot> getSlotsForRecipeItems(TraderRecipe recipe, EnumRecipeItemRole role) {
 		List<RecipeItemSlot> slots = new ArrayList<>();
 		if (role == EnumRecipeItemRole.INGREDIENT) {
-			if (recipe.isSold()) slots.add(this.createRecipeItemSlot(15, 24));
+			if (recipe.isSold()) {
+				slots.add(this.createRecipeItemSlot(15, 24));
+			}
 			slots.add(this.createRecipeItemSlot(43, 24));
 		} else {
 			slots.add(this.createRecipeItemSlot(96, 24));
-			if (!recipe.isSold()) slots.add(this.createRecipeItemSlot(124, 24));
+			if (!recipe.isSold()) {
+				slots.add(this.createRecipeItemSlot(124, 24));
+			}
 		}
 		return slots;
 	}
@@ -174,10 +198,14 @@ public class TraderRecipeHandler extends AbstractRecipeHandler<TraderRecipe> {
 		Item item = itemStack.getItem();
 		if (item instanceof LOTRItemMug) {
 			LOTRItemMug mug = (LOTRItemMug) item;
-			if (mug.isBrewable) tradeCost *= LOTRItemMug.getFoodStrength(itemStack);
+			if (mug.isBrewable) {
+				tradeCost *= LOTRItemMug.getFoodStrength(itemStack);
+			}
 			if (LOTRItemMug.isItemFullDrink(itemStack)) {
 				Vessel vessel = LOTRItemMug.getVessel(itemStack);
-				if (vessel != null) tradeCost += vessel.extraPrice;
+				if (vessel != null) {
+					tradeCost += vessel.extraPrice;
+				}
 			}
 		}
 
@@ -198,7 +226,9 @@ public class TraderRecipeHandler extends AbstractRecipeHandler<TraderRecipe> {
 		// }
 		// }
 
-		if (sold) tradeCost *= LOTREnchantmentHelper.calcTradeValueFactor(itemStack);
+		if (sold) {
+			tradeCost *= LOTREnchantmentHelper.calcTradeValueFactor(itemStack);
+		}
 
 		tradeCost *= probabilityFactor;
 
@@ -252,14 +282,18 @@ public class TraderRecipeHandler extends AbstractRecipeHandler<TraderRecipe> {
 		@Override
 		public ItemStack getIngredientReplacement(ItemStack defaultReplacement) {
 			ItemStack ret = defaultReplacement.copy();
-			if (ret.isItemStackDamageable()) ret.setItemDamage(0);
+			if (ret.isItemStackDamageable()) {
+				ret.setItemDamage(0);
+			}
 			return ret;
 		}
 
 		@Override
 		public ItemStack getResultReplacement(ItemStack defaultReplacement) {
 			ItemStack ret = defaultReplacement.copy();
-			if (ret.isItemStackDamageable()) ret.setItemDamage(0);
+			if (ret.isItemStackDamageable()) {
+				ret.setItemDamage(0);
+			}
 			return ret;
 		}
 
@@ -275,8 +309,12 @@ public class TraderRecipeHandler extends AbstractRecipeHandler<TraderRecipe> {
 			RecipeHandlerRendererUtils.getInstance().drawRectangle(42, 41, 18, 4, 0xFFC6C6C6);
 			RecipeHandlerRendererUtils.getInstance().drawRectangle(96, 19, 26, 26, 0xFFC6C6C6);
 			RecipeHandlerRendererUtils.getInstance().drawTexturedRectangle(95, 23, 65, 34, 18, 18);
-			if (!recipe.isSold()) RecipeHandlerRendererUtils.getInstance().drawTexturedRectangle(123, 23, 65, 34, 18, 18);
-			if (recipe.isSold()) RecipeHandlerRendererUtils.getInstance().drawTexturedRectangle(14, 23, 65, 34, 18, 18);
+			if (!recipe.isSold()) {
+				RecipeHandlerRendererUtils.getInstance().drawTexturedRectangle(123, 23, 65, 34, 18, 18);
+			}
+			if (recipe.isSold()) {
+				RecipeHandlerRendererUtils.getInstance().drawTexturedRectangle(14, 23, 65, 34, 18, 18);
+			}
 		}
 
 		@Override

@@ -47,7 +47,9 @@ public class VanillaCraftingTableRecipeHandler extends AbstractLOTRCraftingTable
 	@Override
 	public void onPreLoad(RecipeHandlerConfiguration config, Logger logger) {
 		super.onPreLoad(config, logger);
-		if (LOTRRecipeHandlerUtils.hasMinetweaker()) this.logger.info("The Minetweaker API was detected - dynamic recipe loading will be enabled");
+		if (LOTRRecipeHandlerUtils.hasMinetweaker()) {
+			this.logger.info("The Minetweaker API was detected - dynamic recipe loading will be enabled");
+		}
 		this.removeRecipeHandler("codechicken.nei.recipe.ShapedRecipeHandler");
 		this.removeRecipeHandler("codechicken.nei.recipe.ShapelessRecipeHandler");
 	}
@@ -88,7 +90,9 @@ public class VanillaCraftingTableRecipeHandler extends AbstractLOTRCraftingTable
 		if (LOTRRecipeHandlerUtils.hasMinetweaker()) {
 			Collection<AbstractRecipe> recipes = this.loadRecipes();
 			for (AbstractRecipe recipe : recipes)
-				if (recipe.produces(result)) ret.add(recipe);
+				if (recipe.produces(result)) {
+					ret.add(recipe);
+				}
 		}
 		return ret;
 	}
@@ -99,7 +103,9 @@ public class VanillaCraftingTableRecipeHandler extends AbstractLOTRCraftingTable
 		if (LOTRRecipeHandlerUtils.hasMinetweaker()) {
 			Collection<AbstractRecipe> recipes = this.loadRecipes();
 			for (AbstractRecipe recipe : recipes)
-				if (recipe.consumes(ingredient)) ret.add(recipe);
+				if (recipe.consumes(ingredient)) {
+					ret.add(recipe);
+				}
 		}
 		return ret;
 	}

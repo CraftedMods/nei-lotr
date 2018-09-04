@@ -86,7 +86,9 @@ public class UnsmelteryRecipeHandler extends AbstractRecipeHandler<UnsmelteryRec
 	public Collection<UnsmelteryRecipe> getDynamicUsageRecipes(ItemStack ingredient) {
 		Collection<UnsmelteryRecipe> usageRecipes = new ArrayList<>();
 		UnsmelteryRecipe recipe = this.createUnsmelteryRecipe(ingredient);
-		if (recipe != null) usageRecipes.add(recipe);
+		if (recipe != null) {
+			usageRecipes.add(recipe);
+		}
 		return usageRecipes;
 	}
 
@@ -190,7 +192,9 @@ public class UnsmelteryRecipeHandler extends AbstractRecipeHandler<UnsmelteryRec
 
 	public static int getUnsmeltingResultCount(ItemStack ingredient, ItemStack largestPossibleResult, float minReduction) {
 		float size = largestPossibleResult.stackSize * 0.8f;
-		if (ingredient.isItemStackDamageable()) size *= (ingredient.getMaxDamage() - ingredient.getItemDamage()) / (float) ingredient.getMaxDamage();
+		if (ingredient.isItemStackDamageable()) {
+			size *= (ingredient.getMaxDamage() - ingredient.getItemDamage()) / (float) ingredient.getMaxDamage();
+		}
 		size *= minReduction;
 		return Math.max(0, Math.round(size));
 	}
@@ -208,7 +212,9 @@ public class UnsmelteryRecipeHandler extends AbstractRecipeHandler<UnsmelteryRec
 			for (String key : (Set<String>) cacheContentTag.func_150296_c()) {
 				NBTTagCompound recipeTag = cacheContentTag.getCompoundTag(key);
 				UnsmelteryRecipe recipe = UnsmelteryRecipe.readRecipeFromNBT(recipeTag);
-				if (recipe != null) ret.add(recipe);
+				if (recipe != null) {
+					ret.add(recipe);
+				}
 			}
 			UnsmelteryRecipeHandler.this.wasCacheLoaded = ret.size() > 0;
 			UnsmelteryRecipeHandler.this.recipesLoadedOnWorldJoin.addAll(ret);
@@ -266,10 +272,11 @@ public class UnsmelteryRecipeHandler extends AbstractRecipeHandler<UnsmelteryRec
 		public static UnsmelteryRecipe readRecipeFromNBT(NBTTagCompound parent) {
 			UnsmelteryRecipe ret = null;
 			if (parent.hasKey(UnsmelteryRecipe.INGREDIENT_ITEM_KEY) && parent.hasKey(UnsmelteryRecipe.RESULT_ITEM_KEY)
-					&& parent.hasKey(UnsmelteryRecipe.MIN_COUNT_KEY) && parent.hasKey(UnsmelteryRecipe.MAX_COUNT_KEY))
+					&& parent.hasKey(UnsmelteryRecipe.MIN_COUNT_KEY) && parent.hasKey(UnsmelteryRecipe.MAX_COUNT_KEY)) {
 				ret = new UnsmelteryRecipe(RecipeHandlerUtils.getInstance().readItemStackFromNBT(parent.getCompoundTag(UnsmelteryRecipe.INGREDIENT_ITEM_KEY)),
 						RecipeHandlerUtils.getInstance().readItemStackFromNBT(parent.getCompoundTag(UnsmelteryRecipe.RESULT_ITEM_KEY)),
 						parent.getInteger(UnsmelteryRecipe.MIN_COUNT_KEY), parent.getInteger(UnsmelteryRecipe.MAX_COUNT_KEY));
+			}
 			return ret;
 		}
 

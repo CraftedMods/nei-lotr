@@ -26,7 +26,7 @@ public class NeiLotrVersionCheckerHandler implements VersionCheckerHandler {
 
 	@Override
 	public SemanticVersion getCurrentVersion() {
-		return NEI_LOTR_VERSION;
+		return NeiLotrVersionCheckerHandler.NEI_LOTR_VERSION;
 	}
 
 	@Override

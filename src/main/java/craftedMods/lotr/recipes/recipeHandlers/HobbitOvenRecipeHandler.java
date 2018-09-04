@@ -52,7 +52,9 @@ public class HobbitOvenRecipeHandler extends AbstractRecipeHandler<HobbitOvenRec
 	public Collection<HobbitOvenRecipe> loadSimpleStaticRecipes() {
 		Collection<HobbitOvenRecipe> ret = new ArrayList<>();
 		((Map<ItemStack, ItemStack>) FurnaceRecipes.smelting().getSmeltingList()).forEach((ingredient, result) -> {
-			if (LOTRTileEntityHobbitOven.isCookResultAcceptable(result)) ret.add(new HobbitOvenRecipe(ingredient, result));
+			if (LOTRTileEntityHobbitOven.isCookResultAcceptable(result)) {
+				ret.add(new HobbitOvenRecipe(ingredient, result));
+			}
 		});
 		return ret;
 	}
@@ -62,12 +64,14 @@ public class HobbitOvenRecipeHandler extends AbstractRecipeHandler<HobbitOvenRec
 		List<RecipeItemSlot> slots = new ArrayList<>();
 		switch (role) {
 			case INGREDIENT:
-				for (int i = 0; i < 9; i++)
+				for (int i = 0; i < 9; i++) {
 					slots.add(this.createRecipeItemSlot(3 + i * 18, 10));
+				}
 				break;
 			case RESULT:
-				for (int i = 0; i < 9; i++)
+				for (int i = 0; i < 9; i++) {
 					slots.add(this.createRecipeItemSlot(3 + i * 18, 56));
+				}
 				break;
 			case OTHER:
 				slots.add(this.createRecipeItemSlot(75, 100));

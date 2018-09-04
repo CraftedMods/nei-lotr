@@ -85,7 +85,7 @@ public class LOTRItemHidingHandler implements ItemHidingHandler {
 		this.hideItemAll(LOTRMod.glassBottleBlock);
 		this.hideItemAll(LOTRMod.aleHornBlock);
 		this.hideItemAll(LOTRMod.aleHornGoldBlock);
-		
+
 		// Plates
 		this.hideItemAll(LOTRMod.plateBlock);
 		this.hideItemAll(LOTRMod.ceramicPlateBlock);
@@ -168,8 +168,9 @@ public class LOTRItemHidingHandler implements ItemHidingHandler {
 	}
 
 	private void hideItemMeta(ItemStack stack) {
-		for (int i = 8; i < 16; i++)
+		for (int i = 8; i < 16; i++) {
 			LOTRItemHidingHandler.hiddenStacks.add(new ItemStack(stack.getItem(), 1, i));
+		}
 	}
 
 	private void hideItemMeta(Block block) {
