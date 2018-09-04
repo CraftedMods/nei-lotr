@@ -32,7 +32,7 @@ public class EntJarRecipeHandler extends AbstractRecipeHandler<ShapelessRecipe> 
 	private final EntJarRecipeHandlerRenderer renderer = new EntJarRecipeHandlerRenderer();
 
 	public EntJarRecipeHandler() {
-		super("entJar");
+		super("lotr.entJar");
 	}
 
 	@Override

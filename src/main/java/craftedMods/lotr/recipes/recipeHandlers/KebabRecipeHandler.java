@@ -32,7 +32,7 @@ public class KebabRecipeHandler extends AbstractRecipeHandler<ShapelessRecipe> {
 	private final LOTRTileEntityKebabStand kebabStandDummy = new LOTRTileEntityKebabStand();
 
 	public KebabRecipeHandler() {
-		super("kebab");
+		super("lotr.kebab");
 	}
 
 	@Override

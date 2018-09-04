@@ -36,7 +36,7 @@ public class CauldronRecipeHandler extends AbstractRecipeHandler<ShapelessRecipe
 	private final CauldronRecipeHandlerRenderer renderer = new CauldronRecipeHandlerRenderer();
 
 	public CauldronRecipeHandler() {
-		super("cauldron");
+		super("lotr.cauldron");
 	}
 
 	@Override

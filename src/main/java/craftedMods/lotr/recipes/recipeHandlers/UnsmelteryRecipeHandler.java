@@ -55,7 +55,7 @@ public class UnsmelteryRecipeHandler extends AbstractRecipeHandler<UnsmelteryRec
 	private final Collection<UnsmelteryRecipe> recipesLoadedOnWorldJoin = new ArrayList<>(500);
 
 	public UnsmelteryRecipeHandler() {
-		super("unsmeltery");
+		super("lotr.unsmeltery");
 	}
 
 	@Override

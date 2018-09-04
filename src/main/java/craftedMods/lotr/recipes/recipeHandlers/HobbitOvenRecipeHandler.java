@@ -34,7 +34,7 @@ public class HobbitOvenRecipeHandler extends AbstractRecipeHandler<HobbitOvenRec
 	private final HobbitOvenRecipeHandlerRenderer renderer = new HobbitOvenRecipeHandlerRenderer();
 
 	public HobbitOvenRecipeHandler() {
-		super("hobbitOven");
+		super("lotr.hobbitOven");
 	}
 
 	@Override

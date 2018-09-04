@@ -45,7 +45,7 @@ public class TraderRecipeHandler extends AbstractRecipeHandler<TraderRecipe> {
 	public static final int ALL_STRENGHTS_META = 9999;
 
 	public TraderRecipeHandler(String unlocalizedName, String faction, LOTRTradeEntries itemsBought, LOTRTradeEntries itemsSold) {
-		super("trader." + (faction == null ? "" : faction + ".") + unlocalizedName);
+		super("lotr.trader." + (faction == null ? "" : faction + ".") + unlocalizedName);
 		this.traderName = unlocalizedName;
 		this.itemsBought = itemsBought;
 		this.itemsSold = itemsSold;

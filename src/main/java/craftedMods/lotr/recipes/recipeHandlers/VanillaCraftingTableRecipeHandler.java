@@ -36,7 +36,7 @@ public class VanillaCraftingTableRecipeHandler extends AbstractLOTRCraftingTable
 	private final VanillaCraftingTableRecipeHandlerCraftingHelper craftingHelper = new VanillaCraftingTableRecipeHandlerCraftingHelper();
 
 	public VanillaCraftingTableRecipeHandler() {
-		super("vanillaCrafting");
+		super("lotr.vanillaCrafting");
 	}
 
 	@Override

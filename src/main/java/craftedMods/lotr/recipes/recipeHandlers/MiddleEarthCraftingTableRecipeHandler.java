@@ -28,7 +28,7 @@ public class MiddleEarthCraftingTableRecipeHandler extends AbstractLOTRCraftingT
 
 	private final MiddleEarthCraftingTableRecipeHandlerCraftingHelper craftingHelper;
 
-	public static final String UNLOCALIZED_NAME_PREFIX = "middleEarthCrafting.";
+	public static final String UNLOCALIZED_NAME_PREFIX = "lotr.middleEarthCrafting.";
 
 	public MiddleEarthCraftingTableRecipeHandler(String unlocalizedName, Class<? extends GuiContainer> guiClass, Collection<IRecipe> recipes) {
 		super(MiddleEarthCraftingTableRecipeHandler.UNLOCALIZED_NAME_PREFIX + unlocalizedName, recipes);

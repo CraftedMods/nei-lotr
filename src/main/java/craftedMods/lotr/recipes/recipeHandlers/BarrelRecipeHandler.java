@@ -38,7 +38,7 @@ public class BarrelRecipeHandler extends CraftingGridRecipeHandler {
 	public static final int[][] BARREL_STACKORDER = new int[][] { { 0, 0 }, { 1, 0 }, { 2, 0 }, { 0, 1 }, { 1, 1 }, { 2, 1 }, { 0, 2 }, { 1, 2 }, { 2, 2 } };
 
 	public BarrelRecipeHandler() {
-		super("barrel", LOTRRecipeHandlerUtils.getBrewingRecipes());
+		super("lotr.barrel", LOTRRecipeHandlerUtils.getBrewingRecipes());
 	}
 
 	@Override

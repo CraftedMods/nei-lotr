@@ -37,7 +37,7 @@ public class AlloyForgeRecipeHandler extends AbstractRecipeHandler<AlloyForgeRec
 	private boolean wasCacheLoaded = false;
 
 	public AlloyForgeRecipeHandler(String unlocalizedName, AlloyForgeAccess alloyForgeDummy) {
-		super("alloyForge." + unlocalizedName);
+		super("lotr.alloyForge." + unlocalizedName);
 		this.alloyForgeDummy = alloyForgeDummy;
 	}
 

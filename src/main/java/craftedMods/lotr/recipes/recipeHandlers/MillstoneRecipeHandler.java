@@ -35,7 +35,7 @@ public class MillstoneRecipeHandler extends AbstractRecipeHandler<MillstoneRecip
 	private final MillstoneRecipeHandlerRenderer renderer = new MillstoneRecipeHandlerRenderer();
 
 	public MillstoneRecipeHandler() {
-		super("millstone");
+		super("lotr.millstone");
 	}
 
 	@Override
