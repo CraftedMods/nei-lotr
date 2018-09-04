@@ -23,10 +23,10 @@ import craftedMods.recipes.api.*;
 import craftedMods.recipes.api.utils.RecipeHandlerRendererUtils;
 import craftedMods.recipes.api.utils.RecipeHandlerRendererUtils.EnumProgressBarDirection;
 import craftedMods.recipes.base.*;
+import lotr.common.LOTRMod;
 import lotr.common.tileentity.LOTRTileEntityHobbitOven;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
-import net.minecraft.util.StatCollector;
 
 @RegisteredHandler
 public class HobbitOvenRecipeHandler extends AbstractRecipeHandler<HobbitOvenRecipe> {
@@ -39,7 +39,7 @@ public class HobbitOvenRecipeHandler extends AbstractRecipeHandler<HobbitOvenRec
 
 	@Override
 	public String getDisplayName() {
-		return StatCollector.translateToLocal("container.lotr.hobbitOven");
+		return LOTRMod.hobbitOven.getLocalizedName();
 	}
 
 	@Override

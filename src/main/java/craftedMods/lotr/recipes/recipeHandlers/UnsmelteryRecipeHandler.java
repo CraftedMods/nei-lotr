@@ -29,6 +29,7 @@ import craftedMods.recipes.api.*;
 import craftedMods.recipes.api.utils.*;
 import craftedMods.recipes.api.utils.RecipeHandlerRendererUtils.EnumProgressBarDirection;
 import craftedMods.recipes.base.*;
+import lotr.common.LOTRMod;
 import lotr.common.tileentity.LOTRTileEntityUnsmeltery;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
@@ -73,7 +74,7 @@ public class UnsmelteryRecipeHandler extends AbstractRecipeHandler<UnsmelteryRec
 
 	@Override
 	public String getDisplayName() {
-		return StatCollector.translateToLocal("container.lotr.unsmeltery");
+		return LOTRMod.unsmeltery.getLocalizedName();
 	}
 
 	@Override

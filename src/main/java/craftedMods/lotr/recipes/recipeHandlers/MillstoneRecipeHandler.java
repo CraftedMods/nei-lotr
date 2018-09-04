@@ -24,6 +24,7 @@ import craftedMods.recipes.api.*;
 import craftedMods.recipes.api.utils.RecipeHandlerRendererUtils;
 import craftedMods.recipes.api.utils.RecipeHandlerRendererUtils.EnumProgressBarDirection;
 import craftedMods.recipes.base.*;
+import lotr.common.LOTRMod;
 import lotr.common.recipe.LOTRMillstoneRecipes;
 import lotr.common.recipe.LOTRMillstoneRecipes.MillstoneResult;
 import net.minecraft.item.ItemStack;
@@ -40,7 +41,7 @@ public class MillstoneRecipeHandler extends AbstractRecipeHandler<MillstoneRecip
 
 	@Override
 	public String getDisplayName() {
-		return StatCollector.translateToLocal("container.lotr.millstone");
+		return LOTRMod.millstone.getLocalizedName();
 	}
 
 	@Override

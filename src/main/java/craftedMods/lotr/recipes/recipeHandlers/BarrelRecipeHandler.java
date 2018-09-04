@@ -22,12 +22,12 @@ import craftedMods.recipes.api.*;
 import craftedMods.recipes.api.utils.ItemStackSet;
 import craftedMods.recipes.base.*;
 import lotr.client.gui.LOTRGuiBarrel;
+import lotr.common.LOTRMod;
 import lotr.common.item.LOTRPoisonedDrinks;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.util.StatCollector;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 @RegisteredHandler
@@ -54,7 +54,7 @@ public class BarrelRecipeHandler extends CraftingGridRecipeHandler {
 
 	@Override
 	public String getDisplayName() {
-		return StatCollector.translateToLocal("container.lotr.barrel");
+		return LOTRMod.barrel.getLocalizedName();
 	}
 
 	@Override

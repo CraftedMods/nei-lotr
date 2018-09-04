@@ -22,9 +22,9 @@ import java.util.*;
 import craftedMods.recipes.api.*;
 import craftedMods.recipes.api.utils.RecipeHandlerRendererUtils;
 import craftedMods.recipes.base.*;
+import lotr.common.LOTRMod;
 import lotr.common.recipe.LOTREntJarRecipes;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.StatCollector;
 
 @RegisteredHandler
 public class EntJarRecipeHandler extends AbstractRecipeHandler<ShapelessRecipe> {
@@ -37,7 +37,7 @@ public class EntJarRecipeHandler extends AbstractRecipeHandler<ShapelessRecipe> 
 
 	@Override
 	public String getDisplayName() {
-		return StatCollector.translateToLocal("tile.lotr:entJar.name");
+		return LOTRMod.entJar.getLocalizedName();
 	}
 
 	@Override
