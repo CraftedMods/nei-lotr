@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package craftedMods.lotr.recipes;
+package craftedMods.lotr.recipes.internal;
 
 import java.util.*;
 

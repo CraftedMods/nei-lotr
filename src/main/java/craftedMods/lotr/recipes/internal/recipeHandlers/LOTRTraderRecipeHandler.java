@@ -14,25 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package craftedMods.lotr.recipes;
+package craftedMods.lotr.recipes.internal.recipeHandlers;
 
-import java.io.InputStream;
-import java.util.Map;
-import java.util.function.Supplier;
+import craftedMods.lotr.recipes.api.recipeHandlers.AbstractTraderRecipeHandler;
+import lotr.common.entity.npc.LOTRTradeEntries;
 
-import craftedMods.recipes.api.*;
-import craftedMods.recipes.base.*;
-import net.minecraft.util.ResourceLocation;
+public class LOTRTraderRecipeHandler extends AbstractTraderRecipeHandler {
 
-@RegisteredHandler
-public class NeiLotrResourceHandler implements ResourceHandler {
-
-	@Override
-	public Map<ResourceLocation, Supplier<InputStream>> getResources() {
-		RecipeHandlerResourceLoader resourceLoader = new ClasspathResourceLoader();
-		resourceLoader.registerResource(new RecipeHandlerResourceLocation("lang/en_US.lang"));
-		resourceLoader.registerResource(new RecipeHandlerResourceLocation("lang/de_DE.lang"));
-		return resourceLoader.loadResources();
+	public LOTRTraderRecipeHandler(String unlocalizedName, String faction, LOTRTradeEntries itemsBought, LOTRTradeEntries itemsSold) {
+		super("lotr.trader.", unlocalizedName, faction, itemsBought, itemsSold);
 	}
 
 }

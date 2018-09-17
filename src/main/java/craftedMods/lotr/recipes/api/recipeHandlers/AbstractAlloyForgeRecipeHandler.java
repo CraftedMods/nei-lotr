@@ -14,30 +14,29 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package craftedMods.lotr.recipes.recipeHandlers;
+package craftedMods.lotr.recipes.api.recipeHandlers;
 
 import java.util.*;
 
-import craftedMods.lotr.recipes.recipeHandlers.AlloyForgeRecipeHandler.AlloyForgeRecipe;
+import craftedMods.lotr.recipes.api.recipeHandlers.AbstractAlloyForgeRecipeHandler.AlloyForgeRecipe;
 import craftedMods.recipes.api.*;
 import craftedMods.recipes.api.utils.*;
 import craftedMods.recipes.api.utils.RecipeHandlerRendererUtils.EnumProgressBarDirection;
 import craftedMods.recipes.base.*;
-import lotr.common.tileentity.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class AlloyForgeRecipeHandler extends AbstractRecipeHandler<AlloyForgeRecipe> {
+public abstract class AbstractAlloyForgeRecipeHandler extends AbstractRecipeHandler<AlloyForgeRecipe> {
 
 	private final AlloyForgeRecipeHandlerRenderer renderer = new AlloyForgeRecipeHandlerRenderer();
-	private final AlloyForgeAccess alloyForgeDummy;
+	protected final AlloyForgeAccess alloyForgeDummy;
 
 	private final AlloyForgeRecipeHandlerCacheManager cacheManager = new AlloyForgeRecipeHandlerCacheManager(this);
 
 	private boolean wasCacheLoaded = false;
 
-	public AlloyForgeRecipeHandler(String unlocalizedName, AlloyForgeAccess alloyForgeDummy) {
-		super("lotr.alloyForge." + unlocalizedName);
+	protected AbstractAlloyForgeRecipeHandler(String unlocalizedName, AlloyForgeAccess alloyForgeDummy) {
+		super(unlocalizedName);
 		this.alloyForgeDummy = alloyForgeDummy;
 	}
 
@@ -108,7 +107,7 @@ public class AlloyForgeRecipeHandler extends AbstractRecipeHandler<AlloyForgeRec
 
 	public class AlloyForgeRecipeHandlerCacheManager extends AbstractRecipeHandlerCacheManager<AlloyForgeRecipe> {
 
-		public AlloyForgeRecipeHandlerCacheManager(AlloyForgeRecipeHandler handler) {
+		public AlloyForgeRecipeHandlerCacheManager(AbstractAlloyForgeRecipeHandler handler) {
 			super(handler);
 		}
 
@@ -123,7 +122,7 @@ public class AlloyForgeRecipeHandler extends AbstractRecipeHandler<AlloyForgeRec
 					ret.add(recipe);
 				}
 			}
-			AlloyForgeRecipeHandler.this.wasCacheLoaded = ret.size() > 0;
+			AbstractAlloyForgeRecipeHandler.this.wasCacheLoaded = ret.size() > 0;
 			return ret;
 		}
 
@@ -131,7 +130,7 @@ public class AlloyForgeRecipeHandler extends AbstractRecipeHandler<AlloyForgeRec
 		public void writeRecipesToCache(NBTTagCompound cacheHeaderTag, NBTTagCompound cacheContentTag) {
 			super.writeRecipesToCache(cacheHeaderTag, cacheContentTag);
 			int recipeIndex = 0;
-			for (AlloyForgeRecipe recipe : AlloyForgeRecipeHandler.this.staticRecipes) {
+			for (AlloyForgeRecipe recipe : AbstractAlloyForgeRecipeHandler.this.staticRecipes) {
 				NBTTagCompound recipeTag = new NBTTagCompound();
 				recipe.writeRecipeToNBT(recipeTag);
 				cacheContentTag.setTag(Integer.toString(recipeIndex++), recipeTag);
@@ -140,10 +139,10 @@ public class AlloyForgeRecipeHandler extends AbstractRecipeHandler<AlloyForgeRec
 
 	}
 
-	public class AlloyForgeRecipeHandlerRenderer implements RecipeHandlerRenderer<AlloyForgeRecipeHandler, AlloyForgeRecipe> {
+	public class AlloyForgeRecipeHandlerRenderer implements RecipeHandlerRenderer<AbstractAlloyForgeRecipeHandler, AlloyForgeRecipe> {
 
 		@Override
-		public void renderBackground(AlloyForgeRecipeHandler handler, AlloyForgeRecipe recipe, int cycleticks) {
+		public void renderBackground(AbstractAlloyForgeRecipeHandler handler, AlloyForgeRecipe recipe, int cycleticks) {
 			RecipeHandlerRendererUtils.getInstance().bindTexture("lotr:gui/forge.png");
 			RecipeHandlerRendererUtils.getInstance().drawTexturedRectangle(15, 0, 20, 20, 110, 130);
 			RecipeHandlerRendererUtils.getInstance().drawProgressBar(75, 37, 176, 14, 16, 30, cycleticks % 48 / 48.0f, EnumProgressBarDirection.INCREASE_DOWN);
@@ -151,7 +150,7 @@ public class AlloyForgeRecipeHandler extends AbstractRecipeHandler<AlloyForgeRec
 		}
 
 		@Override
-		public void renderForeground(AlloyForgeRecipeHandler handler, AlloyForgeRecipe recipe, int cycleticks) {}
+		public void renderForeground(AbstractAlloyForgeRecipeHandler handler, AlloyForgeRecipe recipe, int cycleticks) {}
 
 	}
 
@@ -222,82 +221,6 @@ public class AlloyForgeRecipeHandler extends AbstractRecipeHandler<AlloyForgeRec
 		public ItemStack getSmeltingResult(ItemStack ingredient);
 
 		public ItemStack getAlloyResult(ItemStack ingredient, ItemStack alloy);
-	}
-
-	public static class DwarvenForgeAccess extends LOTRTileEntityDwarvenForge implements AlloyForgeAccess {
-
-		@Override
-		public String getName() {
-			return super.getForgeName();
-		}
-
-		@Override
-		public ItemStack getAlloyResult(ItemStack ingredient, ItemStack alloy) {
-			return super.getAlloySmeltingResult(ingredient, alloy);
-		}
-
-		@Override
-		public ItemStack getSmeltingResult(ItemStack itemstack) {
-			return super.getSmeltingResult(itemstack);
-		}
-
-	}
-
-	public static class ElvenForgeAccess extends LOTRTileEntityElvenForge implements AlloyForgeAccess {
-
-		@Override
-		public String getName() {
-			return super.getForgeName();
-		}
-
-		@Override
-		public ItemStack getAlloyResult(ItemStack ingredient, ItemStack alloy) {
-			return super.getAlloySmeltingResult(ingredient, alloy);
-		}
-
-		@Override
-		public ItemStack getSmeltingResult(ItemStack itemstack) {
-			return super.getSmeltingResult(itemstack);
-		}
-
-	}
-
-	public static class MenForgeAccess extends LOTRTileEntityAlloyForge implements AlloyForgeAccess {
-
-		@Override
-		public String getName() {
-			return super.getForgeName();
-		}
-
-		@Override
-		public ItemStack getAlloyResult(ItemStack ingredient, ItemStack alloy) {
-			return super.getAlloySmeltingResult(ingredient, alloy);
-		}
-
-		@Override
-		public ItemStack getSmeltingResult(ItemStack itemstack) {
-			return super.getSmeltingResult(itemstack);
-		}
-
-	}
-
-	public static class OrcForgeAccess extends LOTRTileEntityOrcForge implements AlloyForgeAccess {
-
-		@Override
-		public String getName() {
-			return super.getForgeName();
-		}
-
-		@Override
-		public ItemStack getAlloyResult(ItemStack ingredient, ItemStack alloy) {
-			return super.getAlloySmeltingResult(ingredient, alloy);
-		}
-
-		@Override
-		public ItemStack getSmeltingResult(ItemStack itemstack) {
-			return super.getSmeltingResult(itemstack);
-		}
-
 	}
 
 }

@@ -14,29 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package craftedMods.lotr.recipes;
+package craftedMods.lotr.recipes.api.utils;
 
-import craftedMods.recipes.api.*;
-import craftedMods.utils.*;
+@FunctionalInterface
+public interface TriFunction<U, V, W, X> {
 
-@RegisteredHandler
-public class NeiLotrVersionCheckerHandler implements VersionCheckerHandler {
-
-	public static final SemanticVersion NEI_LOTR_VERSION = new SemanticVersion(EnumVersionState.ALPHA, 0, 7, 0);
-
-	@Override
-	public SemanticVersion getCurrentVersion() {
-		return NeiLotrVersionCheckerHandler.NEI_LOTR_VERSION;
-	}
-
-	@Override
-	public String getLocalizedHandlerName() {
-		return "NEI LOTR";
-	}
-
-	@Override
-	public String getVersionFileURL() {
-		return "https://raw.githubusercontent.com/CraftedMods/nei-lotr/master/version.txt";
-	}
+	public X accept(U u, V v, W w);
 
 }

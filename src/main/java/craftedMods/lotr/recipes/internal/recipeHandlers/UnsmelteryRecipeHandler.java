@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package craftedMods.lotr.recipes.recipeHandlers;
+package craftedMods.lotr.recipes.internal.recipeHandlers;
 
 import java.lang.reflect.Method;
 import java.util.*;
@@ -24,7 +24,7 @@ import org.apache.logging.log4j.Logger;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
-import craftedMods.lotr.recipes.recipeHandlers.UnsmelteryRecipeHandler.UnsmelteryRecipe;
+import craftedMods.lotr.recipes.internal.recipeHandlers.UnsmelteryRecipeHandler.UnsmelteryRecipe;
 import craftedMods.recipes.api.*;
 import craftedMods.recipes.api.utils.*;
 import craftedMods.recipes.api.utils.RecipeHandlerRendererUtils.EnumProgressBarDirection;
@@ -68,7 +68,7 @@ public class UnsmelteryRecipeHandler extends AbstractRecipeHandler<UnsmelteryRec
 			this.getLargestUnsmeltingResultMethod = this.unsmeltery.getClass().getDeclaredMethod("getLargestUnsmeltingResult", ItemStack.class);
 			this.getLargestUnsmeltingResultMethod.setAccessible(true);
 		} catch (Exception e) {
-			logger.error("Couldn't access LOTR unsmeltery: ", e);
+			logger.error("Couldn't access the LOTR unsmeltery: ", e);
 		}
 	}
 
@@ -177,7 +177,7 @@ public class UnsmelteryRecipeHandler extends AbstractRecipeHandler<UnsmelteryRec
 		try {
 			ret = (ItemStack) this.getLargestUnsmeltingResultMethod.invoke(this.unsmeltery, stack);
 		} catch (Exception e) {
-			this.logger.error("Couldn't get largest unsmeltery result: ", e);
+			this.logger.error("Couldn't get the largest unsmeltery result: ", e);
 		}
 		return ret;
 	}

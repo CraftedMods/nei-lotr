@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package craftedMods.lotr.recipes.recipeHandlers;
+package craftedMods.lotr.recipes.internal.recipeHandlers;
 
 import java.lang.reflect.Field;
 import java.util.*;
 
-import craftedMods.lotr.recipes.recipeHandlers.MillstoneRecipeHandler.MillstoneRecipe;
+import craftedMods.lotr.recipes.internal.recipeHandlers.MillstoneRecipeHandler.MillstoneRecipe;
 import craftedMods.recipes.api.*;
 import craftedMods.recipes.api.utils.RecipeHandlerRendererUtils;
 import craftedMods.recipes.api.utils.RecipeHandlerRendererUtils.EnumProgressBarDirection;
@@ -57,7 +57,7 @@ public class MillstoneRecipeHandler extends AbstractRecipeHandler<MillstoneRecip
 			});
 
 		} catch (Exception e) {
-			this.logger.error("Couldn't access field \"recipes\" in LOTRMillstoneRecipes", e);
+			this.logger.error("Couldn't access the field \"recipes\" in LOTRMillstoneRecipes", e);
 		}
 		return ret;
 	}

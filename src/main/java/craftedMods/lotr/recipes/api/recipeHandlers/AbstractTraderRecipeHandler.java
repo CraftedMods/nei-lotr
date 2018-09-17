@@ -14,14 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package craftedMods.lotr.recipes.recipeHandlers;
+package craftedMods.lotr.recipes.api.recipeHandlers;
 
 import java.util.*;
 
 import org.apache.logging.log4j.Logger;
 
 import cpw.mods.fml.relauncher.ReflectionHelper;
-import craftedMods.lotr.recipes.recipeHandlers.TraderRecipeHandler.TraderRecipe;
+import craftedMods.lotr.recipes.api.recipeHandlers.AbstractTraderRecipeHandler.TraderRecipe;
+import craftedMods.lotr.recipes.api.utils.LOTRRecipeHandlerUtils;
 import craftedMods.recipes.api.*;
 import craftedMods.recipes.api.utils.*;
 import craftedMods.recipes.base.*;
@@ -33,7 +34,7 @@ import lotr.common.item.LOTRItemMug.Vessel;
 import net.minecraft.item.*;
 import net.minecraft.util.StatCollector;
 
-public class TraderRecipeHandler extends AbstractRecipeHandler<TraderRecipe> {
+public abstract class AbstractTraderRecipeHandler extends AbstractRecipeHandler<TraderRecipe> {
 
 	private final String traderName;
 	private final TraderRecipeHandlerRenderer renderer = new TraderRecipeHandlerRenderer();
@@ -44,8 +45,8 @@ public class TraderRecipeHandler extends AbstractRecipeHandler<TraderRecipe> {
 
 	public static final int ALL_STRENGHTS_META = 9999;
 
-	public TraderRecipeHandler(String unlocalizedName, String faction, LOTRTradeEntries itemsBought, LOTRTradeEntries itemsSold) {
-		super("lotr.trader." + (faction == null ? "" : faction + ".") + unlocalizedName);
+	public AbstractTraderRecipeHandler(String prefix, String unlocalizedName, String faction, LOTRTradeEntries itemsBought, LOTRTradeEntries itemsSold) {
+		super(prefix + (faction == null ? "" : faction + ".") + unlocalizedName);
 		this.traderName = unlocalizedName;
 		this.itemsBought = itemsBought;
 		this.itemsSold = itemsSold;
@@ -78,7 +79,7 @@ public class TraderRecipeHandler extends AbstractRecipeHandler<TraderRecipe> {
 				if (result.getItem() instanceof LOTRItemMug && LOTRItemMug.isItemFullDrink(result) && baseItem.getItem() instanceof LOTRItemMug
 						&& LOTRItemMug.isItemFullDrink(baseItem) && result.getItem() == baseItem.getItem()
 						&& LOTRPoisonedDrinks.isDrinkPoisoned(result) == LOTRPoisonedDrinks.isDrinkPoisoned(baseItem)
-						&& (baseItem.getItemDamage() == TraderRecipeHandler.ALL_STRENGHTS_META
+						&& (baseItem.getItemDamage() == AbstractTraderRecipeHandler.ALL_STRENGHTS_META
 								|| LOTRItemMug.getFoodStrength(result) == LOTRItemMug.getFoodStrength(baseItem))) {
 					Vessel vessel = LOTRItemMug.getVessel(result);
 					if (this.vesselsSold.contains(vessel)) {
@@ -95,8 +96,8 @@ public class TraderRecipeHandler extends AbstractRecipeHandler<TraderRecipe> {
 					if (toAdd.isItemStackDamageable()) {
 						toAdd.setItemDamage(0);
 					}
-					recipes.add(new TraderRecipe(toAdd, TraderRecipeHandler.getMinTradeCost(toAdd, baseCost, true),
-							TraderRecipeHandler.getMaxTradeCost(toAdd, baseCost, true), true));
+					recipes.add(new TraderRecipe(toAdd, AbstractTraderRecipeHandler.getMinTradeCost(toAdd, baseCost, true),
+							AbstractTraderRecipeHandler.getMaxTradeCost(toAdd, baseCost, true), true));
 				}
 			}
 		} else {
@@ -104,8 +105,8 @@ public class TraderRecipeHandler extends AbstractRecipeHandler<TraderRecipe> {
 				// boolean add = false;
 				int baseCost = entry.getCost();
 				ItemStack baseItem = entry.createTradeItem();
-				recipes.add(new TraderRecipe(baseItem, TraderRecipeHandler.getMinTradeCost(baseItem, baseCost, false),
-						TraderRecipeHandler.getMaxTradeCost(baseItem, baseCost, false), false));
+				recipes.add(new TraderRecipe(baseItem, AbstractTraderRecipeHandler.getMinTradeCost(baseItem, baseCost, false),
+						AbstractTraderRecipeHandler.getMaxTradeCost(baseItem, baseCost, false), false));
 			}
 		}
 		return recipes;
@@ -125,8 +126,8 @@ public class TraderRecipeHandler extends AbstractRecipeHandler<TraderRecipe> {
 					if (toAdd.isItemStackDamageable()) {
 						toAdd.setItemDamage(0);// TODO: Fix durability (permutation is set in plugin recipe handler)
 					}
-					recipes.add(new TraderRecipe(toAdd, TraderRecipeHandler.getMinTradeCost(toAdd, baseCost, false),
-							TraderRecipeHandler.getMaxTradeCost(toAdd, baseCost, false), false));
+					recipes.add(new TraderRecipe(toAdd, AbstractTraderRecipeHandler.getMinTradeCost(toAdd, baseCost, false),
+							AbstractTraderRecipeHandler.getMaxTradeCost(toAdd, baseCost, false), false));
 				}
 			}
 		} else {
@@ -135,16 +136,16 @@ public class TraderRecipeHandler extends AbstractRecipeHandler<TraderRecipe> {
 				int baseCost = entry.getCost();
 				ItemStack baseItem = entry.createTradeItem();
 				if (baseItem.getItem() instanceof LOTRItemMug && LOTRItemMug.isItemFullDrink(baseItem)
-						&& baseItem.getItemDamage() == TraderRecipeHandler.ALL_STRENGHTS_META) {
+						&& baseItem.getItemDamage() == AbstractTraderRecipeHandler.ALL_STRENGHTS_META) {
 					for (float strength : LOTRRecipeHandlerUtils.getDrinkStrenghts()) {
 						baseItem = baseItem.copy();
 						LOTRItemMug.setStrengthMeta(baseItem, LOTRRecipeHandlerUtils.getDrinkStrengthIndex(strength));
-						recipes.add(new TraderRecipe(baseItem, TraderRecipeHandler.getMinTradeCost(baseItem, baseCost, true),
-								TraderRecipeHandler.getMaxTradeCost(baseItem, baseCost, true), true));
+						recipes.add(new TraderRecipe(baseItem, AbstractTraderRecipeHandler.getMinTradeCost(baseItem, baseCost, true),
+								AbstractTraderRecipeHandler.getMaxTradeCost(baseItem, baseCost, true), true));
 					}
 				} else {
-					recipes.add(new TraderRecipe(baseItem, TraderRecipeHandler.getMinTradeCost(baseItem, baseCost, true),
-							TraderRecipeHandler.getMaxTradeCost(baseItem, baseCost, true), true));
+					recipes.add(new TraderRecipe(baseItem, AbstractTraderRecipeHandler.getMinTradeCost(baseItem, baseCost, true),
+							AbstractTraderRecipeHandler.getMaxTradeCost(baseItem, baseCost, true), true));
 				}
 			}
 		}
@@ -186,11 +187,11 @@ public class TraderRecipeHandler extends AbstractRecipeHandler<TraderRecipe> {
 	}
 
 	public static int getMinTradeCost(ItemStack itemStack, int baseCost, boolean sold) {
-		return TraderRecipeHandler.getTradeCost(itemStack, baseCost, sold, 0.75f);
+		return AbstractTraderRecipeHandler.getTradeCost(itemStack, baseCost, sold, 0.75f);
 	}
 
 	public static int getMaxTradeCost(ItemStack itemStack, int baseCost, boolean sold) {
-		return TraderRecipeHandler.getTradeCost(itemStack, baseCost, sold, 1.25f);
+		return AbstractTraderRecipeHandler.getTradeCost(itemStack, baseCost, sold, 1.25f);
 	}
 
 	public static int getTradeCost(ItemStack itemStack, int baseCost, boolean sold, float probabilityFactor) {
@@ -299,10 +300,10 @@ public class TraderRecipeHandler extends AbstractRecipeHandler<TraderRecipe> {
 
 	}
 
-	public class TraderRecipeHandlerRenderer implements RecipeHandlerRenderer<TraderRecipeHandler, TraderRecipe> {
+	public class TraderRecipeHandlerRenderer implements RecipeHandlerRenderer<AbstractTraderRecipeHandler, TraderRecipe> {
 
 		@Override
-		public void renderBackground(TraderRecipeHandler handler, TraderRecipe recipe, int cycleticks) {
+		public void renderBackground(AbstractTraderRecipeHandler handler, TraderRecipe recipe, int cycleticks) {
 			RecipeHandlerRendererUtils.getInstance().bindTexture(RecipeHandlerRenderer.DEFAULT_GUI_TEXTURE);
 			RecipeHandlerRendererUtils.getInstance().drawTexturedRectangle(42, 19, 65, 30, 80, 26);
 			RecipeHandlerRendererUtils.getInstance().drawRectangle(42, 13, 18, 10, 0xFFC6C6C6);
@@ -318,7 +319,7 @@ public class TraderRecipeHandler extends AbstractRecipeHandler<TraderRecipe> {
 		}
 
 		@Override
-		public void renderForeground(TraderRecipeHandler handler, TraderRecipe recipe, int cycleticks) {
+		public void renderForeground(AbstractTraderRecipeHandler handler, TraderRecipe recipe, int cycleticks) {
 			int offsetX = recipe.isSold() ? 0 : 81;
 			RecipeHandlerRendererUtils.getInstance().drawText(StatCollector.translateToLocal("neiLotr.handler.trader.minLabel"), offsetX + 15, 14, 4210752,
 					false);

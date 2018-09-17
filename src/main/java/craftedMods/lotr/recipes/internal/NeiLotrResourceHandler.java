@@ -14,11 +14,25 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package craftedMods.lotr.recipes.utils;
+package craftedMods.lotr.recipes.internal;
 
-@FunctionalInterface
-public interface TriFunction<U, V, W, X> {
+import java.io.InputStream;
+import java.util.Map;
+import java.util.function.Supplier;
 
-	public X accept(U u, V v, W w);
+import craftedMods.recipes.api.*;
+import craftedMods.recipes.base.*;
+import net.minecraft.util.ResourceLocation;
+
+@RegisteredHandler
+public class NeiLotrResourceHandler implements ResourceHandler {
+
+	@Override
+	public Map<ResourceLocation, Supplier<InputStream>> getResources() {
+		RecipeHandlerResourceLoader resourceLoader = new ClasspathResourceLoader();
+		resourceLoader.registerResource(new RecipeHandlerResourceLocation("lang/en_US.lang"));
+		resourceLoader.registerResource(new RecipeHandlerResourceLocation("lang/de_DE.lang"));
+		return resourceLoader.loadResources();
+	}
 
 }

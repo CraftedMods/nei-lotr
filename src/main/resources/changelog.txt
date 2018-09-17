@@ -1,8 +1,16 @@
 ===Changelog for NEI LOTR===
 Made by 'Crafted_Mods' or 'The_Ranger_Malvegil'
 
+ #1.0.0-ALPHA:
+  + Defined a public API
+  + Updated to NEIRecipeHandlers-2.0.2-ALPHA
+  + Updated to v34.3 of the LOTR Mod
+ 
+  * Fixed that the trader recipe handler for the "Umbar Stonemason" was registered twice
+  * Fixed that the LOTR coin count indicator was rendered for recipe handlers
+
  #0.7.0-ALPHA:
-  + Updated to Beta 34 of the LOTR Mod
+  + Updated to v34 of the LOTR Mod
    + Added support for the Gulf of Harad and Umbar Crafting Tables
    + Added the new technical blocks to the item hiding list
    + Added support for all new traders

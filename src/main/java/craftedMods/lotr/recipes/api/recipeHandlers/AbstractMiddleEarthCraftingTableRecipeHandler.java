@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package craftedMods.lotr.recipes.recipeHandlers;
+package craftedMods.lotr.recipes.api.recipeHandlers;
 
 import java.lang.reflect.Field;
 import java.util.*;
@@ -24,13 +24,13 @@ import craftedMods.recipes.base.*;
 import lotr.common.recipe.LOTRRecipePoisonWeapon;
 import net.minecraft.item.crafting.IRecipe;
 
-public class AbstractLOTRCraftingTableRecipeHandler extends CraftingGridRecipeHandler {
+public abstract class AbstractMiddleEarthCraftingTableRecipeHandler extends CraftingGridRecipeHandler {
 
-	protected AbstractLOTRCraftingTableRecipeHandler(String unlocalizedName) {
+	protected AbstractMiddleEarthCraftingTableRecipeHandler(String unlocalizedName) {
 		super(unlocalizedName);
 	}
 
-	protected AbstractLOTRCraftingTableRecipeHandler(String unlocalizedName, Collection<IRecipe> recipes) {
+	protected AbstractMiddleEarthCraftingTableRecipeHandler(String unlocalizedName, Collection<IRecipe> recipes) {
 		super(unlocalizedName);
 		this.recipes.addAll(recipes);
 	}
@@ -47,7 +47,7 @@ public class AbstractLOTRCraftingTableRecipeHandler extends CraftingGridRecipeHa
 				ingredients.add(RecipeHandlerUtils.getInstance().extractRecipeItems(catalystField.get(poisonRecipe)));
 				container.add(new ShapelessRecipe(ingredients, recipe.getRecipeOutput()));
 			} catch (Exception e) {
-				this.logger.error("Couldn't load poisoned weapon recipe: ", e);
+				this.logger.error("Couldn't load the poisoned weapon recipe: ", e);
 			}
 			return;
 		}

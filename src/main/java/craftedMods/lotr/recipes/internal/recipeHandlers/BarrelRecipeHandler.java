@@ -14,10 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package craftedMods.lotr.recipes.recipeHandlers;
+package craftedMods.lotr.recipes.internal.recipeHandlers;
 
 import java.util.*;
 
+import craftedMods.lotr.recipes.api.utils.LOTRRecipeHandlerUtils;
 import craftedMods.recipes.api.*;
 import craftedMods.recipes.api.utils.ItemStackSet;
 import craftedMods.recipes.base.*;

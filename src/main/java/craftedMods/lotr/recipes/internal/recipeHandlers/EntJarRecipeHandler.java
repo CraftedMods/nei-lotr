@@ -14,44 +14,48 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package craftedMods.lotr.recipes.recipeHandlers;
+package craftedMods.lotr.recipes.internal.recipeHandlers;
 
+import java.lang.reflect.Field;
 import java.util.*;
 
 import craftedMods.recipes.api.*;
 import craftedMods.recipes.api.utils.RecipeHandlerRendererUtils;
 import craftedMods.recipes.base.*;
 import lotr.common.LOTRMod;
-import lotr.common.tileentity.LOTRTileEntityKebabStand;
+import lotr.common.recipe.LOTREntJarRecipes;
 import net.minecraft.item.ItemStack;
 
 @RegisteredHandler
-public class KebabRecipeHandler extends AbstractRecipeHandler<ShapelessRecipe> {
+public class EntJarRecipeHandler extends AbstractRecipeHandler<ShapelessRecipe> {
 
-	private final KebabRecipeHandlerRenderer renderer = new KebabRecipeHandlerRenderer();
-	private final LOTRTileEntityKebabStand kebabStandDummy = new LOTRTileEntityKebabStand();
+	private final EntJarRecipeHandlerRenderer renderer = new EntJarRecipeHandlerRenderer();
 
-	public KebabRecipeHandler() {
-		super("lotr.kebab");
+	public EntJarRecipeHandler() {
+		super("lotr.entJar");
 	}
 
 	@Override
 	public String getDisplayName() {
-		return LOTRMod.kebabStand.getLocalizedName();
+		return LOTRMod.entJar.getLocalizedName();
 	}
 
 	@Override
-	public int getComplicatedStaticRecipeDepth() {
-		return 1;
-	}
-
-	@Override
-	public ShapelessRecipe loadComplicatedStaticRecipe(ItemStack... stacks) {
-		ShapelessRecipe recipe = null;
-		if (this.kebabStandDummy.isMeat(stacks[0])) {
-			recipe = new ShapelessRecipe(Arrays.asList(stacks[0]), new ItemStack(LOTRMod.kebab));
+	@SuppressWarnings("unchecked")
+	public Collection<ShapelessRecipe> loadSimpleStaticRecipes() {
+		Collection<ShapelessRecipe> ret = new ArrayList<>();
+		try {
+			Field entJarRecipesField = LOTREntJarRecipes.class.getDeclaredField("recipes");
+			entJarRecipesField.setAccessible(true);
+			Map<ItemStack, ItemStack> recipes = (Map<ItemStack, ItemStack>) entJarRecipesField.get(null);
+			recipes.forEach((ingredient, result) -> {
+				ret.add(new ShapelessRecipe(ingredient.copy(), result.copy()));
+			});
+		} catch (Exception e) {
+			this.logger.error("Couldn't access the field \"recipes\" in LOTREntJarRecipes.class", e);
 		}
-		return recipe;
+
+		return ret;
 	}
 
 	@Override
@@ -61,14 +65,14 @@ public class KebabRecipeHandler extends AbstractRecipeHandler<ShapelessRecipe> {
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public KebabRecipeHandlerRenderer getRenderer() {
+	public EntJarRecipeHandlerRenderer getRenderer() {
 		return this.renderer;
 	}
 
-	public class KebabRecipeHandlerRenderer implements RecipeHandlerRenderer<KebabRecipeHandler, ShapelessRecipe> {
+	public class EntJarRecipeHandlerRenderer implements RecipeHandlerRenderer<EntJarRecipeHandler, ShapelessRecipe> {
 
 		@Override
-		public void renderBackground(KebabRecipeHandler handler, ShapelessRecipe recipe, int cycleticks) {
+		public void renderBackground(EntJarRecipeHandler handler, ShapelessRecipe recipe, int cycleticks) {
 			RecipeHandlerRendererUtils.getInstance().bindTexture(RecipeHandlerRenderer.DEFAULT_GUI_TEXTURE);
 			RecipeHandlerRendererUtils.getInstance().drawTexturedRectangle(42, 19, 65, 30, 80, 26);
 			RecipeHandlerRendererUtils.getInstance().drawRectangle(42, 13, 18, 10, 0xFFC6C6C6);
@@ -76,7 +80,8 @@ public class KebabRecipeHandler extends AbstractRecipeHandler<ShapelessRecipe> {
 		}
 
 		@Override
-		public void renderForeground(KebabRecipeHandler handler, ShapelessRecipe recipe, int cycleticks) {}
+		public void renderForeground(EntJarRecipeHandler handler, ShapelessRecipe recipe, int cycleticks) {}
 
 	}
+
 }

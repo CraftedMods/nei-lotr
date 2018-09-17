@@ -14,31 +14,32 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package craftedMods.lotr.recipes.recipeHandlers;
+package craftedMods.lotr.recipes.internal.recipeHandlers;
 
 import java.util.*;
 
+import craftedMods.lotr.recipes.api.recipeHandlers.AbstractMiddleEarthCraftingTableRecipeHandler;
 import craftedMods.recipes.api.RecipeHandlerCraftingHelper;
 import craftedMods.recipes.base.*;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.StatCollector;
 
-public class MiddleEarthCraftingTableRecipeHandler extends AbstractLOTRCraftingTableRecipeHandler {
+public class LOTRCraftingTableRecipeHandler extends AbstractMiddleEarthCraftingTableRecipeHandler {
 
 	private final MiddleEarthCraftingTableRecipeHandlerCraftingHelper craftingHelper;
 
 	public static final String UNLOCALIZED_NAME_PREFIX = "lotr.middleEarthCrafting.";
 
-	public MiddleEarthCraftingTableRecipeHandler(String unlocalizedName, Class<? extends GuiContainer> guiClass, Collection<IRecipe> recipes) {
-		super(MiddleEarthCraftingTableRecipeHandler.UNLOCALIZED_NAME_PREFIX + unlocalizedName, recipes);
+	public LOTRCraftingTableRecipeHandler(String unlocalizedName, Class<? extends GuiContainer> guiClass, Collection<IRecipe> recipes) {
+		super(LOTRCraftingTableRecipeHandler.UNLOCALIZED_NAME_PREFIX + unlocalizedName, recipes);
 		this.craftingHelper = new MiddleEarthCraftingTableRecipeHandlerCraftingHelper(guiClass);
 	}
 
 	@Override
 	public String getDisplayName() {
-		return StatCollector.translateToLocal(
-				"container.lotr.crafting." + this.getUnlocalizedName().replace(MiddleEarthCraftingTableRecipeHandler.UNLOCALIZED_NAME_PREFIX, ""));
+		return StatCollector
+				.translateToLocal("container.lotr.crafting." + this.getUnlocalizedName().replace(LOTRCraftingTableRecipeHandler.UNLOCALIZED_NAME_PREFIX, ""));
 	}
 
 	@Override

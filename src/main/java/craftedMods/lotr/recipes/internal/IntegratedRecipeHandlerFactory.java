@@ -14,12 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package craftedMods.lotr.recipes;
+package craftedMods.lotr.recipes.internal;
 
 import java.util.*;
 
-import craftedMods.lotr.recipes.recipeHandlers.*;
+import org.apache.logging.log4j.*;
+
+import craftedMods.lotr.recipes.internal.recipeHandlers.*;
 import craftedMods.recipes.api.*;
+import lotr.client.LOTRGuiHandler;
 import lotr.client.gui.LOTRGuiCraftingTable;
 import lotr.common.entity.npc.*;
 import lotr.common.recipe.LOTRRecipes;
@@ -29,6 +32,8 @@ import net.minecraft.item.crafting.IRecipe;
 
 @RegisteredHandler
 public class IntegratedRecipeHandlerFactory implements RecipeHandlerFactory {
+
+	private static Logger logger = LogManager.getLogger(IntegratedRecipeHandlerFactory.class);
 
 	private static final Set<RecipeHandler<?>> recipeHandlers = new HashSet<>();
 
@@ -250,8 +255,6 @@ public class IntegratedRecipeHandlerFactory implements RecipeHandlerFactory {
 				LOTRTradeEntries.HARAD_MASON_SELL, LOTRTradeEntries.HARAD_MASON_BUY);
 		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityHarnedorMason.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_HARNEDOR,
 				LOTRTradeEntries.HARAD_MASON_SELL, LOTRTradeEntries.HARAD_MASON_BUY);
-		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityUmbarMason.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_UMBAR,
-				LOTRTradeEntries.HARAD_MASON_SELL, LOTRTradeEntries.HARAD_MASON_BUY);
 		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityGulfMason.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_GULF,
 				LOTRTradeEntries.HARAD_MASON_SELL, LOTRTradeEntries.HARAD_MASON_BUY);
 		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntitySouthronButcher.class, IntegratedRecipeHandlerFactory.FACTION_NEAR_HARAD_SOUTHRON,
@@ -335,20 +338,35 @@ public class IntegratedRecipeHandlerFactory implements RecipeHandlerFactory {
 		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityTauredainSmith.class, IntegratedRecipeHandlerFactory.FACTION_TAUREDAIN,
 				LOTRTradeEntries.TAUREDAIN_SMITH_SELL, LOTRTradeEntries.TAUREDAIN_SMITH_BUY);
 
-		IntegratedRecipeHandlerFactory.recipeHandlers.add(new AlloyForgeRecipeHandler("orc", new AlloyForgeRecipeHandler.OrcForgeAccess()));
-		IntegratedRecipeHandlerFactory.recipeHandlers.add(new AlloyForgeRecipeHandler("men", new AlloyForgeRecipeHandler.MenForgeAccess()));
-		IntegratedRecipeHandlerFactory.recipeHandlers.add(new AlloyForgeRecipeHandler("elven", new AlloyForgeRecipeHandler.ElvenForgeAccess()));
-		IntegratedRecipeHandlerFactory.recipeHandlers.add(new AlloyForgeRecipeHandler("dwarven", new AlloyForgeRecipeHandler.DwarvenForgeAccess()));
+		IntegratedRecipeHandlerFactory.recipeHandlers.add(new LOTRAlloyForgeRecipeHandler("orc", new LOTRAlloyForgeRecipeHandler.OrcForgeAccess()));
+		IntegratedRecipeHandlerFactory.recipeHandlers.add(new LOTRAlloyForgeRecipeHandler("men", new LOTRAlloyForgeRecipeHandler.MenForgeAccess()));
+		IntegratedRecipeHandlerFactory.recipeHandlers.add(new LOTRAlloyForgeRecipeHandler("elven", new LOTRAlloyForgeRecipeHandler.ElvenForgeAccess()));
+		IntegratedRecipeHandlerFactory.recipeHandlers.add(new LOTRAlloyForgeRecipeHandler("dwarven", new LOTRAlloyForgeRecipeHandler.DwarvenForgeAccess()));
+
+		IntegratedRecipeHandlerFactory.disableCoinCountDisplayForGUIs("codechicken.nei.recipe.GuiCraftingRecipe", "codechicken.nei.recipe.GuiUsageRecipe");
 	}
 
 	private static void registerMECTHandler(String unlocalizedName, Class<? extends GuiContainer> guiClass, Collection<IRecipe> recipes) {
-		IntegratedRecipeHandlerFactory.recipeHandlers.add(new MiddleEarthCraftingTableRecipeHandler(unlocalizedName, guiClass, recipes));
+		IntegratedRecipeHandlerFactory.recipeHandlers.add(new LOTRCraftingTableRecipeHandler(unlocalizedName, guiClass, recipes));
 	}
 
 	private static void registerTraderHandler(Class<? extends LOTRTradeable> entityClass, String faction, LOTRTradeEntries itemsBought,
 			LOTRTradeEntries itemsSold) {
 		IntegratedRecipeHandlerFactory.recipeHandlers.add(
-				new TraderRecipeHandler(EntityList.classToStringMapping.get(entityClass).toString().replace("lotr.", ""), faction, itemsBought, itemsSold));
+				new LOTRTraderRecipeHandler(EntityList.classToStringMapping.get(entityClass).toString().replace("lotr.", ""), faction, itemsBought, itemsSold));
+	}
+
+	@SuppressWarnings("unchecked")
+	private static void disableCoinCountDisplayForGUIs(String... guiClasses) {
+		for (String guiClass : guiClasses) {
+			try {
+				LOTRGuiHandler.coinCount_excludedGUIs.add((Class<? extends GuiContainer>) Class.forName(guiClass));
+			} catch (ClassNotFoundException e) {
+				IntegratedRecipeHandlerFactory.logger.error("Couldn't retrieve the GUI class instance", e);
+			} catch (ClassCastException e) {
+				IntegratedRecipeHandlerFactory.logger.error("The supplied type doesn't extend GUIContainer", e);
+			}
+		}
 	}
 
 	@Override

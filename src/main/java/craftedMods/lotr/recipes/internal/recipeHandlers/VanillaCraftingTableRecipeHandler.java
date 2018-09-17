@@ -14,12 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package craftedMods.lotr.recipes.recipeHandlers;
+package craftedMods.lotr.recipes.internal.recipeHandlers;
 
 import java.util.*;
 
 import org.apache.logging.log4j.Logger;
 
+import craftedMods.lotr.recipes.api.recipeHandlers.AbstractMiddleEarthCraftingTableRecipeHandler;
+import craftedMods.lotr.recipes.api.utils.LOTRRecipeHandlerUtils;
 import craftedMods.recipes.api.*;
 import craftedMods.recipes.api.utils.RecipeHandlerUtils;
 import craftedMods.recipes.base.*;
@@ -31,7 +33,7 @@ import net.minecraft.item.crafting.*;
 import net.minecraft.util.StatCollector;
 
 @RegisteredHandler
-public class VanillaCraftingTableRecipeHandler extends AbstractLOTRCraftingTableRecipeHandler {
+public class VanillaCraftingTableRecipeHandler extends AbstractMiddleEarthCraftingTableRecipeHandler {
 
 	private final VanillaCraftingTableRecipeHandlerCraftingHelper craftingHelper = new VanillaCraftingTableRecipeHandlerCraftingHelper();
 
