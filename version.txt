@@ -1,1 +1,1 @@
-1.0.0-ALPHA|http://zipansion.com/3WHHj|https://raw.githubusercontent.com/CraftedMods/nei-lotr/master/src/main/resources/changelog.txt
+1.0.0-ALPHA|https://github.com/CraftedMods/nei-lotr/releases|https://raw.githubusercontent.com/CraftedMods/nei-lotr/master/src/main/resources/changelog.txt
