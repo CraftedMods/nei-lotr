@@ -1,6 +1,9 @@
 ===Changelog for NEI LOTR===
 Made by 'Crafted_Mods' or 'The_Ranger_Malvegil'
 
+ #2.0.0-ALPHA:
+ 
+
  #1.0.0-ALPHA:
   + Defined a public API
   + Updated to NEIRecipeHandlers-2.0.2-ALPHA

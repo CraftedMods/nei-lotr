@@ -22,7 +22,7 @@ import craftedMods.utils.*;
 @RegisteredHandler
 public class NeiLotrVersionCheckerHandler implements VersionCheckerHandler {
 
-	public static final SemanticVersion NEI_LOTR_VERSION = new SemanticVersion(EnumVersionState.ALPHA, 1, 0, 0);
+	public static final SemanticVersion NEI_LOTR_VERSION = new SemanticVersion(EnumVersionState.ALPHA, 2, 0, 0);
 
 	@Override
 	public SemanticVersion getCurrentVersion() {
