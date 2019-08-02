@@ -9,6 +9,6 @@ The plugin was created with the MinecraftForge version "1.7.10-10.13.4.1614".
 You need to download the specified JARs and add them to a 'libs' folder.
 ## Announcements and Documentation
 Announcements regarding the plugin can be found here: http://lotrminecraftmod.wikia.com/wiki/Thread:174874
-Here is a link to the [official MC Forum thread](http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/wip-mods/2563743-1-7-10-nei-plugin-for-the-lord-of-the-rings-mod).
+Here is a link to the [official MC Forum thread](https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-mods/wip-mods/2563743-1-7-10-nei-plugin-for-the-lord-of-the-rings-mod-1).
 ## Download
 If you want to download pre-built versions of the plugin, look at the [releases tab](https://github.com/CraftedMods/nei-lotr/releases).
