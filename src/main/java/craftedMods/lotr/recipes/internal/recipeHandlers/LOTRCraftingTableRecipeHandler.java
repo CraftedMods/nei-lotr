@@ -19,7 +19,7 @@ package craftedMods.lotr.recipes.internal.recipeHandlers;
 import java.util.*;
 
 import craftedMods.lotr.recipes.api.recipeHandlers.AbstractMiddleEarthCraftingTableRecipeHandler;
-import craftedMods.recipes.api.RecipeHandlerCraftingHelper;
+import craftedMods.recipes.api.*;
 import craftedMods.recipes.base.*;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.crafting.IRecipe;
@@ -28,12 +28,14 @@ import net.minecraft.util.StatCollector;
 public class LOTRCraftingTableRecipeHandler extends AbstractMiddleEarthCraftingTableRecipeHandler {
 
 	private final MiddleEarthCraftingTableRecipeHandlerCraftingHelper craftingHelper;
+	private final MiddleEarthCraftingTableRecipeHandlerRecipeViewer recipeViewer;
 
 	public static final String UNLOCALIZED_NAME_PREFIX = "lotr.middleEarthCrafting.";
 
 	public LOTRCraftingTableRecipeHandler(String unlocalizedName, Class<? extends GuiContainer> guiClass, Collection<IRecipe> recipes) {
 		super(LOTRCraftingTableRecipeHandler.UNLOCALIZED_NAME_PREFIX + unlocalizedName, recipes);
 		this.craftingHelper = new MiddleEarthCraftingTableRecipeHandlerCraftingHelper(guiClass);
+		this.recipeViewer = new MiddleEarthCraftingTableRecipeHandlerRecipeViewer(this, guiClass);
 	}
 
 	@Override
@@ -45,6 +47,11 @@ public class LOTRCraftingTableRecipeHandler extends AbstractMiddleEarthCraftingT
 	@Override
 	public RecipeHandlerCraftingHelper<AbstractRecipe> getCraftingHelper() {
 		return this.craftingHelper;
+	}
+
+	@Override
+	public RecipeHandlerRecipeViewer<AbstractRecipe> getRecipeViewer() {
+		return recipeViewer;
 	}
 
 	private class MiddleEarthCraftingTableRecipeHandlerCraftingHelper extends AbstractCraftingHelper<AbstractRecipe> {
@@ -68,6 +75,28 @@ public class LOTRCraftingTableRecipeHandler extends AbstractMiddleEarthCraftingT
 		@Override
 		public int getOffsetY(Class<? extends GuiContainer> guiClass, AbstractRecipe recipe) {
 			return 11;
+		}
+
+	}
+
+	private class MiddleEarthCraftingTableRecipeHandlerRecipeViewer extends AbstractRecipeViewer<AbstractRecipe, LOTRCraftingTableRecipeHandler> {
+
+		private final Collection<Class<? extends GuiContainer>> supportedGuiClasses = new ArrayList<>();
+
+		public MiddleEarthCraftingTableRecipeHandlerRecipeViewer(LOTRCraftingTableRecipeHandler handler, Class<? extends GuiContainer> guiClass) {
+			super(handler);
+			supportedGuiClasses.addAll(RECIPE_HANDLER_GUIS);
+			supportedGuiClasses.add(guiClass);
+		}
+
+		@Override
+		public Collection<Class<? extends GuiContainer>> getSupportedGUIClasses() {
+			return supportedGuiClasses;
+		}
+
+		@Override
+		public Collection<AbstractRecipe> getAllRecipes() {
+			return handler.getStaticRecipes();
 		}
 
 	}

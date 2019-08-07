@@ -19,6 +19,7 @@ package craftedMods.lotr.recipes.api.recipeHandlers;
 import java.util.*;
 
 import org.apache.logging.log4j.Logger;
+import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.relauncher.ReflectionHelper;
 import craftedMods.lotr.recipes.api.recipeHandlers.AbstractTraderRecipeHandler.TraderRecipe;
@@ -26,11 +27,13 @@ import craftedMods.lotr.recipes.api.utils.LOTRRecipeHandlerUtils;
 import craftedMods.recipes.api.*;
 import craftedMods.recipes.api.utils.*;
 import craftedMods.recipes.base.*;
+import lotr.client.gui.LOTRGuiTrade;
 import lotr.common.LOTRMod;
 import lotr.common.enchant.LOTREnchantmentHelper;
 import lotr.common.entity.npc.*;
 import lotr.common.item.*;
 import lotr.common.item.LOTRItemMug.Vessel;
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.*;
 import net.minecraft.util.StatCollector;
 
@@ -38,6 +41,7 @@ public abstract class AbstractTraderRecipeHandler extends AbstractRecipeHandler<
 
 	private final String traderName;
 	private final TraderRecipeHandlerRenderer renderer = new TraderRecipeHandlerRenderer();
+	private final TraderRecipeHandlerRecipeViewer recipeViewer = new TraderRecipeHandlerRecipeViewer(this);
 	private final LOTRTradeEntries itemsBought;
 	private final LOTRTradeEntries itemsSold;
 
@@ -101,13 +105,19 @@ public abstract class AbstractTraderRecipeHandler extends AbstractRecipeHandler<
 				}
 			}
 		} else {
-			for (LOTRTradeEntry entry : this.itemsBought.tradeEntries) {
-				// boolean add = false;
-				int baseCost = entry.getCost();
-				ItemStack baseItem = entry.createTradeItem();
-				recipes.add(new TraderRecipe(baseItem, AbstractTraderRecipeHandler.getMinTradeCost(baseItem, baseCost, false),
-						AbstractTraderRecipeHandler.getMaxTradeCost(baseItem, baseCost, false), false));
-			}
+			recipes.addAll(getAllCraftingRecipes());
+		}
+		return recipes;
+	}
+
+	protected Collection<TraderRecipe> getAllCraftingRecipes() {// TODO cache in field
+		Collection<TraderRecipe> recipes = new ArrayList<>();
+		for (LOTRTradeEntry entry : this.itemsBought.tradeEntries) {
+			// boolean add = false;
+			int baseCost = entry.getCost();
+			ItemStack baseItem = entry.createTradeItem();
+			recipes.add(new TraderRecipe(baseItem, AbstractTraderRecipeHandler.getMinTradeCost(baseItem, baseCost, false),
+					AbstractTraderRecipeHandler.getMaxTradeCost(baseItem, baseCost, false), false));
 		}
 		return recipes;
 	}
@@ -131,26 +141,32 @@ public abstract class AbstractTraderRecipeHandler extends AbstractRecipeHandler<
 				}
 			}
 		} else {
-			for (LOTRTradeEntry entry : this.itemsSold.tradeEntries) {
-				// boolean add = false;
-				int baseCost = entry.getCost();
-				ItemStack baseItem = entry.createTradeItem();
-				if (baseItem.getItem() instanceof LOTRItemMug && LOTRItemMug.isItemFullDrink(baseItem)
-						&& baseItem.getItemDamage() == AbstractTraderRecipeHandler.ALL_STRENGHTS_META) {
-					for (float strength : LOTRRecipeHandlerUtils.getDrinkStrenghts()) {
-						baseItem = baseItem.copy();
-						LOTRItemMug.setStrengthMeta(baseItem, LOTRRecipeHandlerUtils.getDrinkStrengthIndex(strength));
-						recipes.add(new TraderRecipe(baseItem, AbstractTraderRecipeHandler.getMinTradeCost(baseItem, baseCost, true),
-								AbstractTraderRecipeHandler.getMaxTradeCost(baseItem, baseCost, true), true));
-					}
-				} else {
-					recipes.add(new TraderRecipe(baseItem, AbstractTraderRecipeHandler.getMinTradeCost(baseItem, baseCost, true),
-							AbstractTraderRecipeHandler.getMaxTradeCost(baseItem, baseCost, true), true));
-				}
-			}
+			recipes.addAll(getAllUsageRecipes());
 		}
 		return recipes;
 
+	}
+
+	protected Collection<TraderRecipe> getAllUsageRecipes() {// TODO cache
+		Collection<TraderRecipe> recipes = new ArrayList<>();
+		for (LOTRTradeEntry entry : this.itemsSold.tradeEntries) {
+			// boolean add = false;
+			int baseCost = entry.getCost();
+			ItemStack baseItem = entry.createTradeItem();
+			if (baseItem.getItem() instanceof LOTRItemMug && LOTRItemMug.isItemFullDrink(baseItem)
+					&& baseItem.getItemDamage() == AbstractTraderRecipeHandler.ALL_STRENGHTS_META) {
+				for (float strength : LOTRRecipeHandlerUtils.getDrinkStrenghts()) {
+					baseItem = baseItem.copy();
+					LOTRItemMug.setStrengthMeta(baseItem, LOTRRecipeHandlerUtils.getDrinkStrengthIndex(strength));
+					recipes.add(new TraderRecipe(baseItem, AbstractTraderRecipeHandler.getMinTradeCost(baseItem, baseCost, true),
+							AbstractTraderRecipeHandler.getMaxTradeCost(baseItem, baseCost, true), true));
+				}
+			} else {
+				recipes.add(new TraderRecipe(baseItem, AbstractTraderRecipeHandler.getMinTradeCost(baseItem, baseCost, true),
+						AbstractTraderRecipeHandler.getMaxTradeCost(baseItem, baseCost, true), true));
+			}
+		}
+		return recipes;
 	}
 
 	@Override
@@ -163,13 +179,13 @@ public abstract class AbstractTraderRecipeHandler extends AbstractRecipeHandler<
 		List<RecipeItemSlot> slots = new ArrayList<>();
 		if (role == EnumRecipeItemRole.INGREDIENT) {
 			if (recipe.isSold()) {
-				slots.add(this.createRecipeItemSlot(15, 24));
+				slots.add(this.createRecipeItemSlot(30, 24));
 			}
-			slots.add(this.createRecipeItemSlot(43, 24));
+			slots.add(this.createRecipeItemSlot(43 + 15, 24));
 		} else {
-			slots.add(this.createRecipeItemSlot(96, 24));
+			slots.add(this.createRecipeItemSlot(96 + 15, 24));
 			if (!recipe.isSold()) {
-				slots.add(this.createRecipeItemSlot(124, 24));
+				slots.add(this.createRecipeItemSlot(124 + 15, 24));
 			}
 		}
 		return slots;
@@ -184,6 +200,11 @@ public abstract class AbstractTraderRecipeHandler extends AbstractRecipeHandler<
 	@SuppressWarnings("unchecked")
 	public TraderRecipeHandlerRenderer getRenderer() {
 		return this.renderer;
+	}
+
+	@Override
+	public RecipeHandlerRecipeViewer<TraderRecipe> getRecipeViewer() {
+		return this.recipeViewer;
 	}
 
 	public static int getMinTradeCost(ItemStack itemStack, int baseCost, boolean sold) {
@@ -304,6 +325,9 @@ public abstract class AbstractTraderRecipeHandler extends AbstractRecipeHandler<
 
 		@Override
 		public void renderBackground(AbstractTraderRecipeHandler handler, TraderRecipe recipe, int cycleticks) {
+			GL11.glPushMatrix();
+			GL11.glTranslatef(15, 0, 0);
+
 			RecipeHandlerRendererUtils.getInstance().bindTexture(RecipeHandlerRenderer.DEFAULT_GUI_TEXTURE);
 			RecipeHandlerRendererUtils.getInstance().drawTexturedRectangle(42, 19, 65, 30, 80, 26);
 			RecipeHandlerRendererUtils.getInstance().drawRectangle(42, 13, 18, 10, 0xFFC6C6C6);
@@ -316,15 +340,70 @@ public abstract class AbstractTraderRecipeHandler extends AbstractRecipeHandler<
 			if (recipe.isSold()) {
 				RecipeHandlerRendererUtils.getInstance().drawTexturedRectangle(14, 23, 65, 34, 18, 18);
 			}
+
+			GL11.glPopMatrix();
 		}
 
 		@Override
 		public void renderForeground(AbstractTraderRecipeHandler handler, TraderRecipe recipe, int cycleticks) {
+			GL11.glPushMatrix();
+			GL11.glTranslatef(15, 0, 0);
+
 			int offsetX = recipe.isSold() ? 0 : 81;
 			RecipeHandlerRendererUtils.getInstance().drawText(StatCollector.translateToLocal("neiLotr.handler.trader.minLabel"), offsetX + 15, 14, 4210752,
 					false);
 			RecipeHandlerRendererUtils.getInstance().drawText(StatCollector.translateToLocal("neiLotr.handler.trader.maxLabel"), offsetX + 42, 14, 4210752,
 					false);
+
+			GL11.glPopMatrix();
+		}
+
+	}
+
+	public class TraderRecipeHandlerRecipeViewer extends AbstractRecipeViewer<TraderRecipe, AbstractTraderRecipeHandler> {
+
+		private Collection<Class<? extends GuiContainer>> supportedGuiClasses = new ArrayList<>();
+
+		public TraderRecipeHandlerRecipeViewer(AbstractTraderRecipeHandler handler) {
+			super(handler);
+			supportedGuiClasses.addAll(RECIPE_HANDLER_GUIS);
+			supportedGuiClasses.add(LOTRGuiTrade.class);
+		}
+
+		@Override
+		public Collection<Class<? extends GuiContainer>> getSupportedGUIClasses() {
+			return supportedGuiClasses;
+		}
+
+		@Override
+		public boolean isGuiContainerSupported(GuiContainer container) {
+			if (container instanceof LOTRGuiTrade) {
+				LOTRGuiTrade tradeGui = (LOTRGuiTrade) container;
+				if (!handler.traderName.equals(LOTRRecipeHandlerUtils.getUnlocalizedEntityName(tradeGui.theEntity.getClass()))) return false;
+			}
+			return true;
+		}
+
+		@Override
+		public Collection<TraderRecipe> getAllRecipes() {
+			Collection<TraderRecipe> recipes = handler.getAllCraftingRecipes();
+			recipes.addAll(handler.getAllUsageRecipes());
+			return recipes;
+		}
+
+		@Override
+		public int getOffsetX(Class<? extends GuiContainer> guiClass) {
+			return guiClass == LOTRGuiTrade.class ? 144 : super.getOffsetX(guiClass);
+		}
+
+		@Override
+		public int getOffsetY(Class<? extends GuiContainer> guiClass) {
+			return guiClass == LOTRGuiTrade.class ? 130 : super.getOffsetY(guiClass);
+		}
+
+		@Override
+		public String getButtonTooltip(Class<? extends GuiContainer> guiClass) {
+			return StatCollector.translateToLocal("neiLotr.handler.trader.recipeViewer.tooltip");
 		}
 
 	}

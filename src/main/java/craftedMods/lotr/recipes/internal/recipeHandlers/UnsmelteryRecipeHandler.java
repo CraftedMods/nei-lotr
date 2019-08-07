@@ -29,9 +29,11 @@ import craftedMods.recipes.api.*;
 import craftedMods.recipes.api.utils.*;
 import craftedMods.recipes.api.utils.RecipeHandlerRendererUtils.EnumProgressBarDirection;
 import craftedMods.recipes.base.*;
+import lotr.client.gui.*;
 import lotr.common.LOTRMod;
 import lotr.common.tileentity.LOTRTileEntityUnsmeltery;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
@@ -43,6 +45,7 @@ public class UnsmelteryRecipeHandler extends AbstractRecipeHandler<UnsmelteryRec
 
 	private final UnsmelteryRecipeHandlerRenderer renderer = new UnsmelteryRecipeHandlerRenderer();
 	private final UnsmelteryRecipeHandlerCacheManager cacheManager = new UnsmelteryRecipeHandlerCacheManager(this);
+	private final UnsmelteryRecipeHandlerRecipeViewer recipeViewer = new UnsmelteryRecipeHandlerRecipeViewer(this);
 
 	private final LOTRTileEntityUnsmeltery unsmeltery = new LOTRTileEntityUnsmeltery();
 	private Method getLargestUnsmeltingResultMethod;
@@ -170,6 +173,11 @@ public class UnsmelteryRecipeHandler extends AbstractRecipeHandler<UnsmelteryRec
 	@Override
 	public RecipeHandlerCacheManager<UnsmelteryRecipe> getCacheManager() {
 		return this.cacheManager;
+	}
+
+	@Override
+	public RecipeHandlerRecipeViewer<UnsmelteryRecipe> getRecipeViewer() {
+		return recipeViewer;
 	}
 
 	public ItemStack getLargestUnsmeltingResult(ItemStack stack) {
@@ -314,6 +322,33 @@ public class UnsmelteryRecipeHandler extends AbstractRecipeHandler<UnsmelteryRec
 			RecipeHandlerRendererUtils.getInstance().drawText(StatCollector.translateToLocal("neiLotr.handler.unsmeltery.maxLabel"), 135, 14, 4210752, false);
 			RecipeHandlerRendererUtils.getInstance().drawText(Integer.toString(recipe.getMinCount()), 122, 33, 0xFFFFFFFF, true);
 			RecipeHandlerRendererUtils.getInstance().drawText(Integer.toString(recipe.getMaxCount()), 147, 33, 0xFFFFFFFF, true);
+		}
+
+	}
+
+	public class UnsmelteryRecipeHandlerRecipeViewer extends AbstractRecipeViewer<UnsmelteryRecipe, UnsmelteryRecipeHandler> {
+
+		private final Collection<Class<? extends GuiContainer>> supportedGuiClasses = new ArrayList<>();
+
+		public UnsmelteryRecipeHandlerRecipeViewer(UnsmelteryRecipeHandler handler) {
+			super(handler);
+			this.supportedGuiClasses.addAll(AbstractRecipeViewer.RECIPE_HANDLER_GUIS);
+			this.supportedGuiClasses.add(LOTRGuiUnsmeltery.class);
+		}
+
+		@Override
+		public Collection<Class<? extends GuiContainer>> getSupportedGUIClasses() {
+			return supportedGuiClasses;
+		}
+
+		@Override
+		public Collection<UnsmelteryRecipe> getAllRecipes() {
+			return handler.getStaticRecipes();
+		}
+
+		@Override
+		public int getOffsetX(Class<? extends GuiContainer> guiClass) {
+			return guiClass == LOTRGuiUnsmeltery.class ? 18 : 8;
 		}
 
 	}

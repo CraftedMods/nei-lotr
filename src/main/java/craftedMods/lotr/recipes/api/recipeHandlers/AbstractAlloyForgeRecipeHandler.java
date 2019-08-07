@@ -19,10 +19,14 @@ package craftedMods.lotr.recipes.api.recipeHandlers;
 import java.util.*;
 
 import craftedMods.lotr.recipes.api.recipeHandlers.AbstractAlloyForgeRecipeHandler.AlloyForgeRecipe;
+import craftedMods.lotr.recipes.api.utils.LOTRRecipeHandlerUtils;
 import craftedMods.recipes.api.*;
 import craftedMods.recipes.api.utils.*;
 import craftedMods.recipes.api.utils.RecipeHandlerRendererUtils.EnumProgressBarDirection;
 import craftedMods.recipes.base.*;
+import lotr.client.gui.LOTRGuiAlloyForge;
+import lotr.common.tileentity.LOTRTileEntityAlloyForgeBase;
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -32,6 +36,7 @@ public abstract class AbstractAlloyForgeRecipeHandler extends AbstractRecipeHand
 	protected final AlloyForgeAccess alloyForgeDummy;
 
 	private final AlloyForgeRecipeHandlerCacheManager cacheManager = new AlloyForgeRecipeHandlerCacheManager(this);
+	private final AlloyForgeRecipeHandlerRecipeViewer recipeViewer = new AlloyForgeRecipeHandlerRecipeViewer(this);
 
 	private boolean wasCacheLoaded = false;
 
@@ -103,6 +108,11 @@ public abstract class AbstractAlloyForgeRecipeHandler extends AbstractRecipeHand
 	@Override
 	public RecipeHandlerCacheManager<AlloyForgeRecipe> getCacheManager() {
 		return this.cacheManager;
+	}
+
+	@Override
+	public RecipeHandlerRecipeViewer<AlloyForgeRecipe> getRecipeViewer() {
+		return recipeViewer;
 	}
 
 	public class AlloyForgeRecipeHandlerCacheManager extends AbstractRecipeHandlerCacheManager<AlloyForgeRecipe> {
@@ -221,6 +231,48 @@ public abstract class AbstractAlloyForgeRecipeHandler extends AbstractRecipeHand
 		public ItemStack getSmeltingResult(ItemStack ingredient);
 
 		public ItemStack getAlloyResult(ItemStack ingredient, ItemStack alloy);
+
+	}
+
+	public class AlloyForgeRecipeHandlerRecipeViewer extends AbstractRecipeViewer<AlloyForgeRecipe, AbstractAlloyForgeRecipeHandler> {
+
+		private final Collection<Class<? extends GuiContainer>> supportedGuiClasses = new ArrayList<>();
+
+		public AlloyForgeRecipeHandlerRecipeViewer(AbstractAlloyForgeRecipeHandler handler) {
+			super(handler);
+			this.supportedGuiClasses.addAll(AbstractRecipeViewer.RECIPE_HANDLER_GUIS);
+			this.supportedGuiClasses.add(LOTRGuiAlloyForge.class);
+		}
+
+		@Override
+		public Collection<AlloyForgeRecipe> getAllRecipes() {
+			return this.handler.getStaticRecipes();
+		}
+
+		@Override
+		public Collection<Class<? extends GuiContainer>> getSupportedGUIClasses() {
+			return supportedGuiClasses;
+		}
+
+		@Override
+		public boolean isGuiContainerSupported(GuiContainer container) {
+			if (container instanceof LOTRGuiAlloyForge) {
+				LOTRTileEntityAlloyForgeBase forge = LOTRRecipeHandlerUtils.getAlloyForge((LOTRGuiAlloyForge) container);
+				if (!forge.getForgeName().equals(this.handler.alloyForgeDummy.getName())) return false;
+			}
+			return true;
+		}
+
+		@Override
+		public int getOffsetX(Class<? extends GuiContainer> guiClass) {
+			return guiClass == LOTRGuiAlloyForge.class ? 144 : 9;
+		}
+
+		@Override
+		public int getOffsetY(Class<? extends GuiContainer> guiClass) {
+			return guiClass == LOTRGuiAlloyForge.class ? 94 : 18;
+		}
+
 	}
 
 }

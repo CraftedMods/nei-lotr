@@ -35,6 +35,7 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 public class BarrelRecipeHandler extends CraftingGridRecipeHandler {
 
 	private final BarrelRecipeHandlerCraftingHelper craftingHelper = new BarrelRecipeHandlerCraftingHelper();
+	private final BarrelRecipeHandlerRecipeViewer recipeViewer = new BarrelRecipeHandlerRecipeViewer(this);
 
 	public static final int[][] BARREL_STACKORDER = new int[][] { { 0, 0 }, { 1, 0 }, { 2, 0 }, { 0, 1 }, { 1, 1 }, { 2, 1 }, { 0, 2 }, { 1, 2 }, { 2, 2 } };
 
@@ -70,6 +71,11 @@ public class BarrelRecipeHandler extends CraftingGridRecipeHandler {
 		return this.craftingHelper;
 	}
 
+	@Override
+	public RecipeHandlerRecipeViewer<AbstractRecipe> getRecipeViewer() {
+		return this.recipeViewer;
+	}
+
 	public class BarrelRecipeHandlerCraftingHelper extends AbstractCraftingHelper<AbstractRecipe> {
 
 		@Override
@@ -86,6 +92,38 @@ public class BarrelRecipeHandler extends CraftingGridRecipeHandler {
 		public int getOffsetY(Class<? extends GuiContainer> guiClass, AbstractRecipe recipe) {
 			return 28;
 		}
+	}
+
+	public class BarrelRecipeHandlerRecipeViewer extends AbstractRecipeViewer<AbstractRecipe, BarrelRecipeHandler> {
+
+		private final Collection<Class<? extends GuiContainer>> supportedGuiClasses = new ArrayList<>();
+
+		public BarrelRecipeHandlerRecipeViewer(BarrelRecipeHandler handler) {
+			super(handler);
+			this.supportedGuiClasses.addAll(AbstractRecipeViewer.RECIPE_HANDLER_GUIS);
+			this.supportedGuiClasses.add(LOTRGuiBarrel.class);
+		}
+
+		@Override
+		public Collection<Class<? extends GuiContainer>> getSupportedGUIClasses() {
+			return this.supportedGuiClasses;
+		}
+
+		@Override
+		public Collection<AbstractRecipe> getAllRecipes() {
+			return this.handler.getStaticRecipes();
+		}
+
+		@Override
+		public int getOffsetX(Class<? extends GuiContainer> guiClass) {
+			return guiClass == LOTRGuiBarrel.class ? -2 : super.getOffsetX(guiClass);
+		}
+
+		@Override
+		public int getOffsetY(Class<? extends GuiContainer> guiClass) {
+			return guiClass == LOTRGuiBarrel.class ? 64 : super.getOffsetY(guiClass);
+		}
+
 	}
 
 	public class BrewingRecipe extends ShapelessRecipe {

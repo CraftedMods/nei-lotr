@@ -24,12 +24,14 @@ import craftedMods.recipes.api.utils.RecipeHandlerRendererUtils;
 import craftedMods.recipes.base.*;
 import lotr.common.LOTRMod;
 import lotr.common.recipe.LOTREntJarRecipes;
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
 
 @RegisteredHandler
 public class EntJarRecipeHandler extends AbstractRecipeHandler<ShapelessRecipe> {
 
 	private final EntJarRecipeHandlerRenderer renderer = new EntJarRecipeHandlerRenderer();
+	private final EntJarRecipeHandlerRecipeViewer recipeViewer = new EntJarRecipeHandlerRecipeViewer(this);
 
 	public EntJarRecipeHandler() {
 		super("lotr.entJar");
@@ -69,6 +71,11 @@ public class EntJarRecipeHandler extends AbstractRecipeHandler<ShapelessRecipe> 
 		return this.renderer;
 	}
 
+	@Override
+	public RecipeHandlerRecipeViewer<ShapelessRecipe> getRecipeViewer() {
+		return recipeViewer;
+	}
+
 	public class EntJarRecipeHandlerRenderer implements RecipeHandlerRenderer<EntJarRecipeHandler, ShapelessRecipe> {
 
 		@Override
@@ -81,6 +88,24 @@ public class EntJarRecipeHandler extends AbstractRecipeHandler<ShapelessRecipe> 
 
 		@Override
 		public void renderForeground(EntJarRecipeHandler handler, ShapelessRecipe recipe, int cycleticks) {}
+
+	}
+
+	public class EntJarRecipeHandlerRecipeViewer extends AbstractRecipeViewer<ShapelessRecipe, EntJarRecipeHandler> {
+
+		public EntJarRecipeHandlerRecipeViewer(EntJarRecipeHandler handler) {
+			super(handler);
+		}
+
+		@Override
+		public Collection<ShapelessRecipe> getAllRecipes() {
+			return handler.getStaticRecipes();
+		}
+
+		@Override
+		public int getOffsetX(Class<? extends GuiContainer> guiClass) {
+			return 8;
+		}
 
 	}
 

@@ -23,8 +23,10 @@ import craftedMods.recipes.api.*;
 import craftedMods.recipes.api.utils.RecipeHandlerRendererUtils;
 import craftedMods.recipes.api.utils.RecipeHandlerRendererUtils.EnumProgressBarDirection;
 import craftedMods.recipes.base.*;
+import lotr.client.gui.*;
 import lotr.common.LOTRMod;
 import lotr.common.tileentity.LOTRTileEntityHobbitOven;
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 
@@ -32,6 +34,7 @@ import net.minecraft.item.crafting.FurnaceRecipes;
 public class HobbitOvenRecipeHandler extends AbstractRecipeHandler<HobbitOvenRecipe> {
 
 	private final HobbitOvenRecipeHandlerRenderer renderer = new HobbitOvenRecipeHandlerRenderer();
+	private final HobbitOvenRecipeHandlerRecipeViewer recipeViewer = new HobbitOvenRecipeHandlerRecipeViewer(this);
 
 	public HobbitOvenRecipeHandler() {
 		super("lotr.hobbitOven");
@@ -86,6 +89,11 @@ public class HobbitOvenRecipeHandler extends AbstractRecipeHandler<HobbitOvenRec
 		return this.renderer;
 	}
 
+	@Override
+	public RecipeHandlerRecipeViewer<HobbitOvenRecipe> getRecipeViewer() {
+		return this.recipeViewer;
+	}
+
 	public class HobbitOvenRecipe extends FurnaceRecipe {
 
 		public HobbitOvenRecipe(ItemStack ingredient, ItemStack result) {
@@ -109,6 +117,38 @@ public class HobbitOvenRecipeHandler extends AbstractRecipeHandler<HobbitOvenRec
 
 		@Override
 		public void renderForeground(HobbitOvenRecipeHandler handler, HobbitOvenRecipe recipe, int cycleticks) {}
+
+	}
+
+	public class HobbitOvenRecipeHandlerRecipeViewer extends AbstractRecipeViewer<HobbitOvenRecipe, HobbitOvenRecipeHandler> {
+
+		private final Collection<Class<? extends GuiContainer>> supportedGuiClasses = new ArrayList<>();
+
+		public HobbitOvenRecipeHandlerRecipeViewer(HobbitOvenRecipeHandler handler) {
+			super(handler);
+			this.supportedGuiClasses.addAll(AbstractRecipeViewer.RECIPE_HANDLER_GUIS);
+			this.supportedGuiClasses.add(LOTRGuiHobbitOven.class);
+		}
+
+		@Override
+		public Collection<Class<? extends GuiContainer>> getSupportedGUIClasses() {
+			return this.supportedGuiClasses;
+		}
+
+		@Override
+		public Collection<HobbitOvenRecipe> getAllRecipes() {
+			return this.handler.getStaticRecipes();
+		}
+
+		@Override
+		public int getOffsetX(Class<? extends GuiContainer> guiClass) {
+			return guiClass == LOTRGuiHobbitOven.class ? 144 : 0;
+		}
+
+		@Override
+		public int getOffsetY(Class<? extends GuiContainer> guiClass) {
+			return guiClass == LOTRGuiHobbitOven.class ? 76 : 9;
+		}
 
 	}
 

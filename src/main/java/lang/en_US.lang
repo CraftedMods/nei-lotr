@@ -2,6 +2,7 @@ neiLotr.handler.vanillaCrafting.name=Vanilla Crafting
 neiLotr.handler.millstone.chanceLabel=Chance: %.2f%%
 neiLotr.handler.trader.minLabel=Min:
 neiLotr.handler.trader.maxLabel=Max:
+neiLotr.handler.trader.recipeViewer.tooltip=Show All Trades
 neiLotr.handler.unsmeltery.minLabel=Min:
 neiLotr.handler.unsmeltery.maxLabel=Max:
 

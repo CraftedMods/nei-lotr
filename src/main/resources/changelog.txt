@@ -3,6 +3,7 @@ Made by 'Crafted_Mods' or 'The_Ranger_Malvegil'
 
  #2.0.0-ALPHA:
  + Updated to NEIRecipeHandlers-1.0.0-BETA
+ + Added a button which shows all recipes of a handler to the handler and device GUIs ("transfer rect")
 
  #1.0.0-ALPHA:
   + Defined a public API

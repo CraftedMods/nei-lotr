@@ -20,6 +20,7 @@ import java.util.*;
 
 import org.apache.logging.log4j.*;
 
+import craftedMods.lotr.recipes.api.utils.LOTRRecipeHandlerUtils;
 import craftedMods.lotr.recipes.internal.recipeHandlers.*;
 import craftedMods.recipes.api.*;
 import lotr.client.LOTRGuiHandler;
@@ -27,7 +28,6 @@ import lotr.client.gui.LOTRGuiCraftingTable;
 import lotr.common.entity.npc.*;
 import lotr.common.recipe.LOTRRecipes;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.entity.EntityList;
 import net.minecraft.item.crafting.IRecipe;
 
 @RegisteredHandler
@@ -352,8 +352,8 @@ public class IntegratedRecipeHandlerFactory implements RecipeHandlerFactory {
 
 	private static void registerTraderHandler(Class<? extends LOTRTradeable> entityClass, String faction, LOTRTradeEntries itemsBought,
 			LOTRTradeEntries itemsSold) {
-		IntegratedRecipeHandlerFactory.recipeHandlers.add(
-				new LOTRTraderRecipeHandler(EntityList.classToStringMapping.get(entityClass).toString().replace("lotr.", ""), faction, itemsBought, itemsSold));
+		IntegratedRecipeHandlerFactory.recipeHandlers
+				.add(new LOTRTraderRecipeHandler(LOTRRecipeHandlerUtils.getUnlocalizedEntityName(entityClass), faction, itemsBought, itemsSold));
 	}
 
 	@SuppressWarnings("unchecked")

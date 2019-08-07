@@ -24,9 +24,11 @@ import craftedMods.recipes.api.*;
 import craftedMods.recipes.api.utils.RecipeHandlerRendererUtils;
 import craftedMods.recipes.api.utils.RecipeHandlerRendererUtils.EnumProgressBarDirection;
 import craftedMods.recipes.base.*;
+import lotr.client.gui.*;
 import lotr.common.LOTRMod;
 import lotr.common.recipe.LOTRMillstoneRecipes;
 import lotr.common.recipe.LOTRMillstoneRecipes.MillstoneResult;
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 
@@ -34,6 +36,7 @@ import net.minecraft.util.StatCollector;
 public class MillstoneRecipeHandler extends AbstractRecipeHandler<MillstoneRecipe> {
 
 	private final MillstoneRecipeHandlerRenderer renderer = new MillstoneRecipeHandlerRenderer();
+	private final MillstoneRecipeHandlerRecipeViewer recipeViewer = new MillstoneRecipeHandlerRecipeViewer(this);
 
 	public MillstoneRecipeHandler() {
 		super("lotr.millstone");
@@ -78,6 +81,11 @@ public class MillstoneRecipeHandler extends AbstractRecipeHandler<MillstoneRecip
 		return 1;
 	}
 
+	@Override
+	public RecipeHandlerRecipeViewer<MillstoneRecipe> getRecipeViewer() {
+		return recipeViewer;
+	}
+
 	public class MillstoneRecipe extends ShapelessRecipe {
 
 		private final float chance;
@@ -109,6 +117,37 @@ public class MillstoneRecipeHandler extends AbstractRecipeHandler<MillstoneRecip
 					false);
 		}
 
+	}
+
+	public class MillstoneRecipeHandlerRecipeViewer extends AbstractRecipeViewer<MillstoneRecipe, MillstoneRecipeHandler> {
+
+		private final Collection<Class<? extends GuiContainer>> supportedGuiClasses = new ArrayList<>();
+
+		public MillstoneRecipeHandlerRecipeViewer(MillstoneRecipeHandler handler) {
+			super(handler);
+			this.supportedGuiClasses.addAll(AbstractRecipeViewer.RECIPE_HANDLER_GUIS);
+			this.supportedGuiClasses.add(LOTRGuiMillstone.class);
+		}
+
+		@Override
+		public Collection<Class<? extends GuiContainer>> getSupportedGUIClasses() {
+			return supportedGuiClasses;
+		}
+
+		@Override
+		public Collection<MillstoneRecipe> getAllRecipes() {
+			return handler.getStaticRecipes();
+		}
+
+		@Override
+		public int getOffsetX(Class<? extends GuiContainer> guiClass) {
+			return guiClass == LOTRGuiMillstone.class ? 144 : 9;
+		}
+
+		@Override
+		public int getOffsetY(Class<? extends GuiContainer> guiClass) {
+			return guiClass == LOTRGuiMillstone.class ? 36 : 13;
+		}
 	}
 
 }

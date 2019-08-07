@@ -23,12 +23,15 @@ import craftedMods.recipes.api.utils.RecipeHandlerRendererUtils;
 import craftedMods.recipes.base.*;
 import lotr.common.LOTRMod;
 import lotr.common.tileentity.LOTRTileEntityKebabStand;
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
 
 @RegisteredHandler
 public class KebabRecipeHandler extends AbstractRecipeHandler<ShapelessRecipe> {
 
 	private final KebabRecipeHandlerRenderer renderer = new KebabRecipeHandlerRenderer();
+	private final KebabRecipeHandlerRecipeViewer recipeViewer = new KebabRecipeHandlerRecipeViewer(this);
+
 	private final LOTRTileEntityKebabStand kebabStandDummy = new LOTRTileEntityKebabStand();
 
 	public KebabRecipeHandler() {
@@ -65,6 +68,11 @@ public class KebabRecipeHandler extends AbstractRecipeHandler<ShapelessRecipe> {
 		return this.renderer;
 	}
 
+	@Override
+	public RecipeHandlerRecipeViewer<ShapelessRecipe> getRecipeViewer() {
+		return recipeViewer;
+	}
+
 	public class KebabRecipeHandlerRenderer implements RecipeHandlerRenderer<KebabRecipeHandler, ShapelessRecipe> {
 
 		@Override
@@ -77,6 +85,24 @@ public class KebabRecipeHandler extends AbstractRecipeHandler<ShapelessRecipe> {
 
 		@Override
 		public void renderForeground(KebabRecipeHandler handler, ShapelessRecipe recipe, int cycleticks) {}
+
+	}
+
+	public class KebabRecipeHandlerRecipeViewer extends AbstractRecipeViewer<ShapelessRecipe, KebabRecipeHandler> {
+
+		public KebabRecipeHandlerRecipeViewer(KebabRecipeHandler handler) {
+			super(handler);
+		}
+
+		@Override
+		public Collection<ShapelessRecipe> getAllRecipes() {
+			return handler.getStaticRecipes();
+		}
+
+		@Override
+		public int getOffsetX(Class<? extends GuiContainer> guiClass) {
+			return 8;
+		}
 
 	}
 }
