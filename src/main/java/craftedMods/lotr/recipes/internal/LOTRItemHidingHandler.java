@@ -114,6 +114,7 @@ public class LOTRItemHidingHandler implements ItemHidingHandler {
 		this.hideItemMeta(LOTRMod.slabSingle11);
 		this.hideItemMeta(LOTRMod.slabSingle12);
 		this.hideItemMeta(LOTRMod.slabSingle13);
+		this.hideItemMeta(LOTRMod.slabSingle14);
 		this.hideItemMeta(LOTRMod.slabSingleV);
 		this.hideItemMeta(LOTRMod.slabSingleThatch);
 		this.hideItemMeta(LOTRMod.slabSingleDirt);
@@ -146,6 +147,7 @@ public class LOTRItemHidingHandler implements ItemHidingHandler {
 		this.hideItemAll(LOTRMod.slabDouble11);
 		this.hideItemAll(LOTRMod.slabDouble12);
 		this.hideItemAll(LOTRMod.slabDouble13);
+		this.hideItemAll(LOTRMod.slabDouble14);
 		this.hideItemAll(LOTRMod.slabDoubleV);
 		this.hideItemAll(LOTRMod.slabDoubleThatch);
 		this.hideItemAll(LOTRMod.slabDoubleDirt);

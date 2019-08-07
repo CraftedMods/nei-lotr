@@ -337,6 +337,8 @@ public class IntegratedRecipeHandlerFactory implements RecipeHandlerFactory {
 				LOTRTradeEntries.GULF_BAKER_SELL, LOTRTradeEntries.GULF_BAKER_BUY);
 		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityTauredainSmith.class, IntegratedRecipeHandlerFactory.FACTION_TAUREDAIN,
 				LOTRTradeEntries.TAUREDAIN_SMITH_SELL, LOTRTradeEntries.TAUREDAIN_SMITH_BUY);
+		IntegratedRecipeHandlerFactory.registerTraderHandler(LOTREntityWickedDwarf.class, IntegratedRecipeHandlerFactory.FACTION_MORDOR,
+				LOTRTradeEntries.WICKED_DWARF_SELL, LOTRTradeEntries.WICKED_DWARF_BUY);
 
 		IntegratedRecipeHandlerFactory.recipeHandlers.add(new LOTRAlloyForgeRecipeHandler("orc", new LOTRAlloyForgeRecipeHandler.OrcForgeAccess()));
 		IntegratedRecipeHandlerFactory.recipeHandlers.add(new LOTRAlloyForgeRecipeHandler("men", new LOTRAlloyForgeRecipeHandler.MenForgeAccess()));

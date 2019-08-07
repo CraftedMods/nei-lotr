@@ -3,6 +3,9 @@ Made by 'Crafted_Mods' or 'The_Ranger_Malvegil'
 
  #2.0.0-ALPHA:
  + Updated to NEIRecipeHandlers-1.0.0-BETA
+ + Updated to v35.3 of the LOTR Mod
+  + Added a trader recipe handler for the Wicked  Dwarf
+  + Added the new technical blocks to the item hiding list
  + Added a button which shows all recipes of a handler to the handler and device GUIs ("transfer rect")
 
  #1.0.0-ALPHA:
