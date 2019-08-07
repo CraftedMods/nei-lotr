@@ -86,7 +86,7 @@ public class HobbitOvenRecipeHandler extends AbstractRecipeHandler<HobbitOvenRec
 		return this.renderer;
 	}
 
-	public class HobbitOvenRecipe extends FurnanceRecipe {
+	public class HobbitOvenRecipe extends FurnaceRecipe {
 
 		public HobbitOvenRecipe(ItemStack ingredient, ItemStack result) {
 			super(ingredient, result);

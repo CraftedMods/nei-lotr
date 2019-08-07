@@ -16,10 +16,9 @@
  ******************************************************************************/
 package craftedMods.lotr.recipes.api.recipeHandlers;
 
-import java.lang.reflect.Field;
-import java.util.*;
+import java.util.Collection;
 
-import craftedMods.recipes.api.utils.RecipeHandlerUtils;
+import craftedMods.lotr.recipes.api.utils.LOTRRecipeHandlerUtils;
 import craftedMods.recipes.base.*;
 import lotr.common.recipe.LOTRRecipePoisonWeapon;
 import net.minecraft.item.crafting.IRecipe;
@@ -38,18 +37,10 @@ public abstract class AbstractMiddleEarthCraftingTableRecipeHandler extends Craf
 	@Override
 	protected void undefinedRecipeTypeFound(IRecipe recipe, Collection<AbstractRecipe> container) {
 		if (recipe instanceof LOTRRecipePoisonWeapon) {
-			LOTRRecipePoisonWeapon poisonRecipe = (LOTRRecipePoisonWeapon) recipe;
-			List<Object> ingredients = new ArrayList<>();
-			ingredients.add(poisonRecipe.getInputItem());
-			try {
-				Field catalystField = LOTRRecipePoisonWeapon.class.getDeclaredField("catalystObj");
-				catalystField.setAccessible(true);
-				ingredients.add(RecipeHandlerUtils.getInstance().extractRecipeItems(catalystField.get(poisonRecipe)));
-				container.add(new ShapelessRecipe(ingredients, recipe.getRecipeOutput()));
-			} catch (Exception e) {
-				this.logger.error("Couldn't load the poisoned weapon recipe: ", e);
+			AbstractRecipe processedRecipe = LOTRRecipeHandlerUtils.processPoisonWeaponRecipe((LOTRRecipePoisonWeapon) recipe);
+			if (processedRecipe != null) {
+				container.add(processedRecipe);
 			}
-			return;
 		}
 		super.undefinedRecipeTypeFound(recipe, container);
 	}

@@ -234,7 +234,7 @@ public class UnsmelteryRecipeHandler extends AbstractRecipeHandler<UnsmelteryRec
 
 	}
 
-	public static class UnsmelteryRecipe extends FurnanceRecipe {
+	public static class UnsmelteryRecipe extends FurnaceRecipe {
 
 		private final ItemStack ingredientItem;
 		private final ItemStack resultItem;

@@ -154,7 +154,7 @@ public abstract class AbstractAlloyForgeRecipeHandler extends AbstractRecipeHand
 
 	}
 
-	public static class AlloyForgeRecipe extends FurnanceRecipe {
+	public static class AlloyForgeRecipe extends FurnaceRecipe {
 
 		private final ItemStack ingredientItem;
 		private final ItemStack alloyItem;
