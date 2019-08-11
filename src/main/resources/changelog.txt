@@ -9,6 +9,7 @@ Made by 'Crafted_Mods' or 'The_Ranger_Malvegil'
  + Added a button which shows all recipes of a handler to the handler and device GUIs ("transfer rect")
  
  * Fixed wrong recipes with the cauldron recipe handler and Hobbit Pipes with magic smoke
+ * Slightly improved the performance of the addon
 
  #1.0.0-ALPHA:
   + Defined a public API

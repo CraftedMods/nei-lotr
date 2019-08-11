@@ -19,14 +19,13 @@ package craftedMods.lotr.recipes.api.utils;
 import java.lang.reflect.Field;
 import java.util.*;
 
-import cpw.mods.fml.relauncher.ReflectionHelper;
 import craftedMods.recipes.api.utils.RecipeHandlerUtils;
 import craftedMods.recipes.base.*;
 import lotr.client.gui.LOTRGuiAlloyForge;
 import lotr.common.item.LOTRItemMug;
 import lotr.common.recipe.*;
 import lotr.common.tileentity.LOTRTileEntityAlloyForgeBase;
-import net.minecraft.entity.*;
+import net.minecraft.entity.EntityList;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.oredict.OreDictionary;
@@ -36,6 +35,9 @@ public class LOTRRecipeHandlerUtils {
 	private static ItemStack[] poison;
 	private static List<IRecipe> brewingRecipes;
 	private static float[] drinkStrenghts;
+
+	private static Field catalystField;
+	private static Field theForgeField;
 
 	public static ItemStack[] getPoison() {
 		if (LOTRRecipeHandlerUtils.poison == null) {
@@ -86,11 +88,14 @@ public class LOTRRecipeHandlerUtils {
 	}
 
 	public static AbstractRecipe processPoisonWeaponRecipe(LOTRRecipePoisonWeapon poisonRecipe) {
-		List<Object> ingredients = new ArrayList<>();
-		ingredients.add(poisonRecipe.getInputItem());
 		try {
-			Field catalystField = LOTRRecipePoisonWeapon.class.getDeclaredField("catalystObj");
-			catalystField.setAccessible(true);
+			if (catalystField == null) {
+				catalystField = LOTRRecipePoisonWeapon.class.getDeclaredField("catalystObj");
+				catalystField.setAccessible(true);
+			}
+			List<Object> ingredients = new ArrayList<>();
+			ingredients.add(poisonRecipe.getInputItem());
+
 			ingredients.add(RecipeHandlerUtils.getInstance().extractRecipeItems(catalystField.get(poisonRecipe)));
 			return new ShapelessRecipe(ingredients, poisonRecipe.getRecipeOutput());
 		} catch (Exception e) {
@@ -101,7 +106,17 @@ public class LOTRRecipeHandlerUtils {
 	}
 
 	public static LOTRTileEntityAlloyForgeBase getAlloyForge(LOTRGuiAlloyForge gui) {
-		return ReflectionHelper.getPrivateValue(LOTRGuiAlloyForge.class, gui, "theForge");
+		try {
+			if (theForgeField == null) {
+				theForgeField = LOTRGuiAlloyForge.class.getDeclaredField("theForge");
+				theForgeField.setAccessible(true);
+			}
+			return (LOTRTileEntityAlloyForgeBase) theForgeField.get(gui);
+		} catch (Exception e) {
+			System.err.print("Couldn't load the poisoned weapon recipe: ");
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public static String getUnlocalizedEntityName(Class<?> entityClass) {
