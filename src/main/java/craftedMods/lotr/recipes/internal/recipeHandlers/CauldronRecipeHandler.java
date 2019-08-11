@@ -50,7 +50,7 @@ public class CauldronRecipeHandler extends AbstractRecipeHandler<ShapelessRecipe
 
 		this.handleUndyedResultItem(LOTRItemPouch.class, result, LOTRItemPouch::isPouchDyed,
 				this.getDefaultColorPermutations(result, LOTRItemPouch::setPouchColor), recipes);
-		this.handleUndyedResultItem(LOTRItemHobbitPipe.class, result, LOTRItemHobbitPipe::isPipeDyed, this.getHobbitPipeDyePermutations(result), recipes);
+		this.handleUndyedResultItem(LOTRItemHobbitPipe.class, result, stack -> LOTRItemHobbitPipe.getSmokeColor(stack) != 0, this.getHobbitPipeDyePermutations(result), recipes);
 		this.handleUndyedResultItem(LOTRItemLeatherHat.class, result,
 				((Predicate<ItemStack>) LOTRItemLeatherHat::isHatDyed).or(LOTRItemLeatherHat::isFeatherDyed), this.getLeatherHatDyePermutations(result),
 				recipes);
@@ -86,7 +86,7 @@ public class CauldronRecipeHandler extends AbstractRecipeHandler<ShapelessRecipe
 
 	private Function<ItemStack, Collection<ItemStack>> getHobbitPipeDyePermutations(ItemStack result) {
 		Collection<ItemStack> data = new ArrayList<>();
-		for (int i = 0; i < 15; i++) {
+		for (int i = 0; i < 16; i++) {
 			ItemStack dyedStack = result.copy();
 			LOTRItemHobbitPipe.setSmokeColor(dyedStack, i + 1);
 			data.add(dyedStack);
@@ -129,7 +129,8 @@ public class CauldronRecipeHandler extends AbstractRecipeHandler<ShapelessRecipe
 		Collection<ShapelessRecipe> recipes = new ArrayList<>();
 
 		this.handleDyeableIngredientItem(LOTRItemPouch.class, ingredient, LOTRItemPouch::isPouchDyed, LOTRItemPouch::removePouchDye, recipes);
-		this.handleDyeableIngredientItem(LOTRItemHobbitPipe.class, ingredient, LOTRItemHobbitPipe::isPipeDyed, LOTRItemHobbitPipe::removePipeDye, recipes);
+		this.handleDyeableIngredientItem(LOTRItemHobbitPipe.class, ingredient, stack -> LOTRItemHobbitPipe.getSmokeColor(stack) != 0,
+				LOTRItemHobbitPipe::removePipeDye, recipes);
 		this.handleDyeableIngredientItem(LOTRItemLeatherHat.class, ingredient,
 				((Predicate<ItemStack>) LOTRItemLeatherHat::isHatDyed).or(LOTRItemLeatherHat::isFeatherDyed), LOTRItemLeatherHat::removeHatAndFeatherDye,
 				recipes);
