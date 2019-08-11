@@ -40,6 +40,7 @@ public abstract class AbstractMiddleEarthCraftingTableRecipeHandler extends Craf
 			AbstractRecipe processedRecipe = LOTRRecipeHandlerUtils.processPoisonWeaponRecipe((LOTRRecipePoisonWeapon) recipe);
 			if (processedRecipe != null) {
 				container.add(processedRecipe);
+				return;
 			}
 		}
 		super.undefinedRecipeTypeFound(recipe, container);
