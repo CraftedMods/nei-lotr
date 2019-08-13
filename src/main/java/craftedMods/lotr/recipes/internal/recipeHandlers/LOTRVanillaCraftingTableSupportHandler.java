@@ -9,17 +9,28 @@ import craftedMods.recipes.api.*;
 import craftedMods.recipes.base.*;
 import lotr.common.item.LOTRPoisonedDrinks;
 import lotr.common.recipe.*;
-import net.minecraft.item.ItemStack;
+import net.minecraft.block.Block;
+import net.minecraft.item.*;
 import net.minecraft.item.crafting.IRecipe;
 
 @RegisteredHandler
 public class LOTRVanillaCraftingTableSupportHandler implements VanillaCraftingTableRecipeHandlerSupport {
 
 	@Override
-	public Pair<AbstractRecipe, Boolean> undefinedRecipeTypeFound(IRecipe recipe) {
+	public Pair<Collection<AbstractRecipe>, Boolean> undefinedRecipeTypeFound(IRecipe recipe) {
 		if (recipe instanceof LOTRRecipesPoisonDrinks) return Pair.of(null, true);
-		if (recipe instanceof LOTRRecipePoisonWeapon) return Pair.of(LOTRRecipeHandlerUtils.processPoisonWeaponRecipe((LOTRRecipePoisonWeapon) recipe), false);
+		if (recipe instanceof LOTRRecipePoisonWeapon)
+			return Pair.of(Arrays.asList(LOTRRecipeHandlerUtils.processPoisonWeaponRecipe((LOTRRecipePoisonWeapon) recipe)), false);
+		if (recipe instanceof LOTRRecipesTreasurePile) return this.processTreasurePileRecipe((LOTRRecipesTreasurePile) recipe);
 		return null;
+	}
+
+	private Pair<Collection<AbstractRecipe>, Boolean> processTreasurePileRecipe(LOTRRecipesTreasurePile recipe) {
+		Pair<Block, Item> recipeItems = LOTRRecipeHandlerUtils.getTreasurePileRecipeItems(recipe);
+		// TODO Only a subset of the treasure pile recipes is currently supported (pile to ingot)
+		return Pair.of(
+				Arrays.asList(new ShapedRecipe(1, 1, new Object[] { new ItemStack(recipeItems.getLeft(), 1, 7) }, new ItemStack(recipeItems.getRight(), 4))),
+				false);
 	}
 
 	@Override
@@ -40,6 +51,16 @@ public class LOTRVanillaCraftingTableSupportHandler implements VanillaCraftingTa
 			recipe = new PoisonedDrinkRecipe(ingredients, result);
 		}
 		return recipe;
+	}
+
+	@Override
+	public Collection<AbstractRecipe> getDynamicCraftingRecipes(ItemStack result) {
+		return Arrays.asList();
+	}
+
+	@Override
+	public Collection<AbstractRecipe> getDynamicUsageRecipes(ItemStack ingredient) {
+		return Arrays.asList();
 	}
 
 	@Override

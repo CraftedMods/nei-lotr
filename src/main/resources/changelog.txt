@@ -7,6 +7,7 @@ Made by 'Crafted_Mods' or 'The_Ranger_Malvegil'
   + Added a trader recipe handler for the Wicked  Dwarf
   + Added the new technical blocks to the item hiding list
  + Added a button which shows all recipes of a handler to the handler and device GUIs ("transfer rect")
+ + Added support for the treasure pile to ingot recipes
  
  * Fixed wrong recipes with the cauldron recipe handler and Hobbit Pipes with magic smoke
  * Slightly improved the performance of the addon
