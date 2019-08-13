@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2018 CraftedMods (see https://github.com/CraftedMods)
+ * Copyright (C) 2019 CraftedMods (see https://github.com/CraftedMods)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ import craftedMods.recipes.api.*;
 import craftedMods.recipes.api.utils.*;
 import craftedMods.recipes.api.utils.RecipeHandlerRendererUtils.EnumProgressBarDirection;
 import craftedMods.recipes.base.*;
-import lotr.client.gui.*;
+import lotr.client.gui.LOTRGuiUnsmeltery;
 import lotr.common.LOTRMod;
 import lotr.common.tileentity.LOTRTileEntityUnsmeltery;
 import net.minecraft.client.Minecraft;
@@ -177,7 +177,7 @@ public class UnsmelteryRecipeHandler extends AbstractRecipeHandler<UnsmelteryRec
 
 	@Override
 	public RecipeHandlerRecipeViewer<UnsmelteryRecipe> getRecipeViewer() {
-		return recipeViewer;
+		return this.recipeViewer;
 	}
 
 	public ItemStack getLargestUnsmeltingResult(ItemStack stack) {
@@ -338,12 +338,12 @@ public class UnsmelteryRecipeHandler extends AbstractRecipeHandler<UnsmelteryRec
 
 		@Override
 		public Collection<Class<? extends GuiContainer>> getSupportedGUIClasses() {
-			return supportedGuiClasses;
+			return this.supportedGuiClasses;
 		}
 
 		@Override
 		public Collection<UnsmelteryRecipe> getAllRecipes() {
-			return handler.getStaticRecipes();
+			return this.handler.getStaticRecipes();
 		}
 
 		@Override

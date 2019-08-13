@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2018 CraftedMods (see https://github.com/CraftedMods)
+ * Copyright (C) 2019 CraftedMods (see https://github.com/CraftedMods)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,7 +51,7 @@ public class LOTRCraftingTableRecipeHandler extends AbstractMiddleEarthCraftingT
 
 	@Override
 	public RecipeHandlerRecipeViewer<AbstractRecipe> getRecipeViewer() {
-		return recipeViewer;
+		return this.recipeViewer;
 	}
 
 	private class MiddleEarthCraftingTableRecipeHandlerCraftingHelper extends AbstractCraftingHelper<AbstractRecipe> {
@@ -85,18 +85,18 @@ public class LOTRCraftingTableRecipeHandler extends AbstractMiddleEarthCraftingT
 
 		public MiddleEarthCraftingTableRecipeHandlerRecipeViewer(LOTRCraftingTableRecipeHandler handler, Class<? extends GuiContainer> guiClass) {
 			super(handler);
-			supportedGuiClasses.addAll(RECIPE_HANDLER_GUIS);
-			supportedGuiClasses.add(guiClass);
+			this.supportedGuiClasses.addAll(AbstractRecipeViewer.RECIPE_HANDLER_GUIS);
+			this.supportedGuiClasses.add(guiClass);
 		}
 
 		@Override
 		public Collection<Class<? extends GuiContainer>> getSupportedGUIClasses() {
-			return supportedGuiClasses;
+			return this.supportedGuiClasses;
 		}
 
 		@Override
 		public Collection<AbstractRecipe> getAllRecipes() {
-			return handler.getStaticRecipes();
+			return this.handler.getStaticRecipes();
 		}
 
 	}

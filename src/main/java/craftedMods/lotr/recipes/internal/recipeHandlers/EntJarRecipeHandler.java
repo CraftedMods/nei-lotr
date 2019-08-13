@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2018 CraftedMods (see https://github.com/CraftedMods)
+ * Copyright (C) 2019 CraftedMods (see https://github.com/CraftedMods)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -73,7 +73,7 @@ public class EntJarRecipeHandler extends AbstractRecipeHandler<ShapelessRecipe> 
 
 	@Override
 	public RecipeHandlerRecipeViewer<ShapelessRecipe> getRecipeViewer() {
-		return recipeViewer;
+		return this.recipeViewer;
 	}
 
 	public class EntJarRecipeHandlerRenderer implements RecipeHandlerRenderer<EntJarRecipeHandler, ShapelessRecipe> {
@@ -99,7 +99,7 @@ public class EntJarRecipeHandler extends AbstractRecipeHandler<ShapelessRecipe> 
 
 		@Override
 		public Collection<ShapelessRecipe> getAllRecipes() {
-			return handler.getStaticRecipes();
+			return this.handler.getStaticRecipes();
 		}
 
 		@Override

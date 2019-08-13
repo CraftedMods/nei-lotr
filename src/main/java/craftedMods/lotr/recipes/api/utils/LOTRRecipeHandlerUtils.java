@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2018 CraftedMods (see https://github.com/CraftedMods)
+ * Copyright (C) 2019 CraftedMods (see https://github.com/CraftedMods)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -94,14 +94,14 @@ public class LOTRRecipeHandlerUtils {
 
 	public static AbstractRecipe processPoisonWeaponRecipe(LOTRRecipePoisonWeapon poisonRecipe) {
 		try {
-			if (catalystField == null) {
-				catalystField = LOTRRecipePoisonWeapon.class.getDeclaredField("catalystObj");
-				catalystField.setAccessible(true);
+			if (LOTRRecipeHandlerUtils.catalystField == null) {
+				LOTRRecipeHandlerUtils.catalystField = LOTRRecipePoisonWeapon.class.getDeclaredField("catalystObj");
+				LOTRRecipeHandlerUtils.catalystField.setAccessible(true);
 			}
 			List<Object> ingredients = new ArrayList<>();
 			ingredients.add(poisonRecipe.getInputItem());
 
-			ingredients.add(RecipeHandlerUtils.getInstance().extractRecipeItems(catalystField.get(poisonRecipe)));
+			ingredients.add(RecipeHandlerUtils.getInstance().extractRecipeItems(LOTRRecipeHandlerUtils.catalystField.get(poisonRecipe)));
 			return new ShapelessRecipe(ingredients, poisonRecipe.getRecipeOutput());
 		} catch (Exception e) {
 			System.err.print("Couldn't load the poisoned weapon recipe: ");
@@ -112,11 +112,11 @@ public class LOTRRecipeHandlerUtils {
 
 	public static LOTRTileEntityAlloyForgeBase getAlloyForge(LOTRGuiAlloyForge gui) {
 		try {
-			if (theForgeField == null) {
-				theForgeField = LOTRGuiAlloyForge.class.getDeclaredField("theForge");
-				theForgeField.setAccessible(true);
+			if (LOTRRecipeHandlerUtils.theForgeField == null) {
+				LOTRRecipeHandlerUtils.theForgeField = LOTRGuiAlloyForge.class.getDeclaredField("theForge");
+				LOTRRecipeHandlerUtils.theForgeField.setAccessible(true);
 			}
-			return (LOTRTileEntityAlloyForgeBase) theForgeField.get(gui);
+			return (LOTRTileEntityAlloyForgeBase) LOTRRecipeHandlerUtils.theForgeField.get(gui);
 		} catch (Exception e) {
 			System.err.print("Couldn't load the poisoned weapon recipe: ");
 			e.printStackTrace();
@@ -130,14 +130,14 @@ public class LOTRRecipeHandlerUtils {
 
 	public static Pair<Block, Item> getTreasurePileRecipeItems(LOTRRecipesTreasurePile recipe) {
 		try {
-			if (treasureBlockField == null || ingotItemField == null) {
-				treasureBlockField = LOTRRecipesTreasurePile.class.getDeclaredField("treasureBlock");
-				ingotItemField = LOTRRecipesTreasurePile.class.getDeclaredField("ingotItem");
+			if (LOTRRecipeHandlerUtils.treasureBlockField == null || LOTRRecipeHandlerUtils.ingotItemField == null) {
+				LOTRRecipeHandlerUtils.treasureBlockField = LOTRRecipesTreasurePile.class.getDeclaredField("treasureBlock");
+				LOTRRecipeHandlerUtils.ingotItemField = LOTRRecipesTreasurePile.class.getDeclaredField("ingotItem");
 
-				treasureBlockField.setAccessible(true);
-				ingotItemField.setAccessible(true);
+				LOTRRecipeHandlerUtils.treasureBlockField.setAccessible(true);
+				LOTRRecipeHandlerUtils.ingotItemField.setAccessible(true);
 			}
-			return Pair.of((Block) treasureBlockField.get(recipe), (Item) ingotItemField.get(recipe));
+			return Pair.of((Block) LOTRRecipeHandlerUtils.treasureBlockField.get(recipe), (Item) LOTRRecipeHandlerUtils.ingotItemField.get(recipe));
 		} catch (Exception e) {
 			System.err.print("Couldn't load the poisoned weapon recipe: ");
 			e.printStackTrace();

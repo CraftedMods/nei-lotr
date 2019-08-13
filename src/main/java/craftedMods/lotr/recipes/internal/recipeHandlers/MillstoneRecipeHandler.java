@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2018 CraftedMods (see https://github.com/CraftedMods)
+ * Copyright (C) 2019 CraftedMods (see https://github.com/CraftedMods)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ import craftedMods.recipes.api.*;
 import craftedMods.recipes.api.utils.RecipeHandlerRendererUtils;
 import craftedMods.recipes.api.utils.RecipeHandlerRendererUtils.EnumProgressBarDirection;
 import craftedMods.recipes.base.*;
-import lotr.client.gui.*;
+import lotr.client.gui.LOTRGuiMillstone;
 import lotr.common.LOTRMod;
 import lotr.common.recipe.LOTRMillstoneRecipes;
 import lotr.common.recipe.LOTRMillstoneRecipes.MillstoneResult;
@@ -83,7 +83,7 @@ public class MillstoneRecipeHandler extends AbstractRecipeHandler<MillstoneRecip
 
 	@Override
 	public RecipeHandlerRecipeViewer<MillstoneRecipe> getRecipeViewer() {
-		return recipeViewer;
+		return this.recipeViewer;
 	}
 
 	public class MillstoneRecipe extends ShapelessRecipe {
@@ -131,12 +131,12 @@ public class MillstoneRecipeHandler extends AbstractRecipeHandler<MillstoneRecip
 
 		@Override
 		public Collection<Class<? extends GuiContainer>> getSupportedGUIClasses() {
-			return supportedGuiClasses;
+			return this.supportedGuiClasses;
 		}
 
 		@Override
 		public Collection<MillstoneRecipe> getAllRecipes() {
-			return handler.getStaticRecipes();
+			return this.handler.getStaticRecipes();
 		}
 
 		@Override

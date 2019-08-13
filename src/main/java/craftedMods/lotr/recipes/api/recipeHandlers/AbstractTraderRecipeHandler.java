@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2018 CraftedMods (see https://github.com/CraftedMods)
+ * Copyright (C) 2019 CraftedMods (see https://github.com/CraftedMods)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -105,7 +105,7 @@ public abstract class AbstractTraderRecipeHandler extends AbstractRecipeHandler<
 				}
 			}
 		} else {
-			recipes.addAll(getAllCraftingRecipes());
+			recipes.addAll(this.getAllCraftingRecipes());
 		}
 		return recipes;
 	}
@@ -141,7 +141,7 @@ public abstract class AbstractTraderRecipeHandler extends AbstractRecipeHandler<
 				}
 			}
 		} else {
-			recipes.addAll(getAllUsageRecipes());
+			recipes.addAll(this.getAllUsageRecipes());
 		}
 		return recipes;
 
@@ -366,28 +366,28 @@ public abstract class AbstractTraderRecipeHandler extends AbstractRecipeHandler<
 
 		public TraderRecipeHandlerRecipeViewer(AbstractTraderRecipeHandler handler) {
 			super(handler);
-			supportedGuiClasses.addAll(RECIPE_HANDLER_GUIS);
-			supportedGuiClasses.add(LOTRGuiTrade.class);
+			this.supportedGuiClasses.addAll(AbstractRecipeViewer.RECIPE_HANDLER_GUIS);
+			this.supportedGuiClasses.add(LOTRGuiTrade.class);
 		}
 
 		@Override
 		public Collection<Class<? extends GuiContainer>> getSupportedGUIClasses() {
-			return supportedGuiClasses;
+			return this.supportedGuiClasses;
 		}
 
 		@Override
 		public boolean isGuiContainerSupported(GuiContainer container) {
 			if (container instanceof LOTRGuiTrade) {
 				LOTRGuiTrade tradeGui = (LOTRGuiTrade) container;
-				if (!handler.traderName.equals(LOTRRecipeHandlerUtils.getUnlocalizedEntityName(tradeGui.theEntity.getClass()))) return false;
+				if (!this.handler.traderName.equals(LOTRRecipeHandlerUtils.getUnlocalizedEntityName(tradeGui.theEntity.getClass()))) return false;
 			}
 			return true;
 		}
 
 		@Override
 		public Collection<TraderRecipe> getAllRecipes() {
-			Collection<TraderRecipe> recipes = handler.getAllCraftingRecipes();
-			recipes.addAll(handler.getAllUsageRecipes());
+			Collection<TraderRecipe> recipes = this.handler.getAllCraftingRecipes();
+			recipes.addAll(this.handler.getAllUsageRecipes());
 			return recipes;
 		}
 

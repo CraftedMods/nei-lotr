@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2018 CraftedMods (see https://github.com/CraftedMods)
+ * Copyright (C) 2019 CraftedMods (see https://github.com/CraftedMods)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -70,7 +70,7 @@ public class KebabRecipeHandler extends AbstractRecipeHandler<ShapelessRecipe> {
 
 	@Override
 	public RecipeHandlerRecipeViewer<ShapelessRecipe> getRecipeViewer() {
-		return recipeViewer;
+		return this.recipeViewer;
 	}
 
 	public class KebabRecipeHandlerRenderer implements RecipeHandlerRenderer<KebabRecipeHandler, ShapelessRecipe> {
@@ -96,7 +96,7 @@ public class KebabRecipeHandler extends AbstractRecipeHandler<ShapelessRecipe> {
 
 		@Override
 		public Collection<ShapelessRecipe> getAllRecipes() {
-			return handler.getStaticRecipes();
+			return this.handler.getStaticRecipes();
 		}
 
 		@Override

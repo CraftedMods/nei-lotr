@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2018 CraftedMods (see https://github.com/CraftedMods)
+ * Copyright (C) 2019 CraftedMods (see https://github.com/CraftedMods)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -112,7 +112,7 @@ public abstract class AbstractAlloyForgeRecipeHandler extends AbstractRecipeHand
 
 	@Override
 	public RecipeHandlerRecipeViewer<AlloyForgeRecipe> getRecipeViewer() {
-		return recipeViewer;
+		return this.recipeViewer;
 	}
 
 	public class AlloyForgeRecipeHandlerCacheManager extends AbstractRecipeHandlerCacheManager<AlloyForgeRecipe> {
@@ -251,7 +251,7 @@ public abstract class AbstractAlloyForgeRecipeHandler extends AbstractRecipeHand
 
 		@Override
 		public Collection<Class<? extends GuiContainer>> getSupportedGUIClasses() {
-			return supportedGuiClasses;
+			return this.supportedGuiClasses;
 		}
 
 		@Override

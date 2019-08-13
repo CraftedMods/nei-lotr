@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2018 CraftedMods (see https://github.com/CraftedMods)
+ * Copyright (C) 2019 CraftedMods (see https://github.com/CraftedMods)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -50,7 +50,8 @@ public class CauldronRecipeHandler extends AbstractRecipeHandler<ShapelessRecipe
 
 		this.handleUndyedResultItem(LOTRItemPouch.class, result, LOTRItemPouch::isPouchDyed,
 				this.getDefaultColorPermutations(result, LOTRItemPouch::setPouchColor), recipes);
-		this.handleUndyedResultItem(LOTRItemHobbitPipe.class, result, stack -> LOTRItemHobbitPipe.getSmokeColor(stack) != 0, this.getHobbitPipeDyePermutations(result), recipes);
+		this.handleUndyedResultItem(LOTRItemHobbitPipe.class, result, stack -> LOTRItemHobbitPipe.getSmokeColor(stack) != 0,
+				this.getHobbitPipeDyePermutations(result), recipes);
 		this.handleUndyedResultItem(LOTRItemLeatherHat.class, result,
 				((Predicate<ItemStack>) LOTRItemLeatherHat::isHatDyed).or(LOTRItemLeatherHat::isFeatherDyed), this.getLeatherHatDyePermutations(result),
 				recipes);

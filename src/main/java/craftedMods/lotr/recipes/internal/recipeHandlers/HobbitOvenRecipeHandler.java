@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2018 CraftedMods (see https://github.com/CraftedMods)
+ * Copyright (C) 2019 CraftedMods (see https://github.com/CraftedMods)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ import craftedMods.recipes.api.*;
 import craftedMods.recipes.api.utils.RecipeHandlerRendererUtils;
 import craftedMods.recipes.api.utils.RecipeHandlerRendererUtils.EnumProgressBarDirection;
 import craftedMods.recipes.base.*;
-import lotr.client.gui.*;
+import lotr.client.gui.LOTRGuiHobbitOven;
 import lotr.common.LOTRMod;
 import lotr.common.tileentity.LOTRTileEntityHobbitOven;
 import net.minecraft.client.gui.inventory.GuiContainer;
