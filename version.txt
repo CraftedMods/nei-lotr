@@ -1,1 +1,1 @@
-2.0.0-ALPHA|https://github.com/CraftedMods/nei-lotr/releases|https://raw.githubusercontent.com/CraftedMods/nei-lotr/master/src/main/resources/changelog.txt
+2.0.0-ALPHA|https://www.curseforge.com/minecraft/mc-mods/nei-lotr/files|https://raw.githubusercontent.com/CraftedMods/nei-lotr/master/src/main/resources/changelog.txt
