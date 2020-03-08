@@ -40,13 +40,13 @@ public class BarrelRecipeHandler extends CraftingGridRecipeHandler {
 	public static final int[][] BARREL_STACKORDER = new int[][] { { 0, 0 }, { 1, 0 }, { 2, 0 }, { 0, 1 }, { 1, 1 }, { 2, 1 }, { 0, 2 }, { 1, 2 }, { 2, 2 } };
 
 	public BarrelRecipeHandler() {
-		super("lotr.barrel", LOTRRecipeHandlerUtils.getBrewingRecipes());
+		super("lotr.barrel", LOTRRecipeHandlerUtils::getBrewingRecipes);
 	}
 
 	@Override
 	public Collection<AbstractRecipe> loadSimpleStaticRecipes() {
 		Collection<AbstractRecipe> ret = new ArrayList<>();
-		for (IRecipe recipe : this.recipes)
+		for (IRecipe recipe : this.recipesListGetter.get ())
 			if (recipe instanceof ShapelessOreRecipe) {
 				ShapelessOreRecipe shapelessOreRecipe = (ShapelessOreRecipe) recipe;
 				ret.add(new BrewingRecipe(shapelessOreRecipe.getInput(), shapelessOreRecipe.getRecipeOutput()));

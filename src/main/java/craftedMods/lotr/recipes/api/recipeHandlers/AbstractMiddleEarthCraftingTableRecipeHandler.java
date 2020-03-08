@@ -17,33 +17,48 @@
 package craftedMods.lotr.recipes.api.recipeHandlers;
 
 import java.util.Collection;
+import java.util.function.Supplier;
 
 import craftedMods.lotr.recipes.api.utils.LOTRRecipeHandlerUtils;
+import craftedMods.recipes.api.utils.RecipeHandlerUtils;
 import craftedMods.recipes.base.*;
 import lotr.common.recipe.LOTRRecipePoisonWeapon;
 import net.minecraft.item.crafting.IRecipe;
 
-public abstract class AbstractMiddleEarthCraftingTableRecipeHandler extends CraftingGridRecipeHandler {
+public abstract class AbstractMiddleEarthCraftingTableRecipeHandler extends CraftingGridRecipeHandler
+{
 
-	protected AbstractMiddleEarthCraftingTableRecipeHandler(String unlocalizedName) {
-		super(unlocalizedName);
-	}
+    protected AbstractMiddleEarthCraftingTableRecipeHandler (String unlocalizedName)
+    {
+        super (unlocalizedName);
+    }
 
-	protected AbstractMiddleEarthCraftingTableRecipeHandler(String unlocalizedName, Collection<IRecipe> recipes) {
-		super(unlocalizedName);
-		this.recipes.addAll(recipes);
-	}
+    protected AbstractMiddleEarthCraftingTableRecipeHandler (String unlocalizedName,
+        Supplier<Collection<IRecipe>> recipesGetter)
+    {
+        super (unlocalizedName, recipesGetter);
+    }
 
-	@Override
-	protected void undefinedRecipeTypeFound(IRecipe recipe, Collection<AbstractRecipe> container) {
-		if (recipe instanceof LOTRRecipePoisonWeapon) {
-			AbstractRecipe processedRecipe = LOTRRecipeHandlerUtils.processPoisonWeaponRecipe((LOTRRecipePoisonWeapon) recipe);
-			if (processedRecipe != null) {
-				container.add(processedRecipe);
-				return;
-			}
-		}
-		super.undefinedRecipeTypeFound(recipe, container);
-	}
+    @Override
+    protected void undefinedRecipeTypeFound (IRecipe recipe, Collection<AbstractRecipe> container)
+    {
+        if (recipe instanceof LOTRRecipePoisonWeapon)
+        {
+            AbstractRecipe processedRecipe = LOTRRecipeHandlerUtils
+                .processPoisonWeaponRecipe ((LOTRRecipePoisonWeapon) recipe);
+            if (processedRecipe != null)
+            {
+                container.add (processedRecipe);
+                return;
+            }
+        }
+        super.undefinedRecipeTypeFound (recipe, container);
+    }
+    
+    @Override
+    protected boolean isMineTweakerSupportEnabled ()
+    {
+        return RecipeHandlerUtils.getInstance ().hasMineTweaker () && LOTRRecipeHandlerUtils.hasMtLotr ();
+    }
 
 }

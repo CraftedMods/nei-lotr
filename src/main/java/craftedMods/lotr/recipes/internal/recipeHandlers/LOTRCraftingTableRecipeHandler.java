@@ -17,6 +17,7 @@
 package craftedMods.lotr.recipes.internal.recipeHandlers;
 
 import java.util.*;
+import java.util.function.Supplier;
 
 import craftedMods.lotr.recipes.api.recipeHandlers.AbstractMiddleEarthCraftingTableRecipeHandler;
 import craftedMods.recipes.api.*;
@@ -32,8 +33,8 @@ public class LOTRCraftingTableRecipeHandler extends AbstractMiddleEarthCraftingT
 
 	public static final String UNLOCALIZED_NAME_PREFIX = "lotr.middleEarthCrafting.";
 
-	public LOTRCraftingTableRecipeHandler(String unlocalizedName, Class<? extends GuiContainer> guiClass, Collection<IRecipe> recipes) {
-		super(LOTRCraftingTableRecipeHandler.UNLOCALIZED_NAME_PREFIX + unlocalizedName, recipes);
+	public LOTRCraftingTableRecipeHandler(String unlocalizedName, Class<? extends GuiContainer> guiClass, Supplier<Collection<IRecipe>> recipesGetter) {
+		super(LOTRCraftingTableRecipeHandler.UNLOCALIZED_NAME_PREFIX + unlocalizedName, recipesGetter);
 		this.craftingHelper = new MiddleEarthCraftingTableRecipeHandlerCraftingHelper(guiClass);
 		this.recipeViewer = new MiddleEarthCraftingTableRecipeHandlerRecipeViewer(this, guiClass);
 	}
@@ -94,10 +95,11 @@ public class LOTRCraftingTableRecipeHandler extends AbstractMiddleEarthCraftingT
 			return this.supportedGuiClasses;
 		}
 
-		@Override
-		public Collection<AbstractRecipe> getAllRecipes() {
-			return this.handler.getStaticRecipes();
-		}
+        @Override
+        public Collection<AbstractRecipe> getAllRecipes ()
+        {
+            return handler.isMineTweakerSupportEnabled () ? handler.loadRecipes () : handler.getStaticRecipes ();
+        }
 
 	}
 

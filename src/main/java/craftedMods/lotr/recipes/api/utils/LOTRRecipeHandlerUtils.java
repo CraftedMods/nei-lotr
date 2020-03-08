@@ -21,6 +21,7 @@ import java.util.*;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import cpw.mods.fml.common.Loader;
 import craftedMods.recipes.api.utils.RecipeHandlerUtils;
 import craftedMods.recipes.base.*;
 import lotr.client.gui.LOTRGuiAlloyForge;
@@ -33,116 +34,156 @@ import net.minecraft.item.*;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class LOTRRecipeHandlerUtils {
+public class LOTRRecipeHandlerUtils
+{
 
-	private static ItemStack[] poison;
-	private static List<IRecipe> brewingRecipes;
-	private static float[] drinkStrenghts;
+    private static ItemStack[] poison;
+    private static List<IRecipe> brewingRecipes;
+    private static float[] drinkStrenghts;
 
-	private static Field catalystField;
-	private static Field theForgeField;
-	private static Field treasureBlockField;
-	private static Field ingotItemField;
+    private static Field catalystField;
+    private static Field theForgeField;
+    private static Field treasureBlockField;
+    private static Field ingotItemField;
 
-	public static ItemStack[] getPoison() {
-		if (LOTRRecipeHandlerUtils.poison == null) {
-			List<ItemStack> poisonList = OreDictionary.getOres("poison");
-			LOTRRecipeHandlerUtils.poison = poisonList.toArray(new ItemStack[poisonList.size()]);
-		}
-		return LOTRRecipeHandlerUtils.poison;
-	}
+    public static ItemStack[] getPoison ()
+    {
+        if (LOTRRecipeHandlerUtils.poison == null)
+        {
+            List<ItemStack> poisonList = OreDictionary.getOres ("poison");
+            LOTRRecipeHandlerUtils.poison = poisonList.toArray (new ItemStack[poisonList.size ()]);
+        }
+        return LOTRRecipeHandlerUtils.poison;
+    }
 
-	@SuppressWarnings("unchecked")
-	public static List<IRecipe> getBrewingRecipes() {
-		if (LOTRRecipeHandlerUtils.brewingRecipes == null) {
-			try {
-				Field brewingRecipesField = LOTRBrewingRecipes.class.getDeclaredField("recipes");
-				brewingRecipesField.setAccessible(true);
-				LOTRRecipeHandlerUtils.brewingRecipes = (List<IRecipe>) (List<?>) brewingRecipesField.get(null);
-			} catch (Exception e) {
-				System.err.print("Couldn't access LOTR brewing recipes: ");
-				e.printStackTrace();
-			}
-		}
-		return LOTRRecipeHandlerUtils.brewingRecipes;
-	}
+    @SuppressWarnings("unchecked")
+    public static List<IRecipe> getBrewingRecipes ()
+    {
+        if (LOTRRecipeHandlerUtils.brewingRecipes == null)
+        {
+            try
+            {
+                Field brewingRecipesField = LOTRBrewingRecipes.class.getDeclaredField ("recipes");
+                brewingRecipesField.setAccessible (true);
+                LOTRRecipeHandlerUtils.brewingRecipes = (List<IRecipe>) (List<?>) brewingRecipesField.get (null);
+            }
+            catch (Exception e)
+            {
+                System.err.print ("Couldn't access LOTR brewing recipes: ");
+                e.printStackTrace ();
+            }
+        }
+        return LOTRRecipeHandlerUtils.brewingRecipes;
+    }
 
-	public static float[] getDrinkStrenghts() {
-		if (LOTRRecipeHandlerUtils.drinkStrenghts == null) {
-			try {
-				Field strenghts = LOTRItemMug.class.getDeclaredField("strengths");
-				strenghts.setAccessible(true);
-				LOTRRecipeHandlerUtils.drinkStrenghts = (float[]) strenghts.get(null);
-			} catch (Exception e) {
-				System.err.print("Couldn't access drinkStrengths: ");
-				e.printStackTrace();
-			}
-		}
-		return LOTRRecipeHandlerUtils.drinkStrenghts;
-	}
+    public static float[] getDrinkStrenghts ()
+    {
+        if (LOTRRecipeHandlerUtils.drinkStrenghts == null)
+        {
+            try
+            {
+                Field strenghts = LOTRItemMug.class.getDeclaredField ("strengths");
+                strenghts.setAccessible (true);
+                LOTRRecipeHandlerUtils.drinkStrenghts = (float[]) strenghts.get (null);
+            }
+            catch (Exception e)
+            {
+                System.err.print ("Couldn't access drinkStrengths: ");
+                e.printStackTrace ();
+            }
+        }
+        return LOTRRecipeHandlerUtils.drinkStrenghts;
+    }
 
-	public static int getDrinkStrengthIndex(float strength) {
-		int index = 0;
-		float[] strengths = LOTRRecipeHandlerUtils.getDrinkStrenghts();
-		for (int i = 0; i < strengths.length; i++)
-			if (strengths[i] == strength) {
-				index = i;
-				break;
-			}
-		return index;
-	}
+    public static int getDrinkStrengthIndex (float strength)
+    {
+        int index = 0;
+        float[] strengths = LOTRRecipeHandlerUtils.getDrinkStrenghts ();
+        for (int i = 0; i < strengths.length; i++)
+            if (strengths[i] == strength)
+            {
+                index = i;
+                break;
+            }
+        return index;
+    }
 
-	public static AbstractRecipe processPoisonWeaponRecipe(LOTRRecipePoisonWeapon poisonRecipe) {
-		try {
-			if (LOTRRecipeHandlerUtils.catalystField == null) {
-				LOTRRecipeHandlerUtils.catalystField = LOTRRecipePoisonWeapon.class.getDeclaredField("catalystObj");
-				LOTRRecipeHandlerUtils.catalystField.setAccessible(true);
-			}
-			List<Object> ingredients = new ArrayList<>();
-			ingredients.add(poisonRecipe.getInputItem());
+    public static AbstractRecipe processPoisonWeaponRecipe (LOTRRecipePoisonWeapon poisonRecipe)
+    {
+        try
+        {
+            if (LOTRRecipeHandlerUtils.catalystField == null)
+            {
+                LOTRRecipeHandlerUtils.catalystField = LOTRRecipePoisonWeapon.class.getDeclaredField ("catalystObj");
+                LOTRRecipeHandlerUtils.catalystField.setAccessible (true);
+            }
+            List<Object> ingredients = new ArrayList<> ();
+            ingredients.add (poisonRecipe.getInputItem ());
 
-			ingredients.add(RecipeHandlerUtils.getInstance().extractRecipeItems(LOTRRecipeHandlerUtils.catalystField.get(poisonRecipe)));
-			return new ShapelessRecipe(ingredients, poisonRecipe.getRecipeOutput());
-		} catch (Exception e) {
-			System.err.print("Couldn't load the poisoned weapon recipe: ");
-			e.printStackTrace();
-		}
-		return null;
-	}
+            ingredients.add (RecipeHandlerUtils.getInstance ()
+                .extractRecipeItems (LOTRRecipeHandlerUtils.catalystField.get (poisonRecipe)));
+            return new ShapelessRecipe (ingredients, poisonRecipe.getRecipeOutput ());
+        }
+        catch (Exception e)
+        {
+            System.err.print ("Couldn't load the poisoned weapon recipe: ");
+            e.printStackTrace ();
+        }
+        return null;
+    }
 
-	public static LOTRTileEntityAlloyForgeBase getAlloyForge(LOTRGuiAlloyForge gui) {
-		try {
-			if (LOTRRecipeHandlerUtils.theForgeField == null) {
-				LOTRRecipeHandlerUtils.theForgeField = LOTRGuiAlloyForge.class.getDeclaredField("theForge");
-				LOTRRecipeHandlerUtils.theForgeField.setAccessible(true);
-			}
-			return (LOTRTileEntityAlloyForgeBase) LOTRRecipeHandlerUtils.theForgeField.get(gui);
-		} catch (Exception e) {
-			System.err.print("Couldn't load the poisoned weapon recipe: ");
-			e.printStackTrace();
-		}
-		return null;
-	}
+    public static LOTRTileEntityAlloyForgeBase getAlloyForge (LOTRGuiAlloyForge gui)
+    {
+        try
+        {
+            if (LOTRRecipeHandlerUtils.theForgeField == null)
+            {
+                LOTRRecipeHandlerUtils.theForgeField = LOTRGuiAlloyForge.class.getDeclaredField ("theForge");
+                LOTRRecipeHandlerUtils.theForgeField.setAccessible (true);
+            }
+            return (LOTRTileEntityAlloyForgeBase) LOTRRecipeHandlerUtils.theForgeField.get (gui);
+        }
+        catch (Exception e)
+        {
+            System.err.print ("Couldn't load the poisoned weapon recipe: ");
+            e.printStackTrace ();
+        }
+        return null;
+    }
 
-	public static String getUnlocalizedEntityName(Class<?> entityClass) {
-		return EntityList.classToStringMapping.get(entityClass).toString().replace("lotr.", "");
-	}
+    public static String getUnlocalizedEntityName (Class<?> entityClass)
+    {
+        return EntityList.classToStringMapping.get (entityClass).toString ().replace ("lotr.", "");
+    }
 
-	public static Pair<Block, Item> getTreasurePileRecipeItems(LOTRRecipesTreasurePile recipe) {
-		try {
-			if (LOTRRecipeHandlerUtils.treasureBlockField == null || LOTRRecipeHandlerUtils.ingotItemField == null) {
-				LOTRRecipeHandlerUtils.treasureBlockField = LOTRRecipesTreasurePile.class.getDeclaredField("treasureBlock");
-				LOTRRecipeHandlerUtils.ingotItemField = LOTRRecipesTreasurePile.class.getDeclaredField("ingotItem");
+    public static Pair<Block, Item> getTreasurePileRecipeItems (LOTRRecipesTreasurePile recipe)
+    {
+        try
+        {
+            if (LOTRRecipeHandlerUtils.treasureBlockField == null || LOTRRecipeHandlerUtils.ingotItemField == null)
+            {
+                LOTRRecipeHandlerUtils.treasureBlockField = LOTRRecipesTreasurePile.class
+                    .getDeclaredField ("treasureBlock");
+                LOTRRecipeHandlerUtils.ingotItemField = LOTRRecipesTreasurePile.class.getDeclaredField ("ingotItem");
 
-				LOTRRecipeHandlerUtils.treasureBlockField.setAccessible(true);
-				LOTRRecipeHandlerUtils.ingotItemField.setAccessible(true);
-			}
-			return Pair.of((Block) LOTRRecipeHandlerUtils.treasureBlockField.get(recipe), (Item) LOTRRecipeHandlerUtils.ingotItemField.get(recipe));
-		} catch (Exception e) {
-			System.err.print("Couldn't load the poisoned weapon recipe: ");
-			e.printStackTrace();
-		}
-		return null;
-	}
+                LOTRRecipeHandlerUtils.treasureBlockField.setAccessible (true);
+                LOTRRecipeHandlerUtils.ingotItemField.setAccessible (true);
+            }
+            return Pair.of ((Block) LOTRRecipeHandlerUtils.treasureBlockField.get (recipe),
+                (Item) LOTRRecipeHandlerUtils.ingotItemField.get (recipe));
+        }
+        catch (Exception e)
+        {
+            System.err.print ("Couldn't load the poisoned weapon recipe: ");
+            e.printStackTrace ();
+        }
+        return null;
+    }
+
+    // Returns true if MT LOTR is present
+    public static boolean hasMtLotr ()
+    {
+        return Loader.isModLoaded ("mt-lotr");
+    }
 
 }

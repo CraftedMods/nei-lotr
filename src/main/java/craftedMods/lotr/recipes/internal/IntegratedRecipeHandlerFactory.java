@@ -349,7 +349,7 @@ public class IntegratedRecipeHandlerFactory implements RecipeHandlerFactory {
 	}
 
 	private static void registerMECTHandler(String unlocalizedName, Class<? extends GuiContainer> guiClass, Collection<IRecipe> recipes) {
-		IntegratedRecipeHandlerFactory.recipeHandlers.add(new LOTRCraftingTableRecipeHandler(unlocalizedName, guiClass, recipes));
+		IntegratedRecipeHandlerFactory.recipeHandlers.add(new LOTRCraftingTableRecipeHandler(unlocalizedName, guiClass, ()->recipes));
 	}
 
 	private static void registerTraderHandler(Class<? extends LOTRTradeable> entityClass, String faction, LOTRTradeEntries itemsBought,
