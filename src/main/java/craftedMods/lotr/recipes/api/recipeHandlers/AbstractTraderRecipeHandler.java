@@ -231,26 +231,9 @@ public abstract class AbstractTraderRecipeHandler extends AbstractRecipeHandler<
 			}
 		}
 
-		// Vessel[] drinkVessels = NeiLotrReflection.getDrinkVessels(entries);
-		// if (drinkVessels != null && LOTRItemMug.isItemFullDrink((ItemStack) tradeItem)) {
-		// LOTRItemMug.Vessel v = drinkVessels[random.nextInt(this.drinkVessels.length)];
-		// LOTRItemMug.setVessel((ItemStack) tradeItem, (LOTRItemMug.Vessel) v, (boolean) true);
-		// tradeCost += (float) v.extraPrice;
-		// }
-
-		// if (LOTRConfig.enchantingLOTR)
-		// {
-		// if (tradeType == TradeType.BUY)
-		// {
-		// boolean skilful = random.nextInt(3) == 0;
-		// LOTREnchantmentHelper.applyRandomEnchantments(tradeItem, random, skilful, false);
-		// tradeCost *= LOTREnchantmentHelper.calcTradeValueFactor(tradeItem);
-		// }
-		// }
-
-		if (sold) {
-			tradeCost *= LOTREnchantmentHelper.calcTradeValueFactor(itemStack);
-		}
+        if (sold) {
+            tradeCost *= LOTREnchantmentHelper.calcTradeValueFactor (itemStack);
+        }
 
 		tradeCost *= probabilityFactor;
 
