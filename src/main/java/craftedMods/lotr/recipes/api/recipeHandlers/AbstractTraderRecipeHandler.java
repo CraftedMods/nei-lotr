@@ -38,16 +38,17 @@ import net.minecraft.item.*;
 import net.minecraft.util.StatCollector;
 
 public abstract class AbstractTraderRecipeHandler extends AbstractRecipeHandler<TraderRecipe> {
+    
+    public static final int ALL_STRENGHTS_META = 9999;
 
-	private final String traderName;
+	protected final String traderName;
+	protected final LOTRTradeEntries itemsBought;
+	protected final LOTRTradeEntries itemsSold;
+
+	protected List<Vessel> vesselsSold;
+	
 	private final TraderRecipeHandlerRenderer renderer = new TraderRecipeHandlerRenderer();
-	private final TraderRecipeHandlerRecipeViewer recipeViewer = new TraderRecipeHandlerRecipeViewer(this);
-	private final LOTRTradeEntries itemsBought;
-	private final LOTRTradeEntries itemsSold;
-
-	private List<Vessel> vesselsSold;
-
-	public static final int ALL_STRENGHTS_META = 9999;
+    private final TraderRecipeHandlerRecipeViewer recipeViewer = new TraderRecipeHandlerRecipeViewer(this);
 
 	public AbstractTraderRecipeHandler(String prefix, String unlocalizedName, String faction, LOTRTradeEntries itemsBought, LOTRTradeEntries itemsSold) {
 		super(prefix + (faction == null ? "" : faction + ".") + unlocalizedName);
@@ -127,7 +128,6 @@ public abstract class AbstractTraderRecipeHandler extends AbstractRecipeHandler<
 		Collection<TraderRecipe> recipes = new ArrayList<>();
 		if (ingredient.getItem() != LOTRMod.silverCoin) {
 			for (LOTRTradeEntry entry : this.itemsBought.tradeEntries) {
-				// boolean add = false;
 				int baseCost = entry.getCost();
 				ItemStack baseItem = entry.createTradeItem();
 				if (RecipeHandlerUtils.getInstance().areStacksSameTypeForCrafting(baseItem, ingredient)) {
@@ -150,7 +150,6 @@ public abstract class AbstractTraderRecipeHandler extends AbstractRecipeHandler<
 	protected Collection<TraderRecipe> getAllUsageRecipes() {// TODO cache
 		Collection<TraderRecipe> recipes = new ArrayList<>();
 		for (LOTRTradeEntry entry : this.itemsSold.tradeEntries) {
-			// boolean add = false;
 			int baseCost = entry.getCost();
 			ItemStack baseItem = entry.createTradeItem();
 			if (baseItem.getItem() instanceof LOTRItemMug && LOTRItemMug.isItemFullDrink(baseItem)

@@ -32,13 +32,13 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public abstract class AbstractAlloyForgeRecipeHandler extends AbstractRecipeHandler<AlloyForgeRecipe> {
 
-	private final AlloyForgeRecipeHandlerRenderer renderer = new AlloyForgeRecipeHandlerRenderer();
 	protected final AlloyForgeAccess alloyForgeDummy;
 
+	protected boolean wasCacheLoaded = false;
+	
+	private final AlloyForgeRecipeHandlerRenderer renderer = new AlloyForgeRecipeHandlerRenderer();
 	private final AlloyForgeRecipeHandlerCacheManager cacheManager = new AlloyForgeRecipeHandlerCacheManager(this);
-	private final AlloyForgeRecipeHandlerRecipeViewer recipeViewer = new AlloyForgeRecipeHandlerRecipeViewer(this);
-
-	private boolean wasCacheLoaded = false;
+    private final AlloyForgeRecipeHandlerRecipeViewer recipeViewer = new AlloyForgeRecipeHandlerRecipeViewer(this);
 
 	protected AbstractAlloyForgeRecipeHandler(String unlocalizedName, AlloyForgeAccess alloyForgeDummy) {
 		super(unlocalizedName);
