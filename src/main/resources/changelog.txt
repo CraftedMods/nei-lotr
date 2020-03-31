@@ -5,7 +5,7 @@ Made by 'Crafted_Mods' or 'The_Ranger_Malvegil'
  + Updated to neiRecipeHandlers-1.1.0-BETA
   + The various recipe handlers are now always shown in the same order - the order can be configured by the user
  + Updated to v35.4 of the LOTR Mod
- + Added compatibility for to mtLotr-1.0.0-BETA
+ + Added compatibility for mtLotr-1.0.0-BETA
  
  * The various modifier scrolls are now actually seen as different items by NEI
 
