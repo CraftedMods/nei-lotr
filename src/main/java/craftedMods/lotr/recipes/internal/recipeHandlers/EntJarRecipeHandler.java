@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2019 CraftedMods (see https://github.com/CraftedMods)
+ * Copyright (C) 2020 CraftedMods (see https://github.com/CraftedMods)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,91 +28,111 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
 
 @RegisteredHandler
-public class EntJarRecipeHandler extends AbstractRecipeHandler<ShapelessRecipe> {
+public class EntJarRecipeHandler extends AbstractRecipeHandler<ShapelessRecipe>
+{
 
-	private final EntJarRecipeHandlerRenderer renderer = new EntJarRecipeHandlerRenderer();
-	private final EntJarRecipeHandlerRecipeViewer recipeViewer = new EntJarRecipeHandlerRecipeViewer(this);
+    private final EntJarRecipeHandlerRenderer renderer = new EntJarRecipeHandlerRenderer ();
+    private final EntJarRecipeHandlerRecipeViewer recipeViewer = new EntJarRecipeHandlerRecipeViewer (this);
 
-	public EntJarRecipeHandler() {
-		super("lotr.entJar");
-	}
+    public EntJarRecipeHandler ()
+    {
+        super ("lotr.entJar");
+    }
 
-	@Override
-	public String getDisplayName() {
-		return LOTRMod.entJar.getLocalizedName();
-	}
+    @Override
+    public String getDisplayName ()
+    {
+        return LOTRMod.entJar.getLocalizedName ();
+    }
 
-	@Override
-	@SuppressWarnings("unchecked")
-	public Collection<ShapelessRecipe> loadSimpleStaticRecipes() {
-		Collection<ShapelessRecipe> ret = new ArrayList<>();
-		try {
-			Field entJarRecipesField = LOTREntJarRecipes.class.getDeclaredField("recipes");
-			entJarRecipesField.setAccessible(true);
-			Map<ItemStack, ItemStack> recipes = (Map<ItemStack, ItemStack>) entJarRecipesField.get(null);
-			recipes.forEach((ingredient, result) -> {
-				ret.add(new ShapelessRecipe(ingredient.copy(), result.copy()));
-			});
-		} catch (Exception e) {
-			this.logger.error("Couldn't access the field \"recipes\" in LOTREntJarRecipes.class", e);
-		}
+    @Override
+    @SuppressWarnings("unchecked")
+    public Collection<ShapelessRecipe> loadSimpleStaticRecipes ()
+    {
+        Collection<ShapelessRecipe> ret = new ArrayList<> ();
+        try
+        {
+            Field entJarRecipesField = LOTREntJarRecipes.class.getDeclaredField ("recipes");
+            entJarRecipesField.setAccessible (true);
+            Map<ItemStack, ItemStack> recipes = (Map<ItemStack, ItemStack>) entJarRecipesField.get (null);
+            recipes.forEach ( (ingredient, result) ->
+            {
+                ret.add (new ShapelessRecipe (ingredient.copy (), result.copy ()));
+            });
+        }
+        catch (Exception e)
+        {
+            logger.error ("Couldn't access the field \"recipes\" in LOTREntJarRecipes.class", e);
+        }
 
-		return ret;
-	}
+        return ret;
+    }
 
-	@Override
-	public List<RecipeItemSlot> getSlotsForRecipeItems(ShapelessRecipe recipe, EnumRecipeItemRole role) {
-		return Arrays.asList(role == EnumRecipeItemRole.INGREDIENT ? this.createRecipeItemSlot(43, 24) : this.createRecipeItemSlot(101, 24));
-	}
+    @Override
+    public List<RecipeItemSlot> getSlotsForRecipeItems (ShapelessRecipe recipe, EnumRecipeItemRole role)
+    {
+        return Arrays.asList (role == EnumRecipeItemRole.INGREDIENT ? createRecipeItemSlot (43, 24)
+            : createRecipeItemSlot (101, 24));
+    }
 
-	@Override
-	@SuppressWarnings("unchecked")
-	public EntJarRecipeHandlerRenderer getRenderer() {
-		return this.renderer;
-	}
+    @Override
+    @SuppressWarnings("unchecked")
+    public EntJarRecipeHandlerRenderer getRenderer ()
+    {
+        return renderer;
+    }
 
-	@Override
-	public RecipeHandlerRecipeViewer<ShapelessRecipe> getRecipeViewer() {
-		return this.recipeViewer;
-	}
-	
-	@Override
-	public int getDefaultOrder ()
-	{
-	    return 6000;
-	}
+    @Override
+    public RecipeHandlerRecipeViewer<ShapelessRecipe> getRecipeViewer ()
+    {
+        return recipeViewer;
+    }
 
-	public class EntJarRecipeHandlerRenderer implements RecipeHandlerRenderer<EntJarRecipeHandler, ShapelessRecipe> {
+    @Override
+    public int getDefaultOrder ()
+    {
+        return 6000;
+    }
 
-		@Override
-		public void renderBackground(EntJarRecipeHandler handler, ShapelessRecipe recipe, int cycleticks) {
-			RecipeHandlerRendererUtils.getInstance().bindTexture(RecipeHandlerRenderer.DEFAULT_GUI_TEXTURE);
-			RecipeHandlerRendererUtils.getInstance().drawTexturedRectangle(42, 19, 65, 30, 80, 26);
-			RecipeHandlerRendererUtils.getInstance().drawRectangle(42, 13, 18, 10, 0xFFC6C6C6);
-			RecipeHandlerRendererUtils.getInstance().drawRectangle(42, 41, 18, 4, 0xFFC6C6C6);
-		}
+    public class EntJarRecipeHandlerRenderer implements RecipeHandlerRenderer<EntJarRecipeHandler, ShapelessRecipe>
+    {
 
-		@Override
-		public void renderForeground(EntJarRecipeHandler handler, ShapelessRecipe recipe, int cycleticks) {}
+        @Override
+        public void renderBackground (EntJarRecipeHandler handler, ShapelessRecipe recipe, int cycleticks)
+        {
+            RecipeHandlerRendererUtils.getInstance ().bindTexture (RecipeHandlerRenderer.DEFAULT_GUI_TEXTURE);
+            RecipeHandlerRendererUtils.getInstance ().drawTexturedRectangle (42, 19, 65, 30, 80, 26);
+            RecipeHandlerRendererUtils.getInstance ().drawRectangle (42, 13, 18, 10, 0xFFC6C6C6);
+            RecipeHandlerRendererUtils.getInstance ().drawRectangle (42, 41, 18, 4, 0xFFC6C6C6);
+        }
 
-	}
+        @Override
+        public void renderForeground (EntJarRecipeHandler handler, ShapelessRecipe recipe, int cycleticks)
+        {
+        }
 
-	public class EntJarRecipeHandlerRecipeViewer extends AbstractRecipeViewer<ShapelessRecipe, EntJarRecipeHandler> {
+    }
 
-		public EntJarRecipeHandlerRecipeViewer(EntJarRecipeHandler handler) {
-			super(handler);
-		}
+    public class EntJarRecipeHandlerRecipeViewer extends AbstractRecipeViewer<ShapelessRecipe, EntJarRecipeHandler>
+    {
 
-		@Override
-		public Collection<ShapelessRecipe> getAllRecipes() {
-			return this.handler.getStaticRecipes();
-		}
+        public EntJarRecipeHandlerRecipeViewer (EntJarRecipeHandler handler)
+        {
+            super (handler);
+        }
 
-		@Override
-		public int getOffsetX(Class<? extends GuiContainer> guiClass) {
-			return 8;
-		}
+        @Override
+        public Collection<ShapelessRecipe> getAllRecipes ()
+        {
+            return handler.getStaticRecipes ();
+        }
 
-	}
+        @Override
+        public int getOffsetX (Class<? extends GuiContainer> guiClass)
+        {
+            return 8;
+        }
+
+    }
 
 }

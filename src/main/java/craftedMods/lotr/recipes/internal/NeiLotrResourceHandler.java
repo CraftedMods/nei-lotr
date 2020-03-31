@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2019 CraftedMods (see https://github.com/CraftedMods)
+ * Copyright (C) 2020 CraftedMods (see https://github.com/CraftedMods)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,14 +25,16 @@ import craftedMods.recipes.base.*;
 import net.minecraft.util.ResourceLocation;
 
 @RegisteredHandler
-public class NeiLotrResourceHandler implements ResourceHandler {
+public class NeiLotrResourceHandler implements ResourceHandler
+{
 
-	@Override
-	public Map<ResourceLocation, Supplier<InputStream>> getResources() {
-		RecipeHandlerResourceLoader resourceLoader = new ClasspathResourceLoader();
-		resourceLoader.registerResource(new RecipeHandlerResourceLocation("lang/en_US.lang"));
-		resourceLoader.registerResource(new RecipeHandlerResourceLocation("lang/de_DE.lang"));
-		return resourceLoader.loadResources();
-	}
+    @Override
+    public Map<ResourceLocation, Supplier<InputStream>> getResources ()
+    {
+        RecipeHandlerResourceLoader resourceLoader = new ClasspathResourceLoader ();
+        resourceLoader.registerResource (new RecipeHandlerResourceLocation ("lang/en_US.lang"));
+        resourceLoader.registerResource (new RecipeHandlerResourceLocation ("lang/de_DE.lang"));
+        return resourceLoader.loadResources ();
+    }
 
 }

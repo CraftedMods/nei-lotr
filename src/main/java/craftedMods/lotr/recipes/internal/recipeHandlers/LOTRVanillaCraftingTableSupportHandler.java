@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2019 CraftedMods (see https://github.com/CraftedMods)
+ * Copyright (C) 2020 CraftedMods (see https://github.com/CraftedMods)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,76 +30,95 @@ import net.minecraft.item.*;
 import net.minecraft.item.crafting.IRecipe;
 
 @RegisteredHandler
-public class LOTRVanillaCraftingTableSupportHandler implements VanillaCraftingTableRecipeHandlerSupport {
+public class LOTRVanillaCraftingTableSupportHandler implements VanillaCraftingTableRecipeHandlerSupport
+{
 
-	@Override
-	public Pair<Collection<AbstractRecipe>, Boolean> undefinedRecipeTypeFound(IRecipe recipe) {
-		if (recipe instanceof LOTRRecipesPoisonDrinks) return Pair.of(null, true);
-		if (recipe instanceof LOTRRecipePoisonWeapon)
-			return Pair.of(Arrays.asList(LOTRRecipeHandlerUtils.processPoisonWeaponRecipe((LOTRRecipePoisonWeapon) recipe)), false);
-		if (recipe instanceof LOTRRecipesTreasurePile) return this.processTreasurePileRecipe((LOTRRecipesTreasurePile) recipe);
-		return null;
-	}
+    @Override
+    public Pair<Collection<AbstractRecipe>, Boolean> undefinedRecipeTypeFound (IRecipe recipe)
+    {
+        if (recipe instanceof LOTRRecipesPoisonDrinks)
+            return Pair.of (null, true);
+        if (recipe instanceof LOTRRecipePoisonWeapon)
+            return Pair.of (
+                Arrays.asList (LOTRRecipeHandlerUtils.processPoisonWeaponRecipe ((LOTRRecipePoisonWeapon) recipe)),
+                false);
+        if (recipe instanceof LOTRRecipesTreasurePile)
+            return processTreasurePileRecipe ((LOTRRecipesTreasurePile) recipe);
+        return null;
+    }
 
-	private Pair<Collection<AbstractRecipe>, Boolean> processTreasurePileRecipe(LOTRRecipesTreasurePile recipe) {
-		Pair<Block, Item> recipeItems = LOTRRecipeHandlerUtils.getTreasurePileRecipeItems(recipe);
-		// TODO Only a subset of the treasure pile recipes is currently supported (pile to ingot)
-		return Pair.of(
-				Arrays.asList(new ShapedRecipe(1, 1, new Object[] { new ItemStack(recipeItems.getLeft(), 1, 7) }, new ItemStack(recipeItems.getRight(), 4))),
-				false);
-	}
+    private Pair<Collection<AbstractRecipe>, Boolean> processTreasurePileRecipe (LOTRRecipesTreasurePile recipe)
+    {
+        Pair<Block, Item> recipeItems = LOTRRecipeHandlerUtils.getTreasurePileRecipeItems (recipe);
+        // TODO Only a subset of the treasure pile recipes is currently supported (pile
+        // to ingot)
+        return Pair.of (
+            Arrays.asList (new ShapedRecipe (1, 1, new Object[]
+            {new ItemStack (recipeItems.getLeft (), 1, 7)}, new ItemStack (recipeItems.getRight (), 4))),
+            false);
+    }
 
-	@Override
-	public int getComplicatedStaticRecipeDepth() {
-		return 1;
-	}
+    @Override
+    public int getComplicatedStaticRecipeDepth ()
+    {
+        return 1;
+    }
 
-	@Override
-	public AbstractRecipe loadComplicatedStaticRecipe(ItemStack... stacks) {
-		ItemStack stack = stacks[0];
-		PoisonedDrinkRecipe recipe = null;
-		if (LOTRPoisonedDrinks.canPoison(stack)) {
-			List<Object> ingredients = new ArrayList<>();
-			ingredients.add(stack.copy());
-			ingredients.add(LOTRRecipeHandlerUtils.getPoison());
-			ItemStack result = stack.copy();
-			LOTRPoisonedDrinks.setDrinkPoisoned(result, true);
-			recipe = new PoisonedDrinkRecipe(ingredients, result);
-		}
-		return recipe;
-	}
+    @Override
+    public AbstractRecipe loadComplicatedStaticRecipe (ItemStack... stacks)
+    {
+        ItemStack stack = stacks[0];
+        PoisonedDrinkRecipe recipe = null;
+        if (LOTRPoisonedDrinks.canPoison (stack))
+        {
+            List<Object> ingredients = new ArrayList<> ();
+            ingredients.add (stack.copy ());
+            ingredients.add (LOTRRecipeHandlerUtils.getPoison ());
+            ItemStack result = stack.copy ();
+            LOTRPoisonedDrinks.setDrinkPoisoned (result, true);
+            recipe = new PoisonedDrinkRecipe (ingredients, result);
+        }
+        return recipe;
+    }
 
-	@Override
-	public Collection<AbstractRecipe> getDynamicCraftingRecipes(ItemStack result) {
-		return Arrays.asList();
-	}
+    @Override
+    public Collection<AbstractRecipe> getDynamicCraftingRecipes (ItemStack result)
+    {
+        return Arrays.asList ();
+    }
 
-	@Override
-	public Collection<AbstractRecipe> getDynamicUsageRecipes(ItemStack ingredient) {
-		return Arrays.asList();
-	}
+    @Override
+    public Collection<AbstractRecipe> getDynamicUsageRecipes (ItemStack ingredient)
+    {
+        return Arrays.asList ();
+    }
 
-	@Override
-	public boolean matches(ItemStack stack1, ItemStack stack2) {
-		return LOTRPoisonedDrinks.isDrinkPoisoned(stack1) == LOTRPoisonedDrinks.isDrinkPoisoned(stack2);
-	}
+    @Override
+    public boolean matches (ItemStack stack1, ItemStack stack2)
+    {
+        return LOTRPoisonedDrinks.isDrinkPoisoned (stack1) == LOTRPoisonedDrinks.isDrinkPoisoned (stack2);
+    }
 
-	public class PoisonedDrinkRecipe extends ShapelessRecipe {
+    public class PoisonedDrinkRecipe extends ShapelessRecipe
+    {
 
-		public PoisonedDrinkRecipe(List<?> ingredients, ItemStack result) {
-			super(ingredients, result);
-		}
+        public PoisonedDrinkRecipe (List<?> ingredients, ItemStack result)
+        {
+            super (ingredients, result);
+        }
 
-		@Override
-		public boolean produces(ItemStack result) {
-			return LOTRPoisonedDrinks.isDrinkPoisoned(result) ? super.produces(result) : false;
-		}
+        @Override
+        public boolean produces (ItemStack result)
+        {
+            return LOTRPoisonedDrinks.isDrinkPoisoned (result) ? super.produces (result) : false;
+        }
 
-		@Override
-		public boolean consumes(ItemStack ingredient) {
-			return !LOTRPoisonedDrinks.isDrinkPoisoned(ingredient) ? super.consumes(ingredient) : false;
-		}
+        @Override
+        public boolean consumes (ItemStack ingredient)
+        {
+            return !LOTRPoisonedDrinks.isDrinkPoisoned (ingredient) ? super.consumes (ingredient) : false;
+        }
 
-	}
+    }
 
 }

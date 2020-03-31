@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2019 CraftedMods (see https://github.com/CraftedMods)
+ * Copyright (C) 2020 CraftedMods (see https://github.com/CraftedMods)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,15 +29,17 @@ import net.minecraft.item.crafting.IRecipe;
 
 public abstract class AbstractMiddleEarthCraftingTableRecipeHandler extends CraftingGridRecipeHandler
 {
-    
+
     private final AbstractMiddleEarthCraftingTableRecipeHandlerCraftingHelper craftingHelper;
     private final AbstractMiddleEarthCraftingTableRecipeHandlerRecipeViewer recipeViewer;
 
-    public AbstractMiddleEarthCraftingTableRecipeHandler(String unlocalizedName, Class<? extends GuiContainer> guiClass, Supplier<Collection<IRecipe>> recipesGetter) {
-        super(unlocalizedName, recipesGetter);
-        
-        this.craftingHelper = new AbstractMiddleEarthCraftingTableRecipeHandlerCraftingHelper(guiClass);
-        this.recipeViewer = new AbstractMiddleEarthCraftingTableRecipeHandlerRecipeViewer(this, guiClass);
+    public AbstractMiddleEarthCraftingTableRecipeHandler (String unlocalizedName,
+        Class<? extends GuiContainer> guiClass, Supplier<Collection<IRecipe>> recipesGetter)
+    {
+        super (unlocalizedName, recipesGetter);
+
+        craftingHelper = new AbstractMiddleEarthCraftingTableRecipeHandlerCraftingHelper (guiClass);
+        recipeViewer = new AbstractMiddleEarthCraftingTableRecipeHandlerRecipeViewer (this, guiClass);
     }
 
     @Override
@@ -55,61 +57,74 @@ public abstract class AbstractMiddleEarthCraftingTableRecipeHandler extends Craf
         }
         super.undefinedRecipeTypeFound (recipe, container);
     }
-    
+
     @Override
-    public RecipeHandlerCraftingHelper<AbstractRecipe> getCraftingHelper() {
-        return this.craftingHelper;
+    public RecipeHandlerCraftingHelper<AbstractRecipe> getCraftingHelper ()
+    {
+        return craftingHelper;
     }
 
     @Override
-    public RecipeHandlerRecipeViewer<AbstractRecipe> getRecipeViewer() {
-        return this.recipeViewer;
+    public RecipeHandlerRecipeViewer<AbstractRecipe> getRecipeViewer ()
+    {
+        return recipeViewer;
     }
-    
+
     @Override
     protected boolean isMineTweakerSupportEnabled ()
     {
         return RecipeHandlerUtils.getInstance ().hasMineTweaker () && LOTRRecipeHandlerUtils.hasMtLotr ();
     }
-    
-    private class AbstractMiddleEarthCraftingTableRecipeHandlerCraftingHelper extends AbstractCraftingHelper<AbstractRecipe> {
+
+    private class AbstractMiddleEarthCraftingTableRecipeHandlerCraftingHelper
+        extends AbstractCraftingHelper<AbstractRecipe>
+    {
 
         private final Collection<Class<? extends GuiContainer>> guiClass;
 
-        public AbstractMiddleEarthCraftingTableRecipeHandlerCraftingHelper(Class<? extends GuiContainer> guiClass) {
-            this.guiClass = Arrays.asList(guiClass);
+        public AbstractMiddleEarthCraftingTableRecipeHandlerCraftingHelper (Class<? extends GuiContainer> guiClass)
+        {
+            this.guiClass = Arrays.asList (guiClass);
         }
 
         @Override
-        public Collection<Class<? extends GuiContainer>> getSupportedGUIClasses(AbstractRecipe recipe) {
-            return this.guiClass;
+        public Collection<Class<? extends GuiContainer>> getSupportedGUIClasses (AbstractRecipe recipe)
+        {
+            return guiClass;
         }
 
         @Override
-        public int getOffsetX(Class<? extends GuiContainer> guiClass, AbstractRecipe recipe) {
+        public int getOffsetX (Class<? extends GuiContainer> guiClass, AbstractRecipe recipe)
+        {
             return 5;
         }
 
         @Override
-        public int getOffsetY(Class<? extends GuiContainer> guiClass, AbstractRecipe recipe) {
+        public int getOffsetY (Class<? extends GuiContainer> guiClass, AbstractRecipe recipe)
+        {
             return 11;
         }
 
     }
 
-    private class AbstractMiddleEarthCraftingTableRecipeHandlerRecipeViewer extends AbstractRecipeViewer<AbstractRecipe, AbstractMiddleEarthCraftingTableRecipeHandler> {
+    private class AbstractMiddleEarthCraftingTableRecipeHandlerRecipeViewer
+        extends AbstractRecipeViewer<AbstractRecipe, AbstractMiddleEarthCraftingTableRecipeHandler>
+    {
 
-        private final Collection<Class<? extends GuiContainer>> supportedGuiClasses = new ArrayList<>();
+        private final Collection<Class<? extends GuiContainer>> supportedGuiClasses = new ArrayList<> ();
 
-        public AbstractMiddleEarthCraftingTableRecipeHandlerRecipeViewer(AbstractMiddleEarthCraftingTableRecipeHandler handler, Class<? extends GuiContainer> guiClass) {
-            super(handler);
-            this.supportedGuiClasses.addAll(AbstractRecipeViewer.RECIPE_HANDLER_GUIS);
-            this.supportedGuiClasses.add(guiClass);
+        public AbstractMiddleEarthCraftingTableRecipeHandlerRecipeViewer (
+            AbstractMiddleEarthCraftingTableRecipeHandler handler, Class<? extends GuiContainer> guiClass)
+        {
+            super (handler);
+            supportedGuiClasses.addAll (AbstractRecipeViewer.RECIPE_HANDLER_GUIS);
+            supportedGuiClasses.add (guiClass);
         }
 
         @Override
-        public Collection<Class<? extends GuiContainer>> getSupportedGUIClasses() {
-            return this.supportedGuiClasses;
+        public Collection<Class<? extends GuiContainer>> getSupportedGUIClasses ()
+        {
+            return supportedGuiClasses;
         }
 
         @Override

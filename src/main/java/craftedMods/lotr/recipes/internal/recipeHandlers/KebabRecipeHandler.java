@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2019 CraftedMods (see https://github.com/CraftedMods)
+ * Copyright (C) 2020 CraftedMods (see https://github.com/CraftedMods)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,88 +27,106 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
 
 @RegisteredHandler
-public class KebabRecipeHandler extends AbstractRecipeHandler<ShapelessRecipe> {
+public class KebabRecipeHandler extends AbstractRecipeHandler<ShapelessRecipe>
+{
 
-	private final KebabRecipeHandlerRenderer renderer = new KebabRecipeHandlerRenderer();
-	private final KebabRecipeHandlerRecipeViewer recipeViewer = new KebabRecipeHandlerRecipeViewer(this);
+    private final KebabRecipeHandlerRenderer renderer = new KebabRecipeHandlerRenderer ();
+    private final KebabRecipeHandlerRecipeViewer recipeViewer = new KebabRecipeHandlerRecipeViewer (this);
 
-	private final LOTRTileEntityKebabStand kebabStandDummy = new LOTRTileEntityKebabStand();
+    private final LOTRTileEntityKebabStand kebabStandDummy = new LOTRTileEntityKebabStand ();
 
-	public KebabRecipeHandler() {
-		super("lotr.kebab");
-	}
+    public KebabRecipeHandler ()
+    {
+        super ("lotr.kebab");
+    }
 
-	@Override
-	public String getDisplayName() {
-		return LOTRMod.kebabStand.getLocalizedName();
-	}
+    @Override
+    public String getDisplayName ()
+    {
+        return LOTRMod.kebabStand.getLocalizedName ();
+    }
 
-	@Override
-	public int getComplicatedStaticRecipeDepth() {
-		return 1;
-	}
+    @Override
+    public int getComplicatedStaticRecipeDepth ()
+    {
+        return 1;
+    }
 
-	@Override
-	public ShapelessRecipe loadComplicatedStaticRecipe(ItemStack... stacks) {
-		ShapelessRecipe recipe = null;
-		if (this.kebabStandDummy.isMeat(stacks[0])) {
-			recipe = new ShapelessRecipe(Arrays.asList(stacks[0]), new ItemStack(LOTRMod.kebab));
-		}
-		return recipe;
-	}
+    @Override
+    public ShapelessRecipe loadComplicatedStaticRecipe (ItemStack... stacks)
+    {
+        ShapelessRecipe recipe = null;
+        if (kebabStandDummy.isMeat (stacks[0]))
+        {
+            recipe = new ShapelessRecipe (Arrays.asList (stacks[0]), new ItemStack (LOTRMod.kebab));
+        }
+        return recipe;
+    }
 
-	@Override
-	public List<RecipeItemSlot> getSlotsForRecipeItems(ShapelessRecipe recipe, EnumRecipeItemRole role) {
-		return Arrays.asList(role == EnumRecipeItemRole.INGREDIENT ? this.createRecipeItemSlot(43, 24) : this.createRecipeItemSlot(101, 24));
-	}
+    @Override
+    public List<RecipeItemSlot> getSlotsForRecipeItems (ShapelessRecipe recipe, EnumRecipeItemRole role)
+    {
+        return Arrays.asList (role == EnumRecipeItemRole.INGREDIENT ? createRecipeItemSlot (43, 24)
+            : createRecipeItemSlot (101, 24));
+    }
 
-	@Override
-	@SuppressWarnings("unchecked")
-	public KebabRecipeHandlerRenderer getRenderer() {
-		return this.renderer;
-	}
+    @Override
+    @SuppressWarnings("unchecked")
+    public KebabRecipeHandlerRenderer getRenderer ()
+    {
+        return renderer;
+    }
 
-	@Override
-	public RecipeHandlerRecipeViewer<ShapelessRecipe> getRecipeViewer() {
-		return this.recipeViewer;
-	}
-	
-	@Override
-	public int getDefaultOrder ()
-	{
-	   return 10000;
-	}
+    @Override
+    public RecipeHandlerRecipeViewer<ShapelessRecipe> getRecipeViewer ()
+    {
+        return recipeViewer;
+    }
 
-	public class KebabRecipeHandlerRenderer implements RecipeHandlerRenderer<KebabRecipeHandler, ShapelessRecipe> {
+    @Override
+    public int getDefaultOrder ()
+    {
+        return 10000;
+    }
 
-		@Override
-		public void renderBackground(KebabRecipeHandler handler, ShapelessRecipe recipe, int cycleticks) {
-			RecipeHandlerRendererUtils.getInstance().bindTexture(RecipeHandlerRenderer.DEFAULT_GUI_TEXTURE);
-			RecipeHandlerRendererUtils.getInstance().drawTexturedRectangle(42, 19, 65, 30, 80, 26);
-			RecipeHandlerRendererUtils.getInstance().drawRectangle(42, 13, 18, 10, 0xFFC6C6C6);
-			RecipeHandlerRendererUtils.getInstance().drawRectangle(42, 41, 18, 4, 0xFFC6C6C6);
-		}
+    public class KebabRecipeHandlerRenderer implements RecipeHandlerRenderer<KebabRecipeHandler, ShapelessRecipe>
+    {
 
-		@Override
-		public void renderForeground(KebabRecipeHandler handler, ShapelessRecipe recipe, int cycleticks) {}
+        @Override
+        public void renderBackground (KebabRecipeHandler handler, ShapelessRecipe recipe, int cycleticks)
+        {
+            RecipeHandlerRendererUtils.getInstance ().bindTexture (RecipeHandlerRenderer.DEFAULT_GUI_TEXTURE);
+            RecipeHandlerRendererUtils.getInstance ().drawTexturedRectangle (42, 19, 65, 30, 80, 26);
+            RecipeHandlerRendererUtils.getInstance ().drawRectangle (42, 13, 18, 10, 0xFFC6C6C6);
+            RecipeHandlerRendererUtils.getInstance ().drawRectangle (42, 41, 18, 4, 0xFFC6C6C6);
+        }
 
-	}
+        @Override
+        public void renderForeground (KebabRecipeHandler handler, ShapelessRecipe recipe, int cycleticks)
+        {
+        }
 
-	public class KebabRecipeHandlerRecipeViewer extends AbstractRecipeViewer<ShapelessRecipe, KebabRecipeHandler> {
+    }
 
-		public KebabRecipeHandlerRecipeViewer(KebabRecipeHandler handler) {
-			super(handler);
-		}
+    public class KebabRecipeHandlerRecipeViewer extends AbstractRecipeViewer<ShapelessRecipe, KebabRecipeHandler>
+    {
 
-		@Override
-		public Collection<ShapelessRecipe> getAllRecipes() {
-			return this.handler.getStaticRecipes();
-		}
+        public KebabRecipeHandlerRecipeViewer (KebabRecipeHandler handler)
+        {
+            super (handler);
+        }
 
-		@Override
-		public int getOffsetX(Class<? extends GuiContainer> guiClass) {
-			return 8;
-		}
+        @Override
+        public Collection<ShapelessRecipe> getAllRecipes ()
+        {
+            return handler.getStaticRecipes ();
+        }
 
-	}
+        @Override
+        public int getOffsetX (Class<? extends GuiContainer> guiClass)
+        {
+            return 8;
+        }
+
+    }
 }

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2019 CraftedMods (see https://github.com/CraftedMods)
+ * Copyright (C) 2020 CraftedMods (see https://github.com/CraftedMods)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,16 +19,19 @@ package craftedMods.lotr.recipes.internal.recipeHandlers;
 import craftedMods.lotr.recipes.api.recipeHandlers.AbstractTraderRecipeHandler;
 import lotr.common.entity.npc.LOTRTradeEntries;
 
-public class LOTRTraderRecipeHandler extends AbstractTraderRecipeHandler {
+public class LOTRTraderRecipeHandler extends AbstractTraderRecipeHandler
+{
 
-	public LOTRTraderRecipeHandler(String unlocalizedName, String faction, LOTRTradeEntries itemsBought, LOTRTradeEntries itemsSold) {
-		super("lotr.trader.", unlocalizedName, faction, itemsBought, itemsSold);
-	}
-	
-	@Override
-	public int getDefaultOrder ()
-	{
-	    return 100000;
-	}
+    public LOTRTraderRecipeHandler (String unlocalizedName, String faction, LOTRTradeEntries itemsBought,
+        LOTRTradeEntries itemsSold)
+    {
+        super ("lotr.trader.", unlocalizedName, faction, itemsBought, itemsSold);
+    }
+
+    @Override
+    public int getDefaultOrder ()
+    {
+        return 100000;
+    }
 
 }

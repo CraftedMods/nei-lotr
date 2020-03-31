@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2019 CraftedMods (see https://github.com/CraftedMods)
+ * Copyright (C) 2020 CraftedMods (see https://github.com/CraftedMods)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,357 +37,449 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.*;
 import net.minecraft.util.StatCollector;
 
-public abstract class AbstractTraderRecipeHandler extends AbstractRecipeHandler<TraderRecipe> {
-    
+public abstract class AbstractTraderRecipeHandler extends AbstractRecipeHandler<TraderRecipe>
+{
+
     public static final int ALL_STRENGHTS_META = 9999;
 
-	protected final String traderName;
-	protected final LOTRTradeEntries itemsBought;
-	protected final LOTRTradeEntries itemsSold;
+    protected final String traderName;
+    protected final LOTRTradeEntries itemsBought;
+    protected final LOTRTradeEntries itemsSold;
 
-	protected List<Vessel> vesselsSold;
-	
-	private final TraderRecipeHandlerRenderer renderer = new TraderRecipeHandlerRenderer();
-    private final TraderRecipeHandlerRecipeViewer recipeViewer = new TraderRecipeHandlerRecipeViewer(this);
+    protected List<Vessel> vesselsSold;
 
-	public AbstractTraderRecipeHandler(String prefix, String unlocalizedName, String faction, LOTRTradeEntries itemsBought, LOTRTradeEntries itemsSold) {
-		super(prefix + (faction == null ? "" : faction + ".") + unlocalizedName);
-		this.traderName = unlocalizedName;
-		this.itemsBought = itemsBought;
-		this.itemsSold = itemsSold;
-	}
+    private final TraderRecipeHandlerRenderer renderer = new TraderRecipeHandlerRenderer ();
+    private final TraderRecipeHandlerRecipeViewer recipeViewer = new TraderRecipeHandlerRecipeViewer (this);
 
-	@Override
-	public void onPreLoad(RecipeHandlerConfiguration config, Logger logger) {
-		super.onPreLoad(config, logger);
-		try {
-			Vessel[] vesselsArray = ReflectionHelper.getPrivateValue(LOTRTradeEntries.class, this.itemsSold, "drinkVessels");
-			if (vesselsArray != null) {
-				this.vesselsSold = Arrays.asList(vesselsArray);
-			}
-		} catch (Exception e) {
-			logger.error("Could not get private field value drinkVessels from LOTRTradeEntries via reflection", e);
-		}
-		if (this.vesselsSold == null) {
-			this.vesselsSold = new ArrayList<>();
-		}
-	}
+    public AbstractTraderRecipeHandler (String prefix, String unlocalizedName, String faction,
+        LOTRTradeEntries itemsBought, LOTRTradeEntries itemsSold)
+    {
+        super (prefix + (faction == null ? "" : faction + ".") + unlocalizedName);
+        traderName = unlocalizedName;
+        this.itemsBought = itemsBought;
+        this.itemsSold = itemsSold;
+    }
 
-	@Override
-	public Collection<TraderRecipe> getDynamicCraftingRecipes(ItemStack result) {
-		Collection<TraderRecipe> recipes = new ArrayList<>();
-		if (result.getItem() != LOTRMod.silverCoin) {
-			for (LOTRTradeEntry entry : this.itemsSold.tradeEntries) {
-				boolean add = false;
-				int baseCost = entry.getCost();
-				ItemStack baseItem = entry.createTradeItem();
-				if (result.getItem() instanceof LOTRItemMug && LOTRItemMug.isItemFullDrink(result) && baseItem.getItem() instanceof LOTRItemMug
-						&& LOTRItemMug.isItemFullDrink(baseItem) && result.getItem() == baseItem.getItem()
-						&& LOTRPoisonedDrinks.isDrinkPoisoned(result) == LOTRPoisonedDrinks.isDrinkPoisoned(baseItem)
-						&& (baseItem.getItemDamage() == AbstractTraderRecipeHandler.ALL_STRENGHTS_META
-								|| LOTRItemMug.getFoodStrength(result) == LOTRItemMug.getFoodStrength(baseItem))) {
-					Vessel vessel = LOTRItemMug.getVessel(result);
-					if (this.vesselsSold.contains(vessel)) {
-						add = true;
-					}
-				} else {
-					add = baseItem.getItem() instanceof LOTRItemBarrel || result.getItem() instanceof LOTRItemBarrel
-							? RecipeHandlerUtils.getInstance().areStacksSameType(baseItem, result)
-							: RecipeHandlerUtils.getInstance().areStacksSameTypeForCrafting(baseItem, result);
-				}
-				if (add) {
-					ItemStack toAdd = result.copy();
-					toAdd.stackSize = baseItem.stackSize;
-					if (toAdd.isItemStackDamageable()) {
-						toAdd.setItemDamage(0);
-					}
-					recipes.add(new TraderRecipe(toAdd, AbstractTraderRecipeHandler.getMinTradeCost(toAdd, baseCost, true),
-							AbstractTraderRecipeHandler.getMaxTradeCost(toAdd, baseCost, true), true));
-				}
-			}
-		} else {
-			recipes.addAll(this.getAllCraftingRecipes());
-		}
-		return recipes;
-	}
+    @Override
+    public void onPreLoad (RecipeHandlerConfiguration config, Logger logger)
+    {
+        super.onPreLoad (config, logger);
+        try
+        {
+            Vessel[] vesselsArray = ReflectionHelper.getPrivateValue (LOTRTradeEntries.class, itemsSold,
+                "drinkVessels");
+            if (vesselsArray != null)
+            {
+                vesselsSold = Arrays.asList (vesselsArray);
+            }
+        }
+        catch (Exception e)
+        {
+            logger.error ("Could not get private field value drinkVessels from LOTRTradeEntries via reflection", e);
+        }
+        if (vesselsSold == null)
+        {
+            vesselsSold = new ArrayList<> ();
+        }
+    }
 
-	protected Collection<TraderRecipe> getAllCraftingRecipes() {// TODO cache in field
-		Collection<TraderRecipe> recipes = new ArrayList<>();
-		for (LOTRTradeEntry entry : this.itemsBought.tradeEntries) {
-			// boolean add = false;
-			int baseCost = entry.getCost();
-			ItemStack baseItem = entry.createTradeItem();
-			recipes.add(new TraderRecipe(baseItem, AbstractTraderRecipeHandler.getMinTradeCost(baseItem, baseCost, false),
-					AbstractTraderRecipeHandler.getMaxTradeCost(baseItem, baseCost, false), false));
-		}
-		return recipes;
-	}
+    @Override
+    public Collection<TraderRecipe> getDynamicCraftingRecipes (ItemStack result)
+    {
+        Collection<TraderRecipe> recipes = new ArrayList<> ();
+        if (result.getItem () != LOTRMod.silverCoin)
+        {
+            for (LOTRTradeEntry entry : itemsSold.tradeEntries)
+            {
+                boolean add = false;
+                int baseCost = entry.getCost ();
+                ItemStack baseItem = entry.createTradeItem ();
+                if (result.getItem () instanceof LOTRItemMug && LOTRItemMug.isItemFullDrink (result)
+                    && baseItem.getItem () instanceof LOTRItemMug
+                    && LOTRItemMug.isItemFullDrink (baseItem) && result.getItem () == baseItem.getItem ()
+                    && LOTRPoisonedDrinks.isDrinkPoisoned (result) == LOTRPoisonedDrinks.isDrinkPoisoned (baseItem)
+                    && (baseItem.getItemDamage () == AbstractTraderRecipeHandler.ALL_STRENGHTS_META
+                        || LOTRItemMug.getFoodStrength (result) == LOTRItemMug.getFoodStrength (baseItem)))
+                {
+                    Vessel vessel = LOTRItemMug.getVessel (result);
+                    if (vesselsSold.contains (vessel))
+                    {
+                        add = true;
+                    }
+                }
+                else
+                {
+                    add = baseItem.getItem () instanceof LOTRItemBarrel || result.getItem () instanceof LOTRItemBarrel
+                        ? RecipeHandlerUtils.getInstance ().areStacksSameType (baseItem, result)
+                        : RecipeHandlerUtils.getInstance ().areStacksSameTypeForCrafting (baseItem, result);
+                }
+                if (add)
+                {
+                    ItemStack toAdd = result.copy ();
+                    toAdd.stackSize = baseItem.stackSize;
+                    if (toAdd.isItemStackDamageable ())
+                    {
+                        toAdd.setItemDamage (0);
+                    }
+                    recipes.add (
+                        new TraderRecipe (toAdd, AbstractTraderRecipeHandler.getMinTradeCost (toAdd, baseCost, true),
+                            AbstractTraderRecipeHandler.getMaxTradeCost (toAdd, baseCost, true), true));
+                }
+            }
+        }
+        else
+        {
+            recipes.addAll (getAllCraftingRecipes ());
+        }
+        return recipes;
+    }
 
-	@Override
-	public Collection<TraderRecipe> getDynamicUsageRecipes(ItemStack ingredient) {
-		Collection<TraderRecipe> recipes = new ArrayList<>();
-		if (ingredient.getItem() != LOTRMod.silverCoin) {
-			for (LOTRTradeEntry entry : this.itemsBought.tradeEntries) {
-				int baseCost = entry.getCost();
-				ItemStack baseItem = entry.createTradeItem();
-				if (RecipeHandlerUtils.getInstance().areStacksSameTypeForCrafting(baseItem, ingredient)) {
-					ItemStack toAdd = ingredient.copy();
-					toAdd.stackSize = baseItem.stackSize;
-					if (toAdd.isItemStackDamageable()) {
-						toAdd.setItemDamage(0);// TODO: Fix durability (permutation is set in plugin recipe handler)
-					}
-					recipes.add(new TraderRecipe(toAdd, AbstractTraderRecipeHandler.getMinTradeCost(toAdd, baseCost, false),
-							AbstractTraderRecipeHandler.getMaxTradeCost(toAdd, baseCost, false), false));
-				}
-			}
-		} else {
-			recipes.addAll(this.getAllUsageRecipes());
-		}
-		return recipes;
+    protected Collection<TraderRecipe> getAllCraftingRecipes ()
+    {// TODO cache in field
+        Collection<TraderRecipe> recipes = new ArrayList<> ();
+        for (LOTRTradeEntry entry : itemsBought.tradeEntries)
+        {
+            // boolean add = false;
+            int baseCost = entry.getCost ();
+            ItemStack baseItem = entry.createTradeItem ();
+            recipes.add (
+                new TraderRecipe (baseItem, AbstractTraderRecipeHandler.getMinTradeCost (baseItem, baseCost, false),
+                    AbstractTraderRecipeHandler.getMaxTradeCost (baseItem, baseCost, false), false));
+        }
+        return recipes;
+    }
 
-	}
+    @Override
+    public Collection<TraderRecipe> getDynamicUsageRecipes (ItemStack ingredient)
+    {
+        Collection<TraderRecipe> recipes = new ArrayList<> ();
+        if (ingredient.getItem () != LOTRMod.silverCoin)
+        {
+            for (LOTRTradeEntry entry : itemsBought.tradeEntries)
+            {
+                int baseCost = entry.getCost ();
+                ItemStack baseItem = entry.createTradeItem ();
+                if (RecipeHandlerUtils.getInstance ().areStacksSameTypeForCrafting (baseItem, ingredient))
+                {
+                    ItemStack toAdd = ingredient.copy ();
+                    toAdd.stackSize = baseItem.stackSize;
+                    if (toAdd.isItemStackDamageable ())
+                    {
+                        toAdd.setItemDamage (0);// TODO: Fix durability (permutation is set in plugin recipe handler)
+                    }
+                    recipes.add (
+                        new TraderRecipe (toAdd, AbstractTraderRecipeHandler.getMinTradeCost (toAdd, baseCost, false),
+                            AbstractTraderRecipeHandler.getMaxTradeCost (toAdd, baseCost, false), false));
+                }
+            }
+        }
+        else
+        {
+            recipes.addAll (getAllUsageRecipes ());
+        }
+        return recipes;
 
-	protected Collection<TraderRecipe> getAllUsageRecipes() {// TODO cache
-		Collection<TraderRecipe> recipes = new ArrayList<>();
-		for (LOTRTradeEntry entry : this.itemsSold.tradeEntries) {
-			int baseCost = entry.getCost();
-			ItemStack baseItem = entry.createTradeItem();
-			if (baseItem.getItem() instanceof LOTRItemMug && LOTRItemMug.isItemFullDrink(baseItem)
-					&& baseItem.getItemDamage() == AbstractTraderRecipeHandler.ALL_STRENGHTS_META) {
-				for (float strength : LOTRRecipeHandlerUtils.getDrinkStrenghts()) {
-					baseItem = baseItem.copy();
-					LOTRItemMug.setStrengthMeta(baseItem, LOTRRecipeHandlerUtils.getDrinkStrengthIndex(strength));
-					recipes.add(new TraderRecipe(baseItem, AbstractTraderRecipeHandler.getMinTradeCost(baseItem, baseCost, true),
-							AbstractTraderRecipeHandler.getMaxTradeCost(baseItem, baseCost, true), true));
-				}
-			} else {
-				recipes.add(new TraderRecipe(baseItem, AbstractTraderRecipeHandler.getMinTradeCost(baseItem, baseCost, true),
-						AbstractTraderRecipeHandler.getMaxTradeCost(baseItem, baseCost, true), true));
-			}
-		}
-		return recipes;
-	}
+    }
 
-	@Override
-	public String getDisplayName() {
-		return StatCollector.translateToLocal("entity.lotr." + this.traderName + ".name");
-	}
+    protected Collection<TraderRecipe> getAllUsageRecipes ()
+    {// TODO cache
+        Collection<TraderRecipe> recipes = new ArrayList<> ();
+        for (LOTRTradeEntry entry : itemsSold.tradeEntries)
+        {
+            int baseCost = entry.getCost ();
+            ItemStack baseItem = entry.createTradeItem ();
+            if (baseItem.getItem () instanceof LOTRItemMug && LOTRItemMug.isItemFullDrink (baseItem)
+                && baseItem.getItemDamage () == AbstractTraderRecipeHandler.ALL_STRENGHTS_META)
+            {
+                for (float strength : LOTRRecipeHandlerUtils.getDrinkStrenghts ())
+                {
+                    baseItem = baseItem.copy ();
+                    LOTRItemMug.setStrengthMeta (baseItem, LOTRRecipeHandlerUtils.getDrinkStrengthIndex (strength));
+                    recipes.add (new TraderRecipe (baseItem,
+                        AbstractTraderRecipeHandler.getMinTradeCost (baseItem, baseCost, true),
+                        AbstractTraderRecipeHandler.getMaxTradeCost (baseItem, baseCost, true), true));
+                }
+            }
+            else
+            {
+                recipes.add (
+                    new TraderRecipe (baseItem, AbstractTraderRecipeHandler.getMinTradeCost (baseItem, baseCost, true),
+                        AbstractTraderRecipeHandler.getMaxTradeCost (baseItem, baseCost, true), true));
+            }
+        }
+        return recipes;
+    }
 
-	@Override
-	public List<RecipeItemSlot> getSlotsForRecipeItems(TraderRecipe recipe, EnumRecipeItemRole role) {
-		List<RecipeItemSlot> slots = new ArrayList<>();
-		if (role == EnumRecipeItemRole.INGREDIENT) {
-			if (recipe.isSold()) {
-				slots.add(this.createRecipeItemSlot(30, 24));
-			}
-			slots.add(this.createRecipeItemSlot(43 + 15, 24));
-		} else {
-			slots.add(this.createRecipeItemSlot(96 + 15, 24));
-			if (!recipe.isSold()) {
-				slots.add(this.createRecipeItemSlot(124 + 15, 24));
-			}
-		}
-		return slots;
-	}
+    @Override
+    public String getDisplayName ()
+    {
+        return StatCollector.translateToLocal ("entity.lotr." + traderName + ".name");
+    }
 
-	@Override
-	public int getRecipesPerPage() {
-		return 2;
-	}
+    @Override
+    public List<RecipeItemSlot> getSlotsForRecipeItems (TraderRecipe recipe, EnumRecipeItemRole role)
+    {
+        List<RecipeItemSlot> slots = new ArrayList<> ();
+        if (role == EnumRecipeItemRole.INGREDIENT)
+        {
+            if (recipe.isSold ())
+            {
+                slots.add (createRecipeItemSlot (30, 24));
+            }
+            slots.add (createRecipeItemSlot (43 + 15, 24));
+        }
+        else
+        {
+            slots.add (createRecipeItemSlot (96 + 15, 24));
+            if (!recipe.isSold ())
+            {
+                slots.add (createRecipeItemSlot (124 + 15, 24));
+            }
+        }
+        return slots;
+    }
 
-	@Override
-	@SuppressWarnings("unchecked")
-	public TraderRecipeHandlerRenderer getRenderer() {
-		return this.renderer;
-	}
+    @Override
+    public int getRecipesPerPage ()
+    {
+        return 2;
+    }
 
-	@Override
-	public RecipeHandlerRecipeViewer<TraderRecipe> getRecipeViewer() {
-		return this.recipeViewer;
-	}
+    @Override
+    @SuppressWarnings("unchecked")
+    public TraderRecipeHandlerRenderer getRenderer ()
+    {
+        return renderer;
+    }
 
-	public static int getMinTradeCost(ItemStack itemStack, int baseCost, boolean sold) {
-		return AbstractTraderRecipeHandler.getTradeCost(itemStack, baseCost, sold, 0.75f);
-	}
+    @Override
+    public RecipeHandlerRecipeViewer<TraderRecipe> getRecipeViewer ()
+    {
+        return recipeViewer;
+    }
 
-	public static int getMaxTradeCost(ItemStack itemStack, int baseCost, boolean sold) {
-		return AbstractTraderRecipeHandler.getTradeCost(itemStack, baseCost, sold, 1.25f);
-	}
+    public static int getMinTradeCost (ItemStack itemStack, int baseCost, boolean sold)
+    {
+        return AbstractTraderRecipeHandler.getTradeCost (itemStack, baseCost, sold, 0.75f);
+    }
 
-	public static int getTradeCost(ItemStack itemStack, int baseCost, boolean sold, float probabilityFactor) {
-		float tradeCost = baseCost;
-		Item item = itemStack.getItem();
-		if (item instanceof LOTRItemMug) {
-			LOTRItemMug mug = (LOTRItemMug) item;
-			if (mug.isBrewable) {
-				tradeCost *= LOTRItemMug.getFoodStrength(itemStack);
-			}
-			if (LOTRItemMug.isItemFullDrink(itemStack)) {
-				Vessel vessel = LOTRItemMug.getVessel(itemStack);
-				if (vessel != null) {
-					tradeCost += vessel.extraPrice;
-				}
-			}
-		}
+    public static int getMaxTradeCost (ItemStack itemStack, int baseCost, boolean sold)
+    {
+        return AbstractTraderRecipeHandler.getTradeCost (itemStack, baseCost, sold, 1.25f);
+    }
 
-        if (sold) {
+    public static int getTradeCost (ItemStack itemStack, int baseCost, boolean sold, float probabilityFactor)
+    {
+        float tradeCost = baseCost;
+        Item item = itemStack.getItem ();
+        if (item instanceof LOTRItemMug)
+        {
+            LOTRItemMug mug = (LOTRItemMug) item;
+            if (mug.isBrewable)
+            {
+                tradeCost *= LOTRItemMug.getFoodStrength (itemStack);
+            }
+            if (LOTRItemMug.isItemFullDrink (itemStack))
+            {
+                Vessel vessel = LOTRItemMug.getVessel (itemStack);
+                if (vessel != null)
+                {
+                    tradeCost += vessel.extraPrice;
+                }
+            }
+        }
+
+        if (sold)
+        {
             tradeCost *= LOTREnchantmentHelper.calcTradeValueFactor (itemStack);
         }
 
-		tradeCost *= probabilityFactor;
+        tradeCost *= probabilityFactor;
 
-		return Math.max(Math.round(Math.max(tradeCost, 1.0F)), 1);
-	}
+        return Math.max (Math.round (Math.max (tradeCost, 1.0F)), 1);
+    }
 
-	public class TraderRecipe extends AbstractRecipe {
+    public class TraderRecipe extends AbstractRecipe
+    {
 
-		private final int minPrice;
-		private final int maxPrice;
-		private final boolean sold;
+        private final int minPrice;
+        private final int maxPrice;
+        private final boolean sold;
 
-		public TraderRecipe(ItemStack stack, int minPrice, int maxPrice, boolean sold) {
-			if (sold) {
-				this.add(new ItemStack(LOTRMod.silverCoin, minPrice), this.ingredients);
-				this.add(new ItemStack(LOTRMod.silverCoin, maxPrice), this.ingredients);
-				this.add(stack, this.results);
-			} else {
-				this.add(new ItemStack(LOTRMod.silverCoin, minPrice), this.results);
-				this.add(new ItemStack(LOTRMod.silverCoin, maxPrice), this.results);
-				this.add(stack, this.ingredients);
-			}
-			this.minPrice = minPrice;
-			this.maxPrice = maxPrice;
-			this.sold = sold;
-			this.generatePermutations();
-		}
+        public TraderRecipe (ItemStack stack, int minPrice, int maxPrice, boolean sold)
+        {
+            if (sold)
+            {
+                add (new ItemStack (LOTRMod.silverCoin, minPrice), ingredients);
+                add (new ItemStack (LOTRMod.silverCoin, maxPrice), ingredients);
+                add (stack, results);
+            }
+            else
+            {
+                add (new ItemStack (LOTRMod.silverCoin, minPrice), results);
+                add (new ItemStack (LOTRMod.silverCoin, maxPrice), results);
+                add (stack, ingredients);
+            }
+            this.minPrice = minPrice;
+            this.maxPrice = maxPrice;
+            this.sold = sold;
+            generatePermutations ();
+        }
 
-		@Override
-		public boolean consumes(ItemStack ingredient) {
-			return this.sold && ingredient.getItem() instanceof LOTRItemCoin ? true : super.consumes(ingredient);
-		}
+        @Override
+        public boolean consumes (ItemStack ingredient)
+        {
+            return sold && ingredient.getItem () instanceof LOTRItemCoin ? true : super.consumes (ingredient);
+        }
 
-		@Override
-		public boolean produces(ItemStack result) {
-			return !this.sold && result.getItem() instanceof LOTRItemCoin ? true : super.produces(result);
-		}
+        @Override
+        public boolean produces (ItemStack result)
+        {
+            return !sold && result.getItem () instanceof LOTRItemCoin ? true : super.produces (result);
+        }
 
-		public int getMinPrice() {
-			return this.minPrice;
-		}
+        public int getMinPrice ()
+        {
+            return minPrice;
+        }
 
-		public int getMaxPrice() {
-			return this.maxPrice;
-		}
+        public int getMaxPrice ()
+        {
+            return maxPrice;
+        }
 
-		public boolean isSold() {
-			return this.sold;
-		}
+        public boolean isSold ()
+        {
+            return sold;
+        }
 
-		@Override
-		public ItemStack getIngredientReplacement(ItemStack defaultReplacement) {
-			ItemStack ret = defaultReplacement.copy();
-			if (ret.isItemStackDamageable()) {
-				ret.setItemDamage(0);
-			}
-			return ret;
-		}
+        @Override
+        public ItemStack getIngredientReplacement (ItemStack defaultReplacement)
+        {
+            ItemStack ret = defaultReplacement.copy ();
+            if (ret.isItemStackDamageable ())
+            {
+                ret.setItemDamage (0);
+            }
+            return ret;
+        }
 
-		@Override
-		public ItemStack getResultReplacement(ItemStack defaultReplacement) {
-			ItemStack ret = defaultReplacement.copy();
-			if (ret.isItemStackDamageable()) {
-				ret.setItemDamage(0);
-			}
-			return ret;
-		}
+        @Override
+        public ItemStack getResultReplacement (ItemStack defaultReplacement)
+        {
+            ItemStack ret = defaultReplacement.copy ();
+            if (ret.isItemStackDamageable ())
+            {
+                ret.setItemDamage (0);
+            }
+            return ret;
+        }
 
-	}
+    }
 
-	public class TraderRecipeHandlerRenderer implements RecipeHandlerRenderer<AbstractTraderRecipeHandler, TraderRecipe> {
+    public class TraderRecipeHandlerRenderer implements RecipeHandlerRenderer<AbstractTraderRecipeHandler, TraderRecipe>
+    {
 
-		@Override
-		public void renderBackground(AbstractTraderRecipeHandler handler, TraderRecipe recipe, int cycleticks) {
-			GL11.glPushMatrix();
-			GL11.glTranslatef(15, 0, 0);
+        @Override
+        public void renderBackground (AbstractTraderRecipeHandler handler, TraderRecipe recipe, int cycleticks)
+        {
+            GL11.glPushMatrix ();
+            GL11.glTranslatef (15, 0, 0);
 
-			RecipeHandlerRendererUtils.getInstance().bindTexture(RecipeHandlerRenderer.DEFAULT_GUI_TEXTURE);
-			RecipeHandlerRendererUtils.getInstance().drawTexturedRectangle(42, 19, 65, 30, 80, 26);
-			RecipeHandlerRendererUtils.getInstance().drawRectangle(42, 13, 18, 10, 0xFFC6C6C6);
-			RecipeHandlerRendererUtils.getInstance().drawRectangle(42, 41, 18, 4, 0xFFC6C6C6);
-			RecipeHandlerRendererUtils.getInstance().drawRectangle(96, 19, 26, 26, 0xFFC6C6C6);
-			RecipeHandlerRendererUtils.getInstance().drawTexturedRectangle(95, 23, 65, 34, 18, 18);
-			if (!recipe.isSold()) {
-				RecipeHandlerRendererUtils.getInstance().drawTexturedRectangle(123, 23, 65, 34, 18, 18);
-			}
-			if (recipe.isSold()) {
-				RecipeHandlerRendererUtils.getInstance().drawTexturedRectangle(14, 23, 65, 34, 18, 18);
-			}
+            RecipeHandlerRendererUtils.getInstance ().bindTexture (RecipeHandlerRenderer.DEFAULT_GUI_TEXTURE);
+            RecipeHandlerRendererUtils.getInstance ().drawTexturedRectangle (42, 19, 65, 30, 80, 26);
+            RecipeHandlerRendererUtils.getInstance ().drawRectangle (42, 13, 18, 10, 0xFFC6C6C6);
+            RecipeHandlerRendererUtils.getInstance ().drawRectangle (42, 41, 18, 4, 0xFFC6C6C6);
+            RecipeHandlerRendererUtils.getInstance ().drawRectangle (96, 19, 26, 26, 0xFFC6C6C6);
+            RecipeHandlerRendererUtils.getInstance ().drawTexturedRectangle (95, 23, 65, 34, 18, 18);
+            if (!recipe.isSold ())
+            {
+                RecipeHandlerRendererUtils.getInstance ().drawTexturedRectangle (123, 23, 65, 34, 18, 18);
+            }
+            if (recipe.isSold ())
+            {
+                RecipeHandlerRendererUtils.getInstance ().drawTexturedRectangle (14, 23, 65, 34, 18, 18);
+            }
 
-			GL11.glPopMatrix();
-		}
+            GL11.glPopMatrix ();
+        }
 
-		@Override
-		public void renderForeground(AbstractTraderRecipeHandler handler, TraderRecipe recipe, int cycleticks) {
-			GL11.glPushMatrix();
-			GL11.glTranslatef(15, 0, 0);
+        @Override
+        public void renderForeground (AbstractTraderRecipeHandler handler, TraderRecipe recipe, int cycleticks)
+        {
+            GL11.glPushMatrix ();
+            GL11.glTranslatef (15, 0, 0);
 
-			int offsetX = recipe.isSold() ? 0 : 81;
-			RecipeHandlerRendererUtils.getInstance().drawText(StatCollector.translateToLocal("neiLotr.handler.trader.minLabel"), offsetX + 15, 14, 4210752,
-					false);
-			RecipeHandlerRendererUtils.getInstance().drawText(StatCollector.translateToLocal("neiLotr.handler.trader.maxLabel"), offsetX + 42, 14, 4210752,
-					false);
+            int offsetX = recipe.isSold () ? 0 : 81;
+            RecipeHandlerRendererUtils.getInstance ().drawText (
+                StatCollector.translateToLocal ("neiLotr.handler.trader.minLabel"), offsetX + 15, 14, 4210752,
+                false);
+            RecipeHandlerRendererUtils.getInstance ().drawText (
+                StatCollector.translateToLocal ("neiLotr.handler.trader.maxLabel"), offsetX + 42, 14, 4210752,
+                false);
 
-			GL11.glPopMatrix();
-		}
+            GL11.glPopMatrix ();
+        }
 
-	}
+    }
 
-	public class TraderRecipeHandlerRecipeViewer extends AbstractRecipeViewer<TraderRecipe, AbstractTraderRecipeHandler> {
+    public class TraderRecipeHandlerRecipeViewer extends AbstractRecipeViewer<TraderRecipe, AbstractTraderRecipeHandler>
+    {
 
-		private Collection<Class<? extends GuiContainer>> supportedGuiClasses = new ArrayList<>();
+        private Collection<Class<? extends GuiContainer>> supportedGuiClasses = new ArrayList<> ();
 
-		public TraderRecipeHandlerRecipeViewer(AbstractTraderRecipeHandler handler) {
-			super(handler);
-			this.supportedGuiClasses.addAll(AbstractRecipeViewer.RECIPE_HANDLER_GUIS);
-			this.supportedGuiClasses.add(LOTRGuiTrade.class);
-		}
+        public TraderRecipeHandlerRecipeViewer (AbstractTraderRecipeHandler handler)
+        {
+            super (handler);
+            supportedGuiClasses.addAll (AbstractRecipeViewer.RECIPE_HANDLER_GUIS);
+            supportedGuiClasses.add (LOTRGuiTrade.class);
+        }
 
-		@Override
-		public Collection<Class<? extends GuiContainer>> getSupportedGUIClasses() {
-			return this.supportedGuiClasses;
-		}
+        @Override
+        public Collection<Class<? extends GuiContainer>> getSupportedGUIClasses ()
+        {
+            return supportedGuiClasses;
+        }
 
-		@Override
-		public boolean isGuiContainerSupported(GuiContainer container) {
-			if (container instanceof LOTRGuiTrade) {
-				LOTRGuiTrade tradeGui = (LOTRGuiTrade) container;
-				if (!this.handler.traderName.equals(LOTRRecipeHandlerUtils.getUnlocalizedEntityName(tradeGui.theEntity.getClass()))) return false;
-			}
-			return true;
-		}
+        @Override
+        public boolean isGuiContainerSupported (GuiContainer container)
+        {
+            if (container instanceof LOTRGuiTrade)
+            {
+                LOTRGuiTrade tradeGui = (LOTRGuiTrade) container;
+                if (!handler.traderName
+                    .equals (LOTRRecipeHandlerUtils.getUnlocalizedEntityName (tradeGui.theEntity.getClass ())))
+                    return false;
+            }
+            return true;
+        }
 
-		@Override
-		public Collection<TraderRecipe> getAllRecipes() {
-			Collection<TraderRecipe> recipes = this.handler.getAllCraftingRecipes();
-			recipes.addAll(this.handler.getAllUsageRecipes());
-			return recipes;
-		}
+        @Override
+        public Collection<TraderRecipe> getAllRecipes ()
+        {
+            Collection<TraderRecipe> recipes = handler.getAllCraftingRecipes ();
+            recipes.addAll (handler.getAllUsageRecipes ());
+            return recipes;
+        }
 
-		@Override
-		public int getOffsetX(Class<? extends GuiContainer> guiClass) {
-			return guiClass == LOTRGuiTrade.class ? 144 : super.getOffsetX(guiClass);
-		}
+        @Override
+        public int getOffsetX (Class<? extends GuiContainer> guiClass)
+        {
+            return guiClass == LOTRGuiTrade.class ? 144 : super.getOffsetX (guiClass);
+        }
 
-		@Override
-		public int getOffsetY(Class<? extends GuiContainer> guiClass) {
-			return guiClass == LOTRGuiTrade.class ? 130 : super.getOffsetY(guiClass);
-		}
+        @Override
+        public int getOffsetY (Class<? extends GuiContainer> guiClass)
+        {
+            return guiClass == LOTRGuiTrade.class ? 130 : super.getOffsetY (guiClass);
+        }
 
-		@Override
-		public String getButtonTooltip(Class<? extends GuiContainer> guiClass) {
-			return StatCollector.translateToLocal("neiLotr.handler.trader.recipeViewer.tooltip");
-		}
+        @Override
+        public String getButtonTooltip (Class<? extends GuiContainer> guiClass)
+        {
+            return StatCollector.translateToLocal ("neiLotr.handler.trader.recipeViewer.tooltip");
+        }
 
-	}
+    }
 
 }

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2019 CraftedMods (see https://github.com/CraftedMods)
+ * Copyright (C) 2020 CraftedMods (see https://github.com/CraftedMods)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,92 +20,110 @@ import craftedMods.lotr.recipes.api.recipeHandlers.AbstractAlloyForgeRecipeHandl
 import lotr.common.tileentity.*;
 import net.minecraft.item.ItemStack;
 
-public class LOTRAlloyForgeRecipeHandler extends AbstractAlloyForgeRecipeHandler {
+public class LOTRAlloyForgeRecipeHandler extends AbstractAlloyForgeRecipeHandler
+{
 
-	public LOTRAlloyForgeRecipeHandler(String unlocalizedName, AlloyForgeAccess alloyForgeDummy) {
-		super("lotr.alloyForge." + unlocalizedName, alloyForgeDummy);
-	}
-	
-	@Override
-	public int getDefaultOrder ()
-	{
-	    return 3000;
-	}
+    public LOTRAlloyForgeRecipeHandler (String unlocalizedName, AlloyForgeAccess alloyForgeDummy)
+    {
+        super ("lotr.alloyForge." + unlocalizedName, alloyForgeDummy);
+    }
 
-	public static class DwarvenForgeAccess extends LOTRTileEntityDwarvenForge implements AlloyForgeAccess {
+    @Override
+    public int getDefaultOrder ()
+    {
+        return 3000;
+    }
 
-		@Override
-		public String getName() {
-			return super.getForgeName();
-		}
+    public static class DwarvenForgeAccess extends LOTRTileEntityDwarvenForge implements AlloyForgeAccess
+    {
 
-		@Override
-		public ItemStack getAlloyResult(ItemStack ingredient, ItemStack alloy) {
-			return super.getAlloySmeltingResult(ingredient, alloy);
-		}
+        @Override
+        public String getName ()
+        {
+            return super.getForgeName ();
+        }
 
-		@Override
-		public ItemStack getSmeltingResult(ItemStack itemstack) {
-			return super.getSmeltingResult(itemstack);
-		}
+        @Override
+        public ItemStack getAlloyResult (ItemStack ingredient, ItemStack alloy)
+        {
+            return super.getAlloySmeltingResult (ingredient, alloy);
+        }
 
-	}
+        @Override
+        public ItemStack getSmeltingResult (ItemStack itemstack)
+        {
+            return super.getSmeltingResult (itemstack);
+        }
 
-	public static class ElvenForgeAccess extends LOTRTileEntityElvenForge implements AlloyForgeAccess {
+    }
 
-		@Override
-		public String getName() {
-			return super.getForgeName();
-		}
+    public static class ElvenForgeAccess extends LOTRTileEntityElvenForge implements AlloyForgeAccess
+    {
 
-		@Override
-		public ItemStack getAlloyResult(ItemStack ingredient, ItemStack alloy) {
-			return super.getAlloySmeltingResult(ingredient, alloy);
-		}
+        @Override
+        public String getName ()
+        {
+            return super.getForgeName ();
+        }
 
-		@Override
-		public ItemStack getSmeltingResult(ItemStack itemstack) {
-			return super.getSmeltingResult(itemstack);
-		}
+        @Override
+        public ItemStack getAlloyResult (ItemStack ingredient, ItemStack alloy)
+        {
+            return super.getAlloySmeltingResult (ingredient, alloy);
+        }
 
-	}
+        @Override
+        public ItemStack getSmeltingResult (ItemStack itemstack)
+        {
+            return super.getSmeltingResult (itemstack);
+        }
 
-	public static class MenForgeAccess extends LOTRTileEntityAlloyForge implements AlloyForgeAccess {
+    }
 
-		@Override
-		public String getName() {
-			return super.getForgeName();
-		}
+    public static class MenForgeAccess extends LOTRTileEntityAlloyForge implements AlloyForgeAccess
+    {
 
-		@Override
-		public ItemStack getAlloyResult(ItemStack ingredient, ItemStack alloy) {
-			return super.getAlloySmeltingResult(ingredient, alloy);
-		}
+        @Override
+        public String getName ()
+        {
+            return super.getForgeName ();
+        }
 
-		@Override
-		public ItemStack getSmeltingResult(ItemStack itemstack) {
-			return super.getSmeltingResult(itemstack);
-		}
+        @Override
+        public ItemStack getAlloyResult (ItemStack ingredient, ItemStack alloy)
+        {
+            return super.getAlloySmeltingResult (ingredient, alloy);
+        }
 
-	}
+        @Override
+        public ItemStack getSmeltingResult (ItemStack itemstack)
+        {
+            return super.getSmeltingResult (itemstack);
+        }
 
-	public static class OrcForgeAccess extends LOTRTileEntityOrcForge implements AlloyForgeAccess {
+    }
 
-		@Override
-		public String getName() {
-			return super.getForgeName();
-		}
+    public static class OrcForgeAccess extends LOTRTileEntityOrcForge implements AlloyForgeAccess
+    {
 
-		@Override
-		public ItemStack getAlloyResult(ItemStack ingredient, ItemStack alloy) {
-			return super.getAlloySmeltingResult(ingredient, alloy);
-		}
+        @Override
+        public String getName ()
+        {
+            return super.getForgeName ();
+        }
 
-		@Override
-		public ItemStack getSmeltingResult(ItemStack itemstack) {
-			return super.getSmeltingResult(itemstack);
-		}
+        @Override
+        public ItemStack getAlloyResult (ItemStack ingredient, ItemStack alloy)
+        {
+            return super.getAlloySmeltingResult (ingredient, alloy);
+        }
 
-	}
+        @Override
+        public ItemStack getSmeltingResult (ItemStack itemstack)
+        {
+            return super.getSmeltingResult (itemstack);
+        }
+
+    }
 
 }

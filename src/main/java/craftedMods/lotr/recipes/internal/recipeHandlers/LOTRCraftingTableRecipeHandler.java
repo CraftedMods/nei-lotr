@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2019 CraftedMods (see https://github.com/CraftedMods)
+ * Copyright (C) 2020 CraftedMods (see https://github.com/CraftedMods)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,24 +24,29 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.StatCollector;
 
-public class LOTRCraftingTableRecipeHandler extends AbstractMiddleEarthCraftingTableRecipeHandler {
+public class LOTRCraftingTableRecipeHandler extends AbstractMiddleEarthCraftingTableRecipeHandler
+{
 
-	public static final String UNLOCALIZED_NAME_PREFIX = "lotr.middleEarthCrafting.";
+    public static final String UNLOCALIZED_NAME_PREFIX = "lotr.middleEarthCrafting.";
 
-	public LOTRCraftingTableRecipeHandler(String unlocalizedName, Class<? extends GuiContainer> guiClass, Supplier<Collection<IRecipe>> recipesGetter) {
-		super(LOTRCraftingTableRecipeHandler.UNLOCALIZED_NAME_PREFIX + unlocalizedName, guiClass, recipesGetter);
-	}
+    public LOTRCraftingTableRecipeHandler (String unlocalizedName, Class<? extends GuiContainer> guiClass,
+        Supplier<Collection<IRecipe>> recipesGetter)
+    {
+        super (LOTRCraftingTableRecipeHandler.UNLOCALIZED_NAME_PREFIX + unlocalizedName, guiClass, recipesGetter);
+    }
 
-	@Override
-	public String getDisplayName() {
-		return StatCollector
-				.translateToLocal("container.lotr.crafting." + this.getUnlocalizedName().replace(LOTRCraftingTableRecipeHandler.UNLOCALIZED_NAME_PREFIX, ""));
-	}
+    @Override
+    public String getDisplayName ()
+    {
+        return StatCollector
+            .translateToLocal ("container.lotr.crafting."
+                + getUnlocalizedName ().replace (LOTRCraftingTableRecipeHandler.UNLOCALIZED_NAME_PREFIX, ""));
+    }
 
-	@Override
-	public int getDefaultOrder ()
-	{
-	   return 2000;
-	}
+    @Override
+    public int getDefaultOrder ()
+    {
+        return 2000;
+    }
 
 }
