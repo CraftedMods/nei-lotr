@@ -173,6 +173,12 @@ public class CauldronRecipeHandler extends AbstractRecipeHandler<ShapelessRecipe
 	public CauldronRecipeHandlerRenderer getRenderer() {
 		return this.renderer;
 	}
+	
+	@Override
+	public int getDefaultOrder ()
+	{
+	   return 9000;
+	}
 
 	public class UndyeningRecipe extends ShapelessRecipe {
 

@@ -25,6 +25,12 @@ public class LOTRAlloyForgeRecipeHandler extends AbstractAlloyForgeRecipeHandler
 	public LOTRAlloyForgeRecipeHandler(String unlocalizedName, AlloyForgeAccess alloyForgeDummy) {
 		super("lotr.alloyForge." + unlocalizedName, alloyForgeDummy);
 	}
+	
+	@Override
+	public int getDefaultOrder ()
+	{
+	    return 3000;
+	}
 
 	public static class DwarvenForgeAccess extends LOTRTileEntityDwarvenForge implements AlloyForgeAccess {
 

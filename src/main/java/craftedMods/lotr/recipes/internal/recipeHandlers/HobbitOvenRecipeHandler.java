@@ -93,6 +93,12 @@ public class HobbitOvenRecipeHandler extends AbstractRecipeHandler<HobbitOvenRec
 	public RecipeHandlerRecipeViewer<HobbitOvenRecipe> getRecipeViewer() {
 		return this.recipeViewer;
 	}
+	
+	@Override
+	public int getDefaultOrder ()
+	{
+	    return 8000;
+	}
 
 	public class HobbitOvenRecipe extends FurnaceRecipe {
 

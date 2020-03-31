@@ -189,6 +189,12 @@ public class UnsmelteryRecipeHandler extends AbstractRecipeHandler<UnsmelteryRec
 		}
 		return ret;
 	}
+	
+	@Override
+	public int getDefaultOrder ()
+	{
+	    return 7000;
+	}
 
 	public static int getMinUnsmeltingResultCount(ItemStack ingredient, ItemStack largestPossibleResult) {
 		return UnsmelteryRecipeHandler.getUnsmeltingResultCount(ingredient, largestPossibleResult, 0.7f);

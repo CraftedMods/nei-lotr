@@ -75,6 +75,12 @@ public class BarrelRecipeHandler extends CraftingGridRecipeHandler {
 	public RecipeHandlerRecipeViewer<AbstractRecipe> getRecipeViewer() {
 		return this.recipeViewer;
 	}
+	
+	@Override
+	public int getDefaultOrder ()
+	{
+	    return 4000;
+	}
 
 	public class BarrelRecipeHandlerCraftingHelper extends AbstractCraftingHelper<AbstractRecipe> {
 

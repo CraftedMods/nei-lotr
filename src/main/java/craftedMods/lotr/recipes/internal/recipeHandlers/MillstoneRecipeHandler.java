@@ -106,6 +106,12 @@ public class MillstoneRecipeHandler extends AbstractMTRecipeHandler<MillstoneRec
     {
         return RecipeHandlerUtils.getInstance ().hasMineTweaker () && LOTRRecipeHandlerUtils.hasMtLotr ();
     }
+    
+    @Override
+    public int getDefaultOrder ()
+    {
+        return 5000;
+    }
 
     public class MillstoneRecipe extends ShapelessRecipe
     {

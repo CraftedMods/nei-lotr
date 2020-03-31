@@ -72,6 +72,12 @@ public class KebabRecipeHandler extends AbstractRecipeHandler<ShapelessRecipe> {
 	public RecipeHandlerRecipeViewer<ShapelessRecipe> getRecipeViewer() {
 		return this.recipeViewer;
 	}
+	
+	@Override
+	public int getDefaultOrder ()
+	{
+	   return 10000;
+	}
 
 	public class KebabRecipeHandlerRenderer implements RecipeHandlerRenderer<KebabRecipeHandler, ShapelessRecipe> {
 

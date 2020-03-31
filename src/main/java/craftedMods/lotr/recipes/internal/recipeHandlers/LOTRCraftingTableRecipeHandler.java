@@ -54,6 +54,12 @@ public class LOTRCraftingTableRecipeHandler extends AbstractMiddleEarthCraftingT
 	public RecipeHandlerRecipeViewer<AbstractRecipe> getRecipeViewer() {
 		return this.recipeViewer;
 	}
+	
+	@Override
+	public int getDefaultOrder ()
+	{
+	   return 2000;
+	}
 
 	private class MiddleEarthCraftingTableRecipeHandlerCraftingHelper extends AbstractCraftingHelper<AbstractRecipe> {
 

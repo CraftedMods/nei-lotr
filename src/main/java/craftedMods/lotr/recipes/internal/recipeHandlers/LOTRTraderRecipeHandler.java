@@ -24,5 +24,11 @@ public class LOTRTraderRecipeHandler extends AbstractTraderRecipeHandler {
 	public LOTRTraderRecipeHandler(String unlocalizedName, String faction, LOTRTradeEntries itemsBought, LOTRTradeEntries itemsSold) {
 		super("lotr.trader.", unlocalizedName, faction, itemsBought, itemsSold);
 	}
+	
+	@Override
+	public int getDefaultOrder ()
+	{
+	    return 100000;
+	}
 
 }

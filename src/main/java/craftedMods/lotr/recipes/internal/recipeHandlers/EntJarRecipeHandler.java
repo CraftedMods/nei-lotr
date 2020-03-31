@@ -75,6 +75,12 @@ public class EntJarRecipeHandler extends AbstractRecipeHandler<ShapelessRecipe> 
 	public RecipeHandlerRecipeViewer<ShapelessRecipe> getRecipeViewer() {
 		return this.recipeViewer;
 	}
+	
+	@Override
+	public int getDefaultOrder ()
+	{
+	    return 6000;
+	}
 
 	public class EntJarRecipeHandlerRenderer implements RecipeHandlerRenderer<EntJarRecipeHandler, ShapelessRecipe> {
 
