@@ -20,7 +20,7 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "2.1.0-ALPHA"
+version = "1.0.0-BETA"
 group= "craftedMods" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "neiLotr"
 
