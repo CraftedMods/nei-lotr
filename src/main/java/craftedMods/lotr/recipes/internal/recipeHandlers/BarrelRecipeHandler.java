@@ -157,7 +157,7 @@ public class BarrelRecipeHandler extends CraftingGridRecipeHandler
         @Override
         public int getOffsetY (Class<? extends GuiContainer> guiClass)
         {
-            return guiClass == LOTRGuiBarrel.class ? 64 : super.getOffsetY (guiClass);
+            return guiClass == LOTRGuiBarrel.class ? 104 : super.getOffsetY (guiClass);
         }
 
     }

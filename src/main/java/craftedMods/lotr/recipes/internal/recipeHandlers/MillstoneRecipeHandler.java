@@ -184,13 +184,13 @@ public class MillstoneRecipeHandler extends AbstractMTRecipeHandler<MillstoneRec
         @Override
         public int getOffsetX (Class<? extends GuiContainer> guiClass)
         {
-            return guiClass == LOTRGuiMillstone.class ? 144 : 9;
+            return guiClass == LOTRGuiMillstone.class ? 36 : 9;
         }
 
         @Override
         public int getOffsetY (Class<? extends GuiContainer> guiClass)
         {
-            return guiClass == LOTRGuiMillstone.class ? 36 : 13;
+            return guiClass == LOTRGuiMillstone.class ? 11 : 13;
         }
     }
 

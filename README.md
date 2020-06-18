@@ -2,7 +2,7 @@
 The plugin adds NEI support for all devices and recipes added by the LOTR Mod.
 ## Dependencies
 If you want to setup a development environment, you'll need the following dependencies:
-- [The Lord of the Rings Mod v35.4](https://www.mediafire.com/file/0u9r3psso7lb0w6/)
+- [The Lord of the Rings Mod v36.3](https://www.mediafire.com/file/yth0l52ydjnird0/)
 - [neiRecipeHandlers-1.1.0-BETA.jar](https://www.curseforge.com/minecraft/mc-mods/nei-recipe-handlers/files)
 
 The plugin was created with the MinecraftForge version "1.7.10-10.13.4.1614".  

@@ -465,7 +465,7 @@ public abstract class AbstractTraderRecipeHandler extends AbstractRecipeHandler<
         @Override
         public int getOffsetX (Class<? extends GuiContainer> guiClass)
         {
-            return guiClass == LOTRGuiTrade.class ? 144 : super.getOffsetX (guiClass);
+            return guiClass == LOTRGuiTrade.class ? 144-18 : super.getOffsetX (guiClass);
         }
 
         @Override
@@ -479,6 +479,8 @@ public abstract class AbstractTraderRecipeHandler extends AbstractRecipeHandler<
         {
             return StatCollector.translateToLocal ("neiLotr.handler.trader.recipeViewer.tooltip");
         }
+        
+        
 
     }
 

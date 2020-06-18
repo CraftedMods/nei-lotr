@@ -177,13 +177,13 @@ public class HobbitOvenRecipeHandler extends AbstractRecipeHandler<HobbitOvenRec
         @Override
         public int getOffsetX (Class<? extends GuiContainer> guiClass)
         {
-            return guiClass == LOTRGuiHobbitOven.class ? 144 : 0;
+            return 0;
         }
 
         @Override
         public int getOffsetY (Class<? extends GuiContainer> guiClass)
         {
-            return guiClass == LOTRGuiHobbitOven.class ? 76 : 9;
+            return 9;
         }
 
     }

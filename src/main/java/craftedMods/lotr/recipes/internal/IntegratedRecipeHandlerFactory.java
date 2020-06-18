@@ -1,16 +1,16 @@
 /*******************************************************************************
  * Copyright (C) 2020 CraftedMods (see https://github.com/CraftedMods)
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -68,6 +68,7 @@ public class IntegratedRecipeHandlerFactory implements RecipeHandlerFactory
     private static final String FACTION_DUNEDAIN = "dunedain";
     private static final String FACTION_RIVENDELL = "rivendell";
     private static final String FACTION_GUNDABAD = "gundabad";
+    private static final String FACTION_BREE = "bree";
 
     static
     {
@@ -124,6 +125,8 @@ public class IntegratedRecipeHandlerFactory implements RecipeHandlerFactory
             LOTRRecipes.woodElvenRecipes);
         IntegratedRecipeHandlerFactory.registerMECTHandler ("umbar", LOTRGuiCraftingTable.Umbar.class,
             LOTRRecipes.umbarRecipes);
+        IntegratedRecipeHandlerFactory.registerMECTHandler ("bree", LOTRGuiCraftingTable.Bree.class,
+            LOTRRecipes.breeRecipes);
 
         IntegratedRecipeHandlerFactory.registerTraderHandler (LOTREntityHobbitBartender.class,
             IntegratedRecipeHandlerFactory.FACTION_HOBBIT,
@@ -491,6 +494,48 @@ public class IntegratedRecipeHandlerFactory implements RecipeHandlerFactory
         IntegratedRecipeHandlerFactory.registerTraderHandler (LOTREntityWickedDwarf.class,
             IntegratedRecipeHandlerFactory.FACTION_MORDOR,
             LOTRTradeEntries.WICKED_DWARF_SELL, LOTRTradeEntries.WICKED_DWARF_BUY);
+        IntegratedRecipeHandlerFactory.registerTraderHandler (LOTREntityBreeBlacksmith.class,
+            IntegratedRecipeHandlerFactory.FACTION_BREE,
+            LOTRTradeEntries.BREE_BLACKSMITH_SELL, LOTRTradeEntries.BREE_BLACKSMITH_BUY);
+        IntegratedRecipeHandlerFactory.registerTraderHandler (LOTREntityBreeInnkeeper.class,
+            IntegratedRecipeHandlerFactory.FACTION_BREE,
+            LOTRTradeEntries.BREE_INNKEEPER_SELL, LOTRTradeEntries.BREE_INNKEEPER_BUY);
+        IntegratedRecipeHandlerFactory.registerTraderHandler (LOTREntityBreeHobbitInnkeeper.class,
+            IntegratedRecipeHandlerFactory.FACTION_BREE,
+            LOTRTradeEntries.BREE_INNKEEPER_SELL, LOTRTradeEntries.BREE_INNKEEPER_BUY);
+        IntegratedRecipeHandlerFactory.registerTraderHandler (LOTREntityBreeBaker.class,
+            IntegratedRecipeHandlerFactory.FACTION_BREE,
+            LOTRTradeEntries.BREE_BAKER_SELL, LOTRTradeEntries.BREE_BAKER_BUY);
+        IntegratedRecipeHandlerFactory.registerTraderHandler (LOTREntityBreeHobbitBaker.class,
+            IntegratedRecipeHandlerFactory.FACTION_BREE,
+            LOTRTradeEntries.BREE_BAKER_SELL, LOTRTradeEntries.BREE_BAKER_BUY);
+        IntegratedRecipeHandlerFactory.registerTraderHandler (LOTREntityBreeButcher.class,
+            IntegratedRecipeHandlerFactory.FACTION_BREE,
+            LOTRTradeEntries.BREE_BUTCHER_SELL, LOTRTradeEntries.BREE_BUTCHER_BUY);
+        IntegratedRecipeHandlerFactory.registerTraderHandler (LOTREntityBreeHobbitButcher.class,
+            IntegratedRecipeHandlerFactory.FACTION_BREE,
+            LOTRTradeEntries.BREE_BUTCHER_SELL, LOTRTradeEntries.BREE_BUTCHER_BUY);
+        IntegratedRecipeHandlerFactory.registerTraderHandler (LOTREntityBreeBrewer.class,
+            IntegratedRecipeHandlerFactory.FACTION_BREE,
+            LOTRTradeEntries.BREE_BREWER_SELL, LOTRTradeEntries.BREE_BREWER_BUY);
+        IntegratedRecipeHandlerFactory.registerTraderHandler (LOTREntityBreeHobbitBrewer.class,
+            IntegratedRecipeHandlerFactory.FACTION_BREE,
+            LOTRTradeEntries.BREE_BREWER_SELL, LOTRTradeEntries.BREE_BREWER_BUY);
+        IntegratedRecipeHandlerFactory.registerTraderHandler (LOTREntityBreeMason.class,
+            IntegratedRecipeHandlerFactory.FACTION_BREE,
+            LOTRTradeEntries.BREE_MASON_SELL, LOTRTradeEntries.BREE_MASON_BUY);
+        IntegratedRecipeHandlerFactory.registerTraderHandler (LOTREntityBreeLumberman.class,
+            IntegratedRecipeHandlerFactory.FACTION_BREE,
+            LOTRTradeEntries.BREE_LUMBERMAN_SELL, LOTRTradeEntries.BREE_LUMBERMAN_BUY);
+        IntegratedRecipeHandlerFactory.registerTraderHandler (LOTREntityBreeFlorist.class,
+            IntegratedRecipeHandlerFactory.FACTION_BREE,
+            LOTRTradeEntries.BREE_FLORIST_SELL, LOTRTradeEntries.BREE_FLORIST_BUY);
+        IntegratedRecipeHandlerFactory.registerTraderHandler (LOTREntityBreeHobbitFlorist.class,
+            IntegratedRecipeHandlerFactory.FACTION_BREE,
+            LOTRTradeEntries.BREE_FLORIST_SELL, LOTRTradeEntries.BREE_FLORIST_BUY);
+        IntegratedRecipeHandlerFactory.registerTraderHandler (LOTREntityBreeFarmer.class,
+            IntegratedRecipeHandlerFactory.FACTION_BREE,
+            LOTRTradeEntries.BREE_FARMER_SELL, LOTRTradeEntries.BREE_FARMER_BUY);
 
         IntegratedRecipeHandlerFactory.recipeHandlers
             .add (new LOTRAlloyForgeRecipeHandler ("orc", new LOTRAlloyForgeRecipeHandler.OrcForgeAccess ()));

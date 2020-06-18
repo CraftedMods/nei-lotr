@@ -325,13 +325,13 @@ public abstract class AbstractAlloyForgeRecipeHandler extends AbstractRecipeHand
         @Override
         public int getOffsetX (Class<? extends GuiContainer> guiClass)
         {
-            return guiClass == LOTRGuiAlloyForge.class ? 144 : 9;
+            return 9;
         }
 
         @Override
         public int getOffsetY (Class<? extends GuiContainer> guiClass)
         {
-            return guiClass == LOTRGuiAlloyForge.class ? 94 : 18;
+            return guiClass == LOTRGuiAlloyForge.class ? 27 : 18;
         }
 
     }
