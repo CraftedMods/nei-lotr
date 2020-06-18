@@ -548,6 +548,7 @@ public class IntegratedRecipeHandlerFactory implements RecipeHandlerFactory
 
         IntegratedRecipeHandlerFactory.disableCoinCountDisplayForGUIs ("codechicken.nei.recipe.GuiCraftingRecipe",
             "codechicken.nei.recipe.GuiUsageRecipe");
+        LOTRGuiHandler.coinCountLeftSide = true;
     }
 
     private static void registerMECTHandler (String unlocalizedName, Class<? extends GuiContainer> guiClass,
