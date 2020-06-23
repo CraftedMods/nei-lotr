@@ -5,7 +5,8 @@ Made by 'Crafted_Mods' or 'The_Ranger_Malvegil'
  + Updated to v36.3 of the LOTR Mod
   + Added support for the Bree crafting table and traders
   * Moved some "Show all recipes" buttons, so they don't interfere with the pouch button
-+ The LOTR coin coint indicator is now displayed on the left side instead of the right
++ The LOTR coin count indicator is now displayed on the left side instead of the right
++ Added a configuration option for every alloy forge to use hardcoded recipes, which improves startup performance for the cost of compatibility
 
  #2.1.0-ALPHA:
  + Updated to neiRecipeHandlers-1.1.0-BETA

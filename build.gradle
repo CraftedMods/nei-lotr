@@ -51,10 +51,11 @@ jar {
     
     from('src/main/java') {
       include 'lang/**'
-   }
-   from('./') {
+      include '**/*.dat'
+   	}
+    from('./') {
       include 'LICENSE'
-   }
+    }
 }
 
 processResources

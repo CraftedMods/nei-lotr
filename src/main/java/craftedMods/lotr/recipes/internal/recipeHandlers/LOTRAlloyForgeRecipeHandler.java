@@ -16,9 +16,12 @@
  ******************************************************************************/
 package craftedMods.lotr.recipes.internal.recipeHandlers;
 
+import java.util.*;
+
 import craftedMods.lotr.recipes.api.recipeHandlers.AbstractAlloyForgeRecipeHandler;
 import lotr.common.tileentity.*;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.*;
 
 public class LOTRAlloyForgeRecipeHandler extends AbstractAlloyForgeRecipeHandler
 {
@@ -26,6 +29,41 @@ public class LOTRAlloyForgeRecipeHandler extends AbstractAlloyForgeRecipeHandler
     public LOTRAlloyForgeRecipeHandler (String unlocalizedName, AlloyForgeAccess alloyForgeDummy)
     {
         super ("lotr.alloyForge." + unlocalizedName, alloyForgeDummy);
+    }
+
+    @SuppressWarnings("unchecked")
+    protected Collection<AbstractAlloyForgeRecipeHandler.AlloyForgeRecipe> getHardcodedRecipes ()
+    {
+        Collection<AlloyForgeRecipe> recipes = new ArrayList<>();
+
+        try
+        {
+            NBTTagCompound data = CompressedStreamTools.readCompressed (getClass ().getResourceAsStream (
+                "/craftedMods/lotr/recipes/internal/recipeHandlers/hardcoded_alloy_forge_recipes.dat"));
+
+            if (data.hasKey (getUnlocalizedName ()))
+            {
+
+                NBTTagCompound recipesTag = data.getCompoundTag (getUnlocalizedName ()).getCompoundTag ("content");
+
+                for (String key : (Collection<String>) recipesTag.func_150296_c ())
+                {
+                    NBTTagCompound recipeTag = recipesTag.getCompoundTag (key);
+                    AbstractAlloyForgeRecipeHandler.AlloyForgeRecipe recipe = AbstractAlloyForgeRecipeHandler.AlloyForgeRecipe
+                        .readRecipeFromNBT (recipeTag);
+                    if (recipe != null)
+                    {
+                        recipes.add (recipe);
+                    }
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            this.logger.error ("Couldn't load the hardcoded recipes for this handler", e);
+        }
+
+        return recipes;
     }
 
     @Override

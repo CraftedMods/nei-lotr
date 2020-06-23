@@ -18,6 +18,8 @@ package craftedMods.lotr.recipes.api.recipeHandlers;
 
 import java.util.*;
 
+import org.apache.logging.log4j.Logger;
+
 import craftedMods.lotr.recipes.api.recipeHandlers.AbstractAlloyForgeRecipeHandler.AlloyForgeRecipe;
 import craftedMods.lotr.recipes.api.utils.LOTRRecipeHandlerUtils;
 import craftedMods.recipes.api.*;
@@ -36,6 +38,7 @@ public abstract class AbstractAlloyForgeRecipeHandler extends AbstractRecipeHand
     protected final AlloyForgeAccess alloyForgeDummy;
 
     protected boolean wasCacheLoaded = false;
+    protected boolean useHardcodedRecipes = false;
 
     private final AlloyForgeRecipeHandlerRenderer renderer = new AlloyForgeRecipeHandlerRenderer ();
     private final AlloyForgeRecipeHandlerCacheManager cacheManager = new AlloyForgeRecipeHandlerCacheManager (this);
@@ -45,6 +48,40 @@ public abstract class AbstractAlloyForgeRecipeHandler extends AbstractRecipeHand
     {
         super (unlocalizedName);
         this.alloyForgeDummy = alloyForgeDummy;
+    }
+
+    public void onPreLoad (RecipeHandlerConfiguration config, Logger logger)
+    {
+        super.onPreLoad (config, logger);
+
+        this.useHardcodedRecipes = config.getBoolean ("Use hardcoded recipes", false,
+            "Enable this when you experience performance issues caused by this mod. This fixes that issue at the cost of lost compatibility - eventually NEI doesn't show all recipes this device supports.");
+    }
+
+    public void onPostLoad (Collection<AlloyForgeRecipe> staticRecipes)
+    {
+        super.onPostLoad (staticRecipes);
+
+        if (this.useHardcodedRecipes)
+        {
+            Collection<AlloyForgeRecipe> hardcodedRecipes = getHardcodedRecipes ();
+
+            if (hardcodedRecipes.size () == 0)
+            {
+                this.logger.warn (
+                    "This recipe handler was configured to load hardcoded recipes, but there weren't any - thus this handler shows no recipes.");
+            }
+            else
+            {
+                this.logger.debug ("Found " + hardcodedRecipes.size () + " hardcoded recipes that will be used");
+            }
+            getStaticRecipes ().addAll (getHardcodedRecipes ());
+        }
+    }
+
+    protected Collection<AlloyForgeRecipe> getHardcodedRecipes ()
+    {
+        return Arrays.asList ();
     }
 
     @Override
@@ -89,7 +126,7 @@ public abstract class AbstractAlloyForgeRecipeHandler extends AbstractRecipeHand
     @Override
     public int getComplicatedStaticRecipeDepth ()
     {
-        return wasCacheLoaded ? 0 : 2;
+        return (this.useHardcodedRecipes || this.wasCacheLoaded) ? 0 : 2;
     }
 
     @Override
@@ -140,6 +177,11 @@ public abstract class AbstractAlloyForgeRecipeHandler extends AbstractRecipeHand
         public AlloyForgeRecipeHandlerCacheManager (AbstractAlloyForgeRecipeHandler handler)
         {
             super (handler);
+        }
+
+        public boolean isCacheEnabled ()
+        {
+            return ! ((AbstractAlloyForgeRecipeHandler) this.handler).useHardcodedRecipes;
         }
 
         @Override
